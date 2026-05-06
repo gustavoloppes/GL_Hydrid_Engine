@@ -1,0 +1,1456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GL Hybrid Engine — Daily Hybrid Training System</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300&display=swap" rel="stylesheet" />
+
+  <!--
+  ═══════════════════════════════════════════════════════════════
+  STRIPE + EMAIL AUTOMATION SETUP  —  Team Lopes Training
+  ═══════════════════════════════════════════════════════════════
+
+  STEP 1 — CREATE STRIPE PRODUCTS & PAYMENT LINKS
+  ─────────────────────────────────────────────────
+  1. Log into https://dashboard.stripe.com
+  2. Products → Add product for each plan:
+       • Hybrid Daily    CAD $39/mo  (recurring)
+       • Full Program    CAD $59/mo  (recurring)
+       • Strength Block  CAD $39/mo  (recurring)
+  3. For each product: Payment Links → Create link
+     → Under "After payment" set redirect URL to:
+         https://teamlopestraining.com/?paid=success
+       (or your actual domain)
+  4. Copy each Payment Link URL and paste it into index.html:
+       Search for "HYBRID_DAILY_LINK"   → replace with real URL
+       Search for "FULL_PROGRAM_LINK"   → replace with real URL
+       Search for "STRENGTH_BLOCK_LINK" → replace with real URL
+
+  STEP 2 — POST-PAYMENT EMAIL  (Zapier free plan works)
+  ──────────────────────────────────────────────────────
+  1. Go to https://zapier.com → Create Zap
+  2. Trigger:  Stripe → "New Subscription"
+  3. Action:   Gmail (or SendGrid) → "Send Email"
+     Subject:  Welcome to Team Lopes Training 🏆
+     Body (plain text):
+       Hi {{customer_name}},
+
+       Your subscription is active! Here's how to access your workouts:
+
+       1. Download the TrainHeroic app (iOS / Android):
+          https://www.trainheroic.com/download
+       2. You'll receive a separate invite from TrainHeroic —
+          check your inbox (and spam folder).
+       3. Your first workout posts at 6 AM ET tomorrow.
+
+       Questions? Reply to this email — I read every one.
+
+       Train hard,
+       — Coach Lopes / Team Lopes Training
+
+  4. In Zapier, use {{customer_email}} as the "To" address
+     (it comes from the Stripe trigger automatically).
+  5. Test with a real $0.50 test purchase in Stripe test mode.
+
+  STEP 3 — TRAINHEROIC INVITE
+  ────────────────────────────
+  1. In TrainHeroic coach dashboard: Settings → Athlete Invite Link
+  2. Add that invite link to the Zapier email body above.
+  3. Athletes join your team and instantly see today's workout.
+
+  STEP 4 — FORMSPREE (Private Coaching form)
+  ────────────────────────────────────────────
+  1. Go to https://formspree.io → New Form → name it "Private Coaching"
+  2. Copy the form ID (e.g. "xdoqpbzk")
+  3. In index.html search for "YOUR_FORM_ID" and replace with it.
+  ═══════════════════════════════════════════════════════════════
+  -->
+
+  <style>
+    :root {
+      --ca: #FFE500;
+      --c1: #000000;
+      --cd: #0d0d0d;
+      --c2: #151515;
+      --cgray: #777777;
+      --cw: #ffffff;
+      --fh: 'Bebas Neue', Impact, sans-serif;
+      --fb: 'Montserrat', Arial, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--fb); background: var(--c1); color: var(--cw); overflow-x: hidden; font-size: 16px; line-height: 1.6; }
+
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--c1); }
+    ::-webkit-scrollbar-thumb { background: var(--ca); border-radius: 2px; }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      font-family: var(--fb); font-size: 13px; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none;
+      padding: 15px 36px; cursor: pointer; border: none;
+      transition: background 0.2s cubic-bezier(.22,1,.36,1),
+                  color 0.2s cubic-bezier(.22,1,.36,1),
+                  transform 0.2s cubic-bezier(.22,1,.36,1),
+                  box-shadow 0.2s cubic-bezier(.22,1,.36,1);
+    }
+    .btn:focus-visible { outline: 2px solid var(--ca); outline-offset: 3px; }
+    .btn:active { transform: translateY(1px) !important; }
+
+    .btn-yellow {
+      background: var(--ca); color: var(--c1);
+      box-shadow: 0 0 0 rgba(255,229,0,0);
+      animation: btn-yellow-idle 3s ease-in-out infinite;
+    }
+    .btn-yellow:hover {
+      background: #f5dc00; transform: translateY(-3px);
+      box-shadow: 0 0 22px 4px rgba(255,229,0,0.55),
+                  0 0 60px 12px rgba(255,229,0,0.25),
+                  0 12px 32px -4px rgba(255,229,0,0.4);
+      animation: none;
+    }
+
+    @keyframes btn-yellow-idle {
+      0%, 100% { box-shadow: 0 0 8px 1px rgba(255,229,0,0.25), 0 0 22px 4px rgba(255,229,0,0.08); }
+      50%       { box-shadow: 0 0 16px 4px rgba(255,229,0,0.45), 0 0 40px 8px rgba(255,229,0,0.18); }
+    }
+
+    .btn-hero {
+      position: relative; overflow: hidden;
+      animation: btn-hero-pulse 3.2s ease-in-out infinite;
+    }
+    .btn-hero::after {
+      content: '';
+      position: absolute; top: 0; left: -75%;
+      width: 50%; height: 100%;
+      background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.28) 50%, transparent 100%);
+      transform: skewX(-20deg);
+      animation: btn-hero-shine 3.2s ease-in-out infinite;
+    }
+    .btn-hero:hover { animation: none; }
+    .btn-hero:hover::after { animation: none; left: 130%; transition: left 0s; }
+
+    @keyframes btn-hero-pulse {
+      0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 0 10px 2px rgba(255,229,0,0.18), 0 0 28px 6px rgba(255,229,0,0.07);
+      }
+      50% {
+        transform: scale(1.025);
+        box-shadow: 0 0 18px 4px rgba(255,229,0,0.32), 0 0 44px 10px rgba(255,229,0,0.12);
+      }
+    }
+    @keyframes btn-hero-shine {
+      0%   { left: -75%; opacity: 0; }
+      18%  { opacity: 1; }
+      38%  { left: 130%; opacity: 0; }
+      100% { left: 130%; opacity: 0; }
+    }
+
+    .btn-black { background: var(--c1); color: var(--ca); }
+    .btn-black:hover { background: #111; transform: translateY(-2px); }
+
+    .btn-outline {
+      background: transparent; color: var(--cw);
+      border: 1.5px solid rgba(255,255,255,0.25);
+      box-shadow: 0 0 0 rgba(255,229,0,0);
+      animation: btn-outline-idle 3s ease-in-out infinite;
+    }
+    .btn-outline:hover {
+      border-color: var(--ca); color: var(--ca); transform: translateY(-3px);
+      box-shadow: 0 0 18px 3px rgba(255,229,0,0.35),
+                  0 0 48px 8px rgba(255,229,0,0.15),
+                  inset 0 0 12px rgba(255,229,0,0.06);
+      animation: none;
+    }
+
+    @keyframes btn-outline-idle {
+      0%, 100% { box-shadow: 0 0 4px 1px rgba(255,229,0,0.1); border-color: rgba(255,255,255,0.2); }
+      50%       { box-shadow: 0 0 12px 3px rgba(255,229,0,0.22); border-color: rgba(255,229,0,0.35); }
+    }
+
+    .btn-outline-dark { background: transparent; color: var(--c1); border: 1.5px solid rgba(0,0,0,0.4); }
+    .btn-outline-dark:hover { background: var(--c1); color: var(--ca); transform: translateY(-2px); }
+
+    /* Nav */
+    #navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      height: 72px; display: flex; align-items: center;
+      justify-content: space-between; padding: 0 52px;
+      transition: background 0.3s, backdrop-filter 0.3s, border-color 0.3s;
+    }
+    #navbar.scrolled {
+      background: rgba(0,0,0,0.96);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(255,229,0,0.1);
+    }
+    .nav-link {
+      color: rgba(255,255,255,0.6); font-size: 12px; font-weight: 600;
+      letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none;
+      position: relative; transition: color 0.2s;
+    }
+    .nav-link::after {
+      content: ''; position: absolute; bottom: -4px; left: 0;
+      width: 0; height: 1.5px; background: var(--ca);
+      transition: width 0.2s cubic-bezier(.22,1,.36,1);
+    }
+    .nav-link:hover { color: var(--ca); }
+    .nav-link:hover::after { width: 100%; }
+    .nav-link:focus-visible { outline: 2px solid var(--ca); outline-offset: 4px; border-radius: 2px; }
+
+    /* Mobile menu */
+    #mobile-menu {
+      position: fixed; inset: 0; z-index: 90;
+      background: rgba(0,0,0,0.99); backdrop-filter: blur(20px);
+      display: none; flex-direction: column;
+      justify-content: center; align-items: flex-start; padding: 80px 48px;
+    }
+    #mobile-menu.open { display: flex; }
+    .mob-link {
+      font-family: var(--fh); font-size: 58px; text-transform: uppercase;
+      color: var(--cw); text-decoration: none; display: block; margin-bottom: 8px;
+      letter-spacing: 0.02em; line-height: 1.1; transition: color 0.2s;
+    }
+    .mob-link:hover { color: var(--ca); }
+
+    /* Responsive visibility */
+    .hide-desk { display: none; }
+    @media (max-width: 900px) {
+      .hide-mob { display: none !important; }
+      .hide-desk { display: block !important; }
+      #navbar { padding: 0 24px; }
+      .split-2 { grid-template-columns: 1fr !important; }
+      .split-3 { grid-template-columns: 1fr 1fr !important; }
+      .prog-grid { grid-template-columns: 1fr !important; }
+      .mosaic-grid { grid-template-columns: 1fr 1fr !important; grid-template-rows: auto !important; }
+      .mosaic-tall { grid-row: auto !important; }
+      .stats-grid { grid-template-columns: 1fr 1fr !important; }
+    }
+    @media (max-width: 600px) {
+      .split-3 { grid-template-columns: 1fr !important; }
+      .stats-grid { grid-template-columns: 1fr 1fr !important; }
+      .mosaic-grid { grid-template-columns: 1fr !important; }
+    }
+
+    /* Reveal */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s cubic-bezier(.22,1,.36,1), transform 0.7s cubic-bezier(.22,1,.36,1); }
+    .reveal.d1 { transition-delay: 0.1s; }
+    .reveal.d2 { transition-delay: 0.2s; }
+    .reveal.d3 { transition-delay: 0.3s; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* Image tile */
+    .img-tile { position: relative; overflow: hidden; }
+    .img-tile img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.55s cubic-bezier(.22,1,.36,1); display: block; }
+    .img-tile:hover img { transform: scale(1.04); }
+    .overlay-b { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.2) 50%, transparent 100%); pointer-events: none; }
+
+    /* Program card — flip container */
+    .prog-card {
+      background: transparent; padding: 0; position: relative;
+      border: 1px solid rgba(255,255,255,0.04);
+      transition: border-color 0.25s cubic-bezier(.22,1,.36,1);
+      cursor: pointer;
+      perspective: 1400px;
+    }
+    .prog-card:hover { border-color: rgba(255,229,0,0.2); }
+    .prog-card:focus-visible { outline: 2px solid var(--ca); outline-offset: -2px; }
+    .prog-card.featured { border-color: var(--ca); }
+
+    /* Flip mechanism */
+    .flip-inner {
+      position: relative; width: 100%; height: 100%;
+      transform-style: preserve-3d;
+      transition: transform 0.65s cubic-bezier(.4,0,.2,1);
+    }
+    .prog-card.flipped .flip-inner { transform: rotateY(180deg); }
+
+    .flip-front, .flip-back {
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      padding: 48px 36px 52px;
+    }
+    .flip-front {
+      position: relative;
+      background: var(--c2);
+      transition: background 0.25s cubic-bezier(.22,1,.36,1);
+      display: flex; flex-direction: column; height: 100%;
+    }
+    .prog-card:hover .flip-front { background: #1d1d1d; }
+    .flip-front > .btn { margin-top: auto; }
+    .flip-back {
+      position: absolute; inset: 0;
+      transform: rotateY(180deg);
+      background: #131313;
+      display: flex; flex-direction: column; gap: 20px;
+      overflow-y: auto;
+    }
+    .flip-back-title {
+      font-family: var(--fh); font-size: 11px; letter-spacing: 0.28em;
+      text-transform: uppercase; color: var(--ca); margin-bottom: 4px;
+    }
+    .flip-back-section { display: flex; flex-direction: column; gap: 8px; }
+    .flip-back-label {
+      font-size: 9px; font-weight: 700; letter-spacing: 0.3em;
+      text-transform: uppercase; color: rgba(255,255,255,0.3);
+    }
+    .flip-back p {
+      font-size: 13px; font-weight: 300; color: rgba(255,255,255,0.6); line-height: 1.75;
+    }
+    .flip-back ul {
+      list-style: none; display: flex; flex-direction: column; gap: 9px; margin: 0;
+    }
+    .flip-back ul li {
+      display: flex; align-items: flex-start; gap: 9px;
+      font-size: 13px; font-weight: 300; color: rgba(255,255,255,0.55); line-height: 1.5;
+    }
+    .flip-back-cta { margin-top: auto; padding-top: 8px; }
+    .flip-hint {
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+      font-size: 10px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase;
+      color: rgba(255,229,0,0.45); margin-top: 12px;
+      animation: hint-pulse 2.8s ease-in-out infinite;
+    }
+    @keyframes hint-pulse {
+      0%,100% { opacity: 0.45; } 50% { opacity: 0.9; }
+    }
+    .flip-back-close {
+      position: absolute; top: 16px; right: 20px;
+      font-size: 10px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase;
+      color: rgba(255,255,255,0.3); cursor: pointer;
+      transition: color 0.2s;
+    }
+    .flip-back-close:hover { color: var(--ca); }
+
+    /* Testimonial */
+    .testi-card { background: var(--c2); padding: 36px; border-left: 3px solid var(--ca); transition: background 0.2s; }
+    .testi-card:hover { background: #1a1a1a; }
+
+    /* FAQ */
+    .faq-item { border-bottom: 1px solid rgba(255,255,255,0.07); }
+    .faq-btn {
+      width: 100%; display: flex; align-items: center;
+      justify-content: space-between; padding: 26px 0;
+      background: none; border: none; cursor: pointer;
+      font-family: var(--fh); font-size: clamp(20px,2.2vw,28px);
+      font-weight: 400; text-transform: uppercase; text-align: left;
+      color: var(--cw); transition: color 0.2s; gap: 20px; letter-spacing: 0.02em;
+    }
+    .faq-btn:hover { color: var(--ca); }
+    .faq-btn:focus-visible { outline: 2px solid var(--ca); outline-offset: 3px; }
+    #faq .faq-btn:hover { color: rgba(0,0,0,0.5); }
+    .faq-icon {
+      flex-shrink: 0; width: 38px; height: 38px;
+      border: 1.5px solid currentColor; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      transition: transform 0.3s cubic-bezier(.22,1,.36,1), background 0.2s, color 0.2s, border-color 0.2s;
+    }
+    .faq-item.open .faq-icon { transform: rotate(45deg); background: var(--ca); color: var(--c1); border-color: var(--ca); }
+    #faq .faq-item.open .faq-icon { background: var(--c1); color: var(--ca); border-color: var(--c1); }
+    .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(.22,1,.36,1); }
+    .faq-answer-inner { padding-bottom: 26px; font-size: 15px; font-weight: 300; line-height: 1.8; color: rgba(255,255,255,0.45); max-width: 680px; }
+
+    /* Logo glow */
+    @keyframes white-pulse {
+      0%, 100% {
+        filter:
+          drop-shadow(0 0 10px rgba(255,255,255,0.35))
+          drop-shadow(0 0 30px rgba(255,255,255,0.15));
+      }
+      50% {
+        filter:
+          drop-shadow(0 0 18px rgba(255,255,255,0.55))
+          drop-shadow(0 0 50px rgba(255,255,255,0.22));
+      }
+    }
+    .logo-glow { animation: white-pulse 3.5s ease-in-out infinite; }
+
+    @keyframes scroll-pulse {
+      0%, 100% { opacity: 0.7; }
+      50% { opacity: 0.1; }
+    }
+
+    /* Step */
+    .step-num {
+      width: 56px; height: 56px; border: 2px solid currentColor;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-family: var(--fh); font-size: 26px; flex-shrink: 0;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══ COUNTDOWN OVERLAY ═══ -->
+<div id="countdown-overlay" style="
+  position:fixed; inset:0; z-index:99999;
+  background:#000;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:0;
+  pointer-events:all;
+">
+  <!-- Radial vignette for depth -->
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse at center, #0d0d0d 0%, #000 70%);pointer-events:none;"></div>
+
+  <!-- Scanline texture -->
+  <div style="position:absolute;inset:0;opacity:0.03;pointer-events:none;
+    background-image:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(255,255,255,0.5) 2px,rgba(255,255,255,0.5) 3px);
+  "></div>
+
+  <!-- Content -->
+  <div style="position:relative;display:flex;flex-direction:column;align-items:center;gap:16px;">
+    <div id="cd-label" style="
+      font-family:'Montserrat',sans-serif; font-size:12px; font-weight:700;
+      letter-spacing:0.42em; text-transform:uppercase; color:rgba(255,255,255,0.45);
+      animation: cd-label-in 0.8s ease-out both;
+    ">Get Ready</div>
+
+    <div id="cd-num" style="
+      font-family:'Bebas Neue',sans-serif;
+      font-size:clamp(180px,28vw,320px);
+      color:#fff;
+      line-height:0.85;
+      user-select:none;
+      animation: cd-enter 0.35s cubic-bezier(.2,0,.3,1) both;
+    ">3</div>
+
+    <!-- Accent bar under the number -->
+    <div id="cd-bar" style="
+      width:60px; height:3px;
+      background:linear-gradient(90deg,transparent,#fff,transparent);
+      animation:cd-bar-in 0.8s ease-out both 0.15s;
+      opacity:0;
+    "></div>
+  </div>
+</div>
+
+<style>
+@keyframes cd-label-in {
+  from { opacity:0; transform:translateY(8px); letter-spacing:0.65em; }
+  to   { opacity:1; transform:translateY(0);   letter-spacing:0.42em; }
+}
+@keyframes cd-bar-in {
+  from { opacity:0; width:20px; }
+  to   { opacity:1; width:60px; }
+}
+@keyframes cd-enter {
+  from { opacity:0; transform:scale(1.35); filter:blur(12px); }
+  to   { opacity:1; transform:scale(1);    filter:blur(0); }
+}
+@keyframes cd-exit {
+  from { opacity:1; transform:scale(1);    filter:blur(0); }
+  to   { opacity:0; transform:scale(0.72); filter:blur(6px); }
+}
+@keyframes cd-pulse-glow {
+  0%,100% {
+    text-shadow:
+      0 0 18px rgba(255,255,255,0.85),
+      0 0 40px rgba(255,255,255,0.55),
+      0 0 80px rgba(255,255,255,0.28),
+      0 0 140px rgba(255,255,255,0.12);
+  }
+  50% {
+    text-shadow:
+      0 0 28px rgba(255,255,255,1),
+      0 0 60px rgba(255,255,255,0.75),
+      0 0 110px rgba(255,255,255,0.42),
+      0 0 200px rgba(255,255,255,0.18);
+  }
+}
+@keyframes cd-overlay-out {
+  0%   { opacity:1; }
+  100% { opacity:0; }
+}
+</style>
+
+<script>
+(function() {
+  const overlay = document.getElementById('countdown-overlay');
+  const numEl   = document.getElementById('cd-num');
+  let count = 3;
+
+  function applyGlow() {
+    numEl.style.textShadow = [
+      '0 0 18px rgba(255,255,255,0.85)',
+      '0 0 40px rgba(255,255,255,0.55)',
+      '0 0 80px rgba(255,255,255,0.28)',
+      '0 0 140px rgba(255,255,255,0.12)'
+    ].join(',');
+    numEl.style.animation = 'cd-pulse-glow 0.9s ease-in-out infinite';
+  }
+
+  function tick() {
+    count--;
+
+    /* exit animation */
+    numEl.style.animation = 'cd-exit 0.28s cubic-bezier(.4,0,1,1) both';
+
+    setTimeout(() => {
+      numEl.textContent = count;
+      /* enter animation */
+      numEl.style.animation = 'cd-enter 0.32s cubic-bezier(.2,0,.3,1) both';
+
+      setTimeout(() => {
+        if (count > 0) {
+          applyGlow();
+        } else {
+          /* count reached 0 — wait then dismiss */
+          numEl.style.animation = 'cd-pulse-glow 0.5s ease-in-out 1 both';
+          setTimeout(() => {
+            overlay.style.animation = 'cd-overlay-out 0.75s ease-out both';
+            overlay.addEventListener('animationend', () => {
+              overlay.remove();
+            }, { once: true });
+          }, 500);
+        }
+      }, 320);
+
+    }, 280);
+  }
+
+  /* start glow on initial 3 */
+  setTimeout(applyGlow, 350);
+
+  const interval = setInterval(() => {
+    tick();
+    if (count <= 0) clearInterval(interval);
+  }, 1000);
+})();
+</script>
+
+<!-- ═══ PAYMENT SUCCESS BANNER ═══ -->
+<!-- Stripe redirects here with ?paid=success after checkout -->
+<div id="payment-banner" style="display:none; position:fixed; top:0; left:0; right:0; z-index:9999;
+  background:var(--ca); color:var(--c1); text-align:center;
+  padding:14px 24px; font-family:var(--fb); font-size:14px; font-weight:700;
+  letter-spacing:0.06em; box-shadow:0 4px 24px rgba(255,229,0,0.35);">
+  ✓ Payment confirmed — check your email for access instructions &amp; your TrainHeroic invite.
+  <button onclick="document.getElementById('payment-banner').style.display='none'"
+    style="margin-left:20px; background:none; border:1px solid rgba(0,0,0,0.3); cursor:pointer;
+    font-size:11px; font-weight:700; padding:4px 10px; letter-spacing:0.08em; color:var(--c1);">
+    DISMISS
+  </button>
+</div>
+
+<!-- ═══ MOBILE MENU ═══ -->
+<div id="mobile-menu" role="dialog" aria-modal="true" aria-label="Navigation">
+  <button id="menu-close" aria-label="Close menu"
+    style="position:absolute; top:24px; right:24px; background:none; border:none; cursor:pointer; color:#fff; padding:4px;">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+  </button>
+  <a href="#athlete"      class="mob-link" onclick="closeMob()">About</a>
+  <a href="#programs"     class="mob-link" onclick="closeMob()">Programs</a>
+  <a href="#results"      class="mob-link" onclick="closeMob()">Results</a>
+  <a href="#testimonials" class="mob-link" onclick="closeMob()">Athletes</a>
+  <a href="#private"      class="mob-link" onclick="closeMob()">Private</a>
+  <a href="#faq"          class="mob-link" onclick="closeMob()">FAQ</a>
+  <a href="#programs" class="btn btn-yellow" style="margin-top:36px;" onclick="closeMob()">Start Today</a>
+</div>
+
+<!-- ═══ NAV ═══ -->
+<nav id="navbar">
+  <a href="#hero" style="flex-shrink:0; display:flex; align-items:center; gap:6px; text-decoration:none; line-height:1;">
+    <!-- Nav: small gray speed lines left of GL -->
+    <svg viewBox="0 0 120 88" style="height:28px; width:auto; display:block; flex-shrink:0;">
+      <line x1="0"  y1="10" x2="120" y2="10" stroke="rgba(255,255,255,0.45)" stroke-width="2.5" stroke-linecap="square"/>
+      <line x1="16" y1="30" x2="120" y2="30" stroke="rgba(255,255,255,0.32)" stroke-width="2"   stroke-linecap="square"/>
+      <line x1="36" y1="52" x2="120" y2="52" stroke="rgba(255,255,255,0.20)" stroke-width="1.5" stroke-linecap="square"/>
+      <line x1="58" y1="74" x2="120" y2="74" stroke="rgba(255,255,255,0.10)" stroke-width="1"   stroke-linecap="square"/>
+    </svg>
+    <div>
+      <div style="font-family:var(--fh); font-size:26px; letter-spacing:0.04em; color:#fff; line-height:0.9;
+        text-shadow:0 0 8px rgba(255,255,255,0.9),0 0 20px rgba(255,255,255,0.6),0 0 45px rgba(255,255,255,0.3);">GL</div>
+      <div style="font-family:var(--fh); font-size:9px; letter-spacing:0.32em; color:#fff; line-height:1; margin-top:3px;">HYBRID ENGINE</div>
+    </div>
+  </a>
+
+  <ul class="hide-mob" style="display:flex; align-items:center; gap:36px; list-style:none;">
+    <li><a href="#athlete"      class="nav-link">About</a></li>
+    <li><a href="#programs"     class="nav-link">Programs</a></li>
+    <li><a href="#results"      class="nav-link">Results</a></li>
+    <li><a href="#testimonials" class="nav-link">Athletes</a></li>
+    <li><a href="#private"      class="nav-link">Private</a></li>
+    <li><a href="#faq"          class="nav-link">FAQ</a></li>
+  </ul>
+
+  <div style="display:flex; align-items:center; gap:14px;">
+    <a href="#programs" class="btn btn-yellow hide-mob" style="padding:12px 28px;">Start Today</a>
+    <button id="menu-btn" class="hide-desk" aria-label="Open menu"
+      style="background:none; border:none; cursor:pointer; color:#fff; padding:4px;">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+    </button>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section id="hero" style="position:relative; height:100vh; overflow:hidden;">
+  <!-- Official HYROX YouTube video background -->
+  <div style="position:absolute; inset:0; z-index:0; overflow:hidden; pointer-events:none;">
+    <iframe
+      src="https://www.youtube.com/embed/hFTBIELN9VM?autoplay=1&mute=1&loop=1&playlist=hFTBIELN9VM&controls=0&disablekb=1&rel=0&iv_load_policy=3&modestbranding=1&playsinline=1&showinfo=0"
+      style="position:absolute; top:50%; left:50%;
+        transform:translate(-50%,-50%);
+        width:max(100vw, 177.78vh);
+        height:max(100vh, 56.25vw);
+        border:none; pointer-events:none;"
+      allow="autoplay; encrypted-media"
+      title="HYROX race background"
+    ></iframe>
+  </div>
+  <div style="position:absolute; inset:0; z-index:1; pointer-events:none;
+    background:linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.72) 55%, rgba(0,0,0,0.97) 100%);"></div>
+
+  <div class="logo-glow" style="
+    position:absolute; inset:0; z-index:2;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    gap:20px; pointer-events:none;">
+
+    <!-- GL + flanking gray speed lines -->
+    <div style="display:flex; align-items:center; gap:clamp(12px,2vw,28px); user-select:none;">
+
+      <!-- Left speed lines — taper away from GL -->
+      <svg viewBox="0 0 120 88" style="width:clamp(64px,7.5vw,112px); height:auto; display:block; flex-shrink:0;">
+        <line x1="0"  y1="10" x2="120" y2="10" stroke="rgba(255,255,255,0.52)" stroke-width="2.5" stroke-linecap="square"/>
+        <line x1="16" y1="30" x2="120" y2="30" stroke="rgba(255,255,255,0.40)" stroke-width="2"   stroke-linecap="square"/>
+        <line x1="36" y1="52" x2="120" y2="52" stroke="rgba(255,255,255,0.28)" stroke-width="1.5" stroke-linecap="square"/>
+        <line x1="58" y1="74" x2="120" y2="74" stroke="rgba(255,255,255,0.16)" stroke-width="1"   stroke-linecap="square"/>
+      </svg>
+
+      <!-- GL hero -->
+      <div style="font-family:var(--fh); font-size:clamp(80px,12vw,172px); color:#fff; line-height:0.88; letter-spacing:0.04em;
+        text-shadow:0 0 14px rgba(255,255,255,0.75),0 0 36px rgba(255,255,255,0.4),0 0 72px rgba(255,255,255,0.18);">GL</div>
+
+      <!-- Right speed lines — mirror of left -->
+      <svg viewBox="0 0 120 88" style="width:clamp(64px,7.5vw,112px); height:auto; display:block; flex-shrink:0;">
+        <line x1="120" y1="10" x2="0"  y2="10" stroke="rgba(255,255,255,0.52)" stroke-width="2.5" stroke-linecap="square"/>
+        <line x1="104" y1="30" x2="0"  y2="30" stroke="rgba(255,255,255,0.40)" stroke-width="2"   stroke-linecap="square"/>
+        <line x1="84"  y1="52" x2="0"  y2="52" stroke="rgba(255,255,255,0.28)" stroke-width="1.5" stroke-linecap="square"/>
+        <line x1="62"  y1="74" x2="0"  y2="74" stroke="rgba(255,255,255,0.16)" stroke-width="1"   stroke-linecap="square"/>
+      </svg>
+
+    </div>
+
+    <div style="display:flex; flex-direction:column; align-items:center; gap:8px; user-select:none;">
+      <div style="font-family:var(--fh); font-size:clamp(18px,2.6vw,38px); color:#fff; line-height:1; letter-spacing:0.44em; padding-left:0.44em;">HYBRID ENGINE</div>
+    </div>
+
+    <div style="font-family:var(--fh); font-size:clamp(13px,1.5vw,20px); letter-spacing:0.38em; color:rgba(255,255,255,0.55); margin-top:4px; user-select:none;">TRAIN · PROGRESS · RACE</div>
+
+    <div style="pointer-events:auto; margin-top:8px;">
+      <a href="#programs" class="btn btn-yellow btn-hero" style="font-size:14px; padding:18px 52px;">Join the Engine</a>
+    </div>
+  </div>
+
+  <div style="position:absolute; bottom:36px; left:50%; transform:translateX(-50%); z-index:3;
+    display:flex; flex-direction:column; align-items:center; gap:8px; pointer-events:none;">
+    <span style="font-size:10px; font-weight:600; letter-spacing:0.3em; text-transform:uppercase; color:rgba(255,255,255,0.3);">Scroll</span>
+    <div style="width:1px; height:52px; background:linear-gradient(to bottom, rgba(255,229,0,0.65), transparent);
+      animation:scroll-pulse 2.2s ease-in-out infinite;"></div>
+  </div>
+</section>
+
+<!-- ═══ ATHLETE ═══ -->
+<section id="athlete" style="background:var(--cd); padding:120px 52px;">
+  <div style="max-width:1280px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center;" class="split-2">
+
+    <div>
+      <p class="reveal" style="font-size:11px; font-weight:700; letter-spacing:0.28em; text-transform:uppercase; color:var(--ca); margin-bottom:16px;">The Athlete Behind the Program</p>
+      <h2 class="reveal d1" style="font-family:var(--fh); font-size:clamp(48px,5.5vw,82px); line-height:0.93; letter-spacing:0.02em; text-transform:uppercase; margin-bottom:32px;">
+        ATHLETE.<br/>COACH.<br/><span style="color:var(--ca);">CHAMPION.</span>
+      </h2>
+      <p class="reveal d2" style="font-size:15px; font-weight:300; line-height:1.85; color:rgba(255,255,255,0.55); margin-bottom:24px; max-width:500px;">
+        I've competed at the top level in both CrossFit and HYROX — I know what it feels like to line up for your very first race with no idea what to expect, and I know what it takes to go back and shave minutes off a time you thought was already your best.
+      </p>
+      <p class="reveal d2" style="font-size:15px; font-weight:300; line-height:1.85; color:rgba(255,255,255,0.55); margin-bottom:20px; max-width:500px;">
+        Team Lopes Training is built for <strong style="color:rgba(255,255,255,0.85); font-weight:600;">two types of athlete</strong>: the beginner who has signed up for their first run or race and needs a structured plan to get to that finish line — and the experienced athlete who is done accepting their current PR and wants a real system to break it.
+      </p>
+      <p class="reveal d2" style="font-size:15px; font-weight:300; line-height:1.85; color:rgba(255,255,255,0.55); margin-bottom:44px; max-width:500px;">
+        No matter where you start, the method is the same: consistent daily training, progressive overload, and programming that prepares your body and your mind for race day.
+      </p>
+      <div class="reveal d3" style="display:flex; flex-direction:column; gap:14px;">
+        <div style="display:flex; align-items:center; gap:14px;">
+          <div style="width:5px; height:5px; background:var(--ca); flex-shrink:0; transform:rotate(45deg);"></div>
+          <span style="font-size:14px; font-weight:500; color:rgba(255,255,255,0.8);">HYROX Competitor — Multiple International Finishes</span>
+        </div>
+        <div style="display:flex; align-items:center; gap:14px;">
+          <div style="width:5px; height:5px; background:var(--ca); flex-shrink:0; transform:rotate(45deg);"></div>
+          <span style="font-size:14px; font-weight:500; color:rgba(255,255,255,0.8);">CrossFit Athlete — Open &amp; Sanctioned Events</span>
+        </div>
+        <div style="display:flex; align-items:center; gap:14px;">
+          <div style="width:5px; height:5px; background:var(--ca); flex-shrink:0; transform:rotate(45deg);"></div>
+          <span style="font-size:14px; font-weight:500; color:rgba(255,255,255,0.8);">Online Coach — Athletes Across Multiple Countries</span>
+        </div>
+        <div style="display:flex; align-items:center; gap:14px;">
+          <div style="width:5px; height:5px; background:var(--ca); flex-shrink:0; transform:rotate(45deg);"></div>
+          <span style="font-size:14px; font-weight:500; color:rgba(255,255,255,0.8);">Hybrid Specialist — Strength + Endurance Combined</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="reveal d1 img-tile" style="aspect-ratio:3/4;">
+      <img src="https://placehold.co/600x800/111111/222222?text=Athlete+Photo" alt="Coach Lopes" />
+      <div class="overlay-b"></div>
+      <div style="position:absolute; bottom:28px; left:28px; z-index:2;">
+        <span style="font-family:var(--fh); font-size:12px; letter-spacing:0.26em; color:var(--ca); text-transform:uppercase;">Lopes — Athlete &amp; Coach</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ STATS BAR ═══ -->
+<section style="background:var(--ca); overflow:hidden;">
+  <div style="display:grid; grid-template-columns:repeat(4,1fr); max-width:1280px; margin:0 auto;" class="stats-grid">
+    <div style="padding:40px 36px; border-right:1px solid rgba(0,0,0,0.1); text-align:center;">
+      <div style="font-family:var(--fh); font-size:clamp(44px,4.5vw,66px); color:var(--c1); line-height:1;">20+</div>
+      <div style="font-size:11px; font-weight:700; letter-spacing:0.22em; text-transform:uppercase; color:rgba(0,0,0,0.5); margin-top:4px;">HYROX Races</div>
+    </div>
+    <div style="padding:40px 36px; border-right:1px solid rgba(0,0,0,0.1); text-align:center;">
+      <div style="font-family:var(--fh); font-size:clamp(44px,4.5vw,66px); color:var(--c1); line-height:1;">50+</div>
+      <div style="font-size:11px; font-weight:700; letter-spacing:0.22em; text-transform:uppercase; color:rgba(0,0,0,0.5); margin-top:4px;">CrossFit Events</div>
+    </div>
+    <div style="padding:40px 36px; border-right:1px solid rgba(0,0,0,0.1); text-align:center;">
+      <div style="font-family:var(--fh); font-size:clamp(44px,4.5vw,66px); color:var(--c1); line-height:1;">200+</div>
+      <div style="font-size:11px; font-weight:700; letter-spacing:0.22em; text-transform:uppercase; color:rgba(0,0,0,0.5); margin-top:4px;">Athletes Coached</div>
+    </div>
+    <div style="padding:40px 36px; text-align:center;">
+      <div style="font-family:var(--fh); font-size:clamp(44px,4.5vw,66px); color:var(--c1); line-height:1;">8+</div>
+      <div style="font-size:11px; font-weight:700; letter-spacing:0.22em; text-transform:uppercase; color:rgba(0,0,0,0.5); margin-top:4px;">Years Competing</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ RESULTS ═══ -->
+<section id="results" style="background:var(--c1); padding:120px 52px;">
+  <div style="max-width:1280px; margin:0 auto;">
+
+    <div style="display:flex; align-items:flex-end; justify-content:space-between; flex-wrap:wrap; gap:24px; margin-bottom:64px;">
+      <div>
+        <p class="reveal" style="font-size:11px; font-weight:700; letter-spacing:0.28em; text-transform:uppercase; color:var(--ca); margin-bottom:12px;">On The Race Floor</p>
+        <h2 class="reveal d1" style="font-family:var(--fh); font-size:clamp(44px,5vw,74px); line-height:0.93; letter-spacing:0.02em; text-transform:uppercase;">COMPETITION<br/>HIGHLIGHTS</h2>
+      </div>
+      <p class="reveal d2" style="font-size:14px; font-weight:300; color:rgba(255,255,255,0.4); max-width:320px; line-height:1.8;">From HYROX world series to CrossFit sanctioned events — every race is a data point. Every finish is proof.</p>
+    </div>
+
+    <div class="mosaic-grid" style="display:grid; grid-template-columns:1fr 1fr 1fr; grid-template-rows:340px 340px; gap:3px;">
+      <div class="img-tile mosaic-tall reveal" style="grid-row:1/3;">
+        <img src="https://placehold.co/600x700/111111/222222?text=HYROX+Race" alt="HYROX Race" />
+        <div class="overlay-b"></div>
+        <div style="position:absolute; bottom:28px; left:28px; z-index:2;">
+          <div style="font-size:10px; font-weight:700; letter-spacing:0.22em; text-transform:uppercase; color:var(--ca); margin-bottom:4px;">HYROX 2024</div>
+          <div style="font-family:var(--fh); font-size:30px; color:#fff; line-height:1;">TOP FINISHER</div>
+        </div>
+      </div>
+      <div class="img-tile reveal d1">
+        <img src="https://placehold.co/600x340/0d0d0d/222222?text=CrossFit+Event" alt="CrossFit Open" />
+        <div class="overlay-b"></div>
+        <div style="position:absolute; bottom:20px; left:22px; z-index:2;">
+          <div style="font-size:10px; font-weight:700; letter-spacing:0.22em; text-transform:uppercase; color:var(--ca); margin-bottom:2px;">CrossFit Open 2024</div>
+          <div style="font-family:var(--fh); font-size:26px; color:#fff; line-height:1;">TOP 10%</div>
+        </div>
+      </div>
+      <div class="img-tile reveal d1">
+        <img src="https://placehold.co/600x340/0a0a0a/222222?text=Training+Day" alt="Training" />
+        <div class="overlay-b"></div>
+        <div style="position:absolute; bottom:20px; left:22px; z-index:2;">
+          <div style="font-size:10px; font-weight:700; letter-spacing:0.22em; text-transform:uppercase; color:var(--ca); margin-bottom:2px;">Strength Block</div>
+          <div style="font-family:var(--fh); font-size:26px; color:#fff; line-height:1;">300+ KG TOTAL</div>
+        </div>
+      </div>
+      <div class="img-tile reveal d2">
+        <img src="https://placehold.co/600x340/111111/222222?text=Race+Podium" alt="Race Podium" />
+        <div class="overlay-b"></div>
+        <div style="position:absolute; bottom:20px; left:22px; z-index:2;">
+          <div style="font-size:10px; font-weight:700; letter-spacing:0.22em; text-transform:uppercase; color:var(--ca); margin-bottom:2px;">HYROX Berlin 2023</div>
+          <div style="font-family:var(--fh); font-size:26px; color:#fff; line-height:1;">PODIUM FINISH</div>
+        </div>
+      </div>
+      <div class="img-tile reveal d2">
+        <img src="https://placehold.co/600x340/0d0d0d/222222?text=Competition" alt="Competition" />
+        <div class="overlay-b"></div>
+        <div style="position:absolute; bottom:20px; left:22px; z-index:2;">
+          <div style="font-size:10px; font-weight:700; letter-spacing:0.22em; text-transform:uppercase; color:var(--ca); margin-bottom:2px;">Hybrid WOD 2024</div>
+          <div style="font-family:var(--fh); font-size:26px; color:#fff; line-height:1;">1ST PLACE</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ PROGRAMS ═══ -->
+<section id="programs" style="background:var(--cd); padding:120px 52px;">
+  <div style="max-width:1280px; margin:0 auto;">
+    <div style="text-align:center; margin-bottom:72px;">
+      <p class="reveal" style="font-size:11px; font-weight:700; letter-spacing:0.28em; text-transform:uppercase; color:var(--ca); margin-bottom:12px;">Daily Online Training</p>
+      <h2 class="reveal d1" style="font-family:var(--fh); font-size:clamp(44px,5.5vw,82px); line-height:0.93; letter-spacing:0.02em; text-transform:uppercase; margin-bottom:20px;">CHOOSE YOUR<br/>PROGRAM</h2>
+      <p class="reveal d2" style="font-size:15px; font-weight:300; color:rgba(255,255,255,0.4); max-width:460px; margin:0 auto; line-height:1.8;">Every program is delivered daily. Open, train, improve. No guessing required.</p>
+    </div>
+
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:2px;" class="prog-grid">
+
+      <!-- Hybrid Daily -->
+      <div class="prog-card reveal" tabindex="0">
+        <div class="flip-inner">
+
+          <!-- FRONT -->
+          <div class="flip-front">
+            <div style="font-size:10px; font-weight:700; letter-spacing:0.26em; text-transform:uppercase; color:var(--ca); margin-bottom:18px;">First Race or New to Running</div>
+            <h3 style="font-family:var(--fh); font-size:clamp(30px,3vw,44px); line-height:1; letter-spacing:0.02em; text-transform:uppercase; margin-bottom:14px;">HYBRID<br/>DAILY</h3>
+            <div style="font-family:var(--fh); font-size:54px; color:var(--ca); line-height:1; margin-bottom:4px;">CAD $39<span style="font-family:var(--fb); font-size:14px; color:rgba(255,255,255,0.35); font-weight:300;">/month</span></div>
+            <p style="font-size:13px; font-weight:300; color:rgba(255,255,255,0.35); margin-bottom:32px; line-height:1.6;">Build your base — cardio + functional fitness, 5 sessions/week</p>
+            <ul style="list-style:none; display:flex; flex-direction:column; gap:12px; margin-bottom:32px; flex:1;">
+              <li style="display:flex; align-items:flex-start; gap:10px; font-size:14px; font-weight:300; color:rgba(255,255,255,0.6);">
+                <svg style="flex-shrink:0; margin-top:3px;" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#FFE500" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                Daily workout delivered to your inbox
+              </li>
+              <li style="display:flex; align-items:flex-start; gap:10px; font-size:14px; font-weight:300; color:rgba(255,255,255,0.6);">
+                <svg style="flex-shrink:0; margin-top:3px;" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#FFE500" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                HYROX-specific conditioning
+              </li>
+              <li style="display:flex; align-items:flex-start; gap:10px; font-size:14px; font-weight:300; color:rgba(255,255,255,0.6);">
+                <svg style="flex-shrink:0; margin-top:3px;" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#FFE500" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                Race simulation workouts
+              </li>
+              <li style="display:flex; align-items:flex-start; gap:10px; font-size:14px; font-weight:300; color:rgba(255,255,255,0.6);">
+                <svg style="flex-shrink:0; margin-top:3px;" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#FFE500" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                Community group access
+              </li>
+            </ul>
+            <div class="btn btn-outline" style="width:100%; text-align:center;">Learn More</div>
+            <div class="flip-hint">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M1 4v6h6M23 20v-6h-6"/><path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4-4.64 4.36A9 9 0 0 1 3.51 15"/></svg>
+              Tap to see full details
+            </div>
+          </div>
+
+          <!-- BACK -->
+          <div class="flip-back">
+            <span class="flip-back-close" onclick="event.stopPropagation(); this.closest('.prog-card').classList.remove('flipped')">✕ CLOSE</span>
+            <div class="flip-back-title">Hybrid Daily</div>
+
+            <div class="flip-back-section">
+              <div class="flip-back-label">Who it's for</div>
+              <p>Athletes training for their <strong style="color:rgba(255,255,255,0.8);">first HYROX race</strong>, casual runners who want structure, or anyone who needs a smart daily workout without overcomplicating their routine. No experience required — just consistency.</p>
+            </div>
+
+            <div class="flip-back-section">
+              <div class="flip-back-label">The program</div>
+              <p>5 structured sessions per week built around HYROX-specific movements. Each workout combines cardio conditioning and functional fitness — delivered daily so you never have to think about what to train.</p>
+              <ul>
+                <li><svg style="flex-shrink:0;margin-top:2px;" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#FFE500" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>Zone 2 base work + HYROX conditioning circuits</li>
+                <li><svg style="flex-shrink:0;margin-top:2px;" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#FFE500" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>Race simulations that mirror the real event format</li>
+                <li><svg style="flex-shrink:0;margin-top:2px;" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#FFE500" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>Scaling options — every level can follow along</li>
+                <li><svg style="flex-shrink:0;margin-top:2px;" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#FFE500" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>Sessions run 45–60 min, Mon–Fri</li>
+              </ul>
+            </div>
+
+            <div class="flip-back-section">
+              <div class="flip-back-label">Commitment</div>
+              <p>5 days/week · 45–60 min per session · All fitness levels welcome</p>
+            </div>
+
+            <div class="flip-back-cta">
+              <!-- ⬇ STRIPE: replace href with your Hybrid Daily Payment Link -->
+              <a href="https://buy.stripe.com/HYBRID_DAILY_LINK"
+                 target="_blank" rel="noopener"
+                 class="btn btn-outline" style="width:100%;"
+                 data-plan="hybrid-daily"
+                 onclick="event.stopPropagation()">
+                CAD $39/mo — Start Now
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Full Program — featured -->
+      <div class="prog-card featured reveal d1" tabindex="0">
+        <div class="flip-inner">
+
+          <!-- FRONT -->
+          <div class="flip-front" style="position:relative;">
+            <div style="position:absolute; top:-1px; right:24px; background:var(--ca); color:var(--c1);
+              font-family:var(--fb); font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; padding:6px 14px;">Best Value</div>
+            <div style="font-size:10px; font-weight:700; letter-spacing:0.26em; text-transform:uppercase; color:var(--ca); margin-bottom:18px;">Beat Your PR — All Levels</div>
+            <h3 style="font-family:var(--fh); font-size:clamp(30px,3vw,44px); line-height:1; letter-spacing:0.02em; text-transform:uppercase; margin-bottom:14px;">FULL<br/>PROGRAM</h3>
+            <div style="font-family:var(--fh); font-size:54px; color:var(--ca); line-height:1; margin-bottom:4px;">CAD $59<span style="font-family:var(--fb); font-size:14px; color:rgba(255,255,255,0.35); font-weight:300;">/month</span></div>
+            <p style="font-size:13px; font-weight:300; color:rgba(255,255,255,0.35); margin-bottom:32px; line-height:1.6;">Cardio capacity + strength + running, 6 sessions/week</p>
+            <ul style="list-style:none; display:flex; flex-direction:column; gap:12px; margin-bottom:32px; flex:1;">
+              <li style="display:flex; align-items:flex-start; gap:10px; font-size:14px; font-weight:300; color:rgba(255,255,255,0.6);">
+                <svg style="flex-shrink:0; margin-top:3px;" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#FFE500" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                <span><strong style="color:rgba(255,255,255,0.85);">Cardio capacity</strong> — zone 2 base, threshold work &amp; VO2 sessions</span>
+              </li>
+              <li style="display:flex; align-items:flex-start; gap:10px; font-size:14px; font-weight:300; color:rgba(255,255,255,0.6);">
+                <svg style="flex-shrink:0; margin-top:3px;" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#FFE500" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                <span><strong style="color:rgba(255,255,255,0.85);">Strength blocks</strong> — progressive overload to build a stronger engine</span>
+              </li>
+              <li style="display:flex; align-items:flex-start; gap:10px; font-size:14px; font-weight:300; color:rgba(255,255,255,0.6);">
+                <svg style="flex-shrink:0; margin-top:3px;" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#FFE500" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                <span><strong style="color:rgba(255,255,255,0.85);">Running development</strong> — form, pace, distance &amp; race-specific intervals</span>
+              </li>
+              <li style="display:flex; align-items:flex-start; gap:10px; font-size:14px; font-weight:300; color:rgba(255,255,255,0.6);">
+                <svg style="flex-shrink:0; margin-top:3px;" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#FFE500" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                Monthly programming review &amp; race prep cycles
+              </li>
+              <li style="display:flex; align-items:flex-start; gap:10px; font-size:14px; font-weight:300; color:rgba(255,255,255,0.6);">
+                <svg style="flex-shrink:0; margin-top:3px;" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#FFE500" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                Direct coach Q&amp;A access
+              </li>
+            </ul>
+            <div class="btn btn-yellow" style="width:100%; text-align:center;">Learn More</div>
+            <div class="flip-hint">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M1 4v6h6M23 20v-6h-6"/><path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4-4.64 4.36A9 9 0 0 1 3.51 15"/></svg>
+              Tap to see full details
+            </div>
+          </div>
+
+          <!-- BACK -->
+          <div class="flip-back" style="background:#161400; border-left:2px solid rgba(255,229,0,0.2);">
+            <span class="flip-back-close" onclick="event.stopPropagation(); this.closest('.prog-card').classList.remove('flipped')">✕ CLOSE</span>
+            <div class="flip-back-title">Full Program</div>
+
+            <div class="flip-back-section">
+              <div class="flip-back-label">Who it's for</div>
+              <p>Athletes with <strong style="color:rgba(255,255,255,0.8);">1+ race under their belt</strong> who want to break their PR, or serious beginners who want the complete competitive system from day one. If you want to podium — this is your program.</p>
+            </div>
+
+            <div class="flip-back-section">
+              <div class="flip-back-label">The program</div>
+              <p>The complete GL Hybrid Engine system — 6 days/week combining every performance pillar you need to race at your best. Nothing is left out.</p>
+              <ul>
+                <li><svg style="flex-shrink:0;margin-top:2px;" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#FFE500" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>Zone 2 base, threshold, &amp; VO2max sessions</li>
+                <li><svg style="flex-shrink:0;margin-top:2px;" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#FFE500" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>Strength blocks with progressive overload</li>
+                <li><svg style="flex-shrink:0;margin-top:2px;" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#FFE500" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>Running form, pace work &amp; race intervals</li>
+                <li><svg style="flex-shrink:0;margin-top:2px;" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#FFE500" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>Monthly review + race prep peaking cycles</li>
+                <li><svg style="flex-shrink:0;margin-top:2px;" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#FFE500" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>Direct coach Q&amp;A — your questions answered</li>
+              </ul>
+            </div>
+
+            <div class="flip-back-section">
+              <div class="flip-back-label">Commitment</div>
+              <p>6 days/week · 50–70 min per session · For athletes ready to train seriously</p>
+            </div>
+
+            <div class="flip-back-cta">
+              <!-- ⬇ STRIPE: replace href with your Full Program Payment Link -->
+              <a href="https://buy.stripe.com/FULL_PROGRAM_LINK"
+                 target="_blank" rel="noopener"
+                 class="btn btn-yellow" style="width:100%;"
+                 data-plan="full-program"
+                 onclick="event.stopPropagation()">
+                CAD $59/mo — Start Now
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Strength Block -->
+      <div class="prog-card reveal d2" tabindex="0">
+        <div class="flip-inner">
+
+          <!-- FRONT -->
+          <div class="flip-front">
+            <div style="font-size:10px; font-weight:700; letter-spacing:0.26em; text-transform:uppercase; color:var(--ca); margin-bottom:18px;">Build a Stronger Foundation</div>
+            <h3 style="font-family:var(--fh); font-size:clamp(30px,3vw,44px); line-height:1; letter-spacing:0.02em; text-transform:uppercase; margin-bottom:14px;">STRENGTH<br/>BLOCK</h3>
+            <div style="font-family:var(--fh); font-size:54px; color:var(--ca); line-height:1; margin-bottom:4px;">CAD $39<span style="font-family:var(--fb); font-size:14px; color:rgba(255,255,255,0.35); font-weight:300;">/month</span></div>
+            <p style="font-size:13px; font-weight:300; color:rgba(255,255,255,0.35); margin-bottom:32px; line-height:1.6;">Pure strength training, 4 sessions/week</p>
+            <ul style="list-style:none; display:flex; flex-direction:column; gap:12px; margin-bottom:32px; flex:1;">
+              <li style="display:flex; align-items:flex-start; gap:10px; font-size:14px; font-weight:300; color:rgba(255,255,255,0.6);">
+                <svg style="flex-shrink:0; margin-top:3px;" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#FFE500" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                Daily strength session
+              </li>
+              <li style="display:flex; align-items:flex-start; gap:10px; font-size:14px; font-weight:300; color:rgba(255,255,255,0.6);">
+                <svg style="flex-shrink:0; margin-top:3px;" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#FFE500" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                Progressive overload system
+              </li>
+              <li style="display:flex; align-items:flex-start; gap:10px; font-size:14px; font-weight:300; color:rgba(255,255,255,0.6);">
+                <svg style="flex-shrink:0; margin-top:3px;" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#FFE500" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                Mobility &amp; recovery included
+              </li>
+              <li style="display:flex; align-items:flex-start; gap:10px; font-size:14px; font-weight:300; color:rgba(255,255,255,0.6);">
+                <svg style="flex-shrink:0; margin-top:3px;" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#FFE500" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                Community group access
+              </li>
+            </ul>
+            <div class="btn btn-outline" style="width:100%; text-align:center;">Learn More</div>
+            <div class="flip-hint">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M1 4v6h6M23 20v-6h-6"/><path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4-4.64 4.36A9 9 0 0 1 3.51 15"/></svg>
+              Tap to see full details
+            </div>
+          </div>
+
+          <!-- BACK -->
+          <div class="flip-back">
+            <span class="flip-back-close" onclick="event.stopPropagation(); this.closest('.prog-card').classList.remove('flipped')">✕ CLOSE</span>
+            <div class="flip-back-title">Strength Block</div>
+
+            <div class="flip-back-section">
+              <div class="flip-back-label">Who it's for</div>
+              <p>Athletes who feel <strong style="color:rgba(255,255,255,0.8);">weak at HYROX workout stations</strong>, want to build a strength base before adding cardio volume, or anyone who wants to train 4 days/week with real programming — not random lifts.</p>
+            </div>
+
+            <div class="flip-back-section">
+              <div class="flip-back-label">The program</div>
+              <p>4 sessions/week of progressive strength training built around functional patterns that transfer directly to HYROX performance — squats, deadlifts, carries, overhead pressing.</p>
+              <ul>
+                <li><svg style="flex-shrink:0;margin-top:2px;" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#FFE500" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>Linear progression — add weight every week</li>
+                <li><svg style="flex-shrink:0;margin-top:2px;" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#FFE500" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>Functional patterns: squat, hinge, carry, press</li>
+                <li><svg style="flex-shrink:0;margin-top:2px;" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#FFE500" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>Built-in mobility &amp; recovery protocol</li>
+                <li><svg style="flex-shrink:0;margin-top:2px;" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#FFE500" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>Community group for form checks &amp; support</li>
+              </ul>
+            </div>
+
+            <div class="flip-back-section">
+              <div class="flip-back-label">Commitment</div>
+              <p>4 days/week · 50–60 min per session · Gym required (barbell + rack)</p>
+            </div>
+
+            <div class="flip-back-cta">
+              <!-- ⬇ STRIPE: replace href with your Strength Block Payment Link -->
+              <a href="https://buy.stripe.com/STRENGTH_BLOCK_LINK"
+                 target="_blank" rel="noopener"
+                 class="btn btn-outline" style="width:100%;"
+                 data-plan="strength-block"
+                 onclick="event.stopPropagation()">
+                CAD $39/mo — Start Now
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ HOW IT WORKS ═══ -->
+<section style="background:var(--ca); padding:96px 52px;">
+  <div style="max-width:1280px; margin:0 auto;">
+    <h2 class="reveal" style="font-family:var(--fh); font-size:clamp(40px,5vw,70px); line-height:0.93; letter-spacing:0.02em; text-transform:uppercase; color:var(--c1); text-align:center; margin-bottom:64px;">HOW IT WORKS</h2>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:48px;" class="prog-grid">
+      <div class="reveal" style="display:flex; flex-direction:column; gap:22px;">
+        <div class="step-num" style="color:var(--c1);">01</div>
+        <h3 style="font-family:var(--fh); font-size:30px; letter-spacing:0.02em; text-transform:uppercase; color:var(--c1); line-height:1;">Choose Your Plan</h3>
+        <p style="font-size:14px; font-weight:400; color:rgba(0,0,0,0.55); line-height:1.75;">Pick the program that matches your goal — hybrid endurance, raw strength, or the full competition approach.</p>
+      </div>
+      <div class="reveal d1" style="display:flex; flex-direction:column; gap:22px;">
+        <div class="step-num" style="color:var(--c1);">02</div>
+        <h3 style="font-family:var(--fh); font-size:30px; letter-spacing:0.02em; text-transform:uppercase; color:var(--c1); line-height:1;">Get Daily Workouts</h3>
+        <p style="font-size:14px; font-weight:400; color:rgba(0,0,0,0.55); line-height:1.75;">Every morning a new session drops — full details, coaching notes, scaling options, and performance tracking.</p>
+      </div>
+      <div class="reveal d2" style="display:flex; flex-direction:column; gap:22px;">
+        <div class="step-num" style="color:var(--c1);">03</div>
+        <h3 style="font-family:var(--fh); font-size:30px; letter-spacing:0.02em; text-transform:uppercase; color:var(--c1); line-height:1;">Track &amp; Compete</h3>
+        <p style="font-size:14px; font-weight:400; color:rgba(0,0,0,0.55); line-height:1.75;">Log your results, see your progress week over week, and arrive at race day with the confidence of real preparation.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TESTIMONIALS ═══ -->
+<section id="testimonials" style="background:var(--c1); padding:120px 52px;">
+  <div style="max-width:1280px; margin:0 auto;">
+    <div style="margin-bottom:64px;">
+      <p class="reveal" style="font-size:11px; font-weight:700; letter-spacing:0.28em; text-transform:uppercase; color:var(--ca); margin-bottom:12px;">From The Athletes</p>
+      <h2 class="reveal d1" style="font-family:var(--fh); font-size:clamp(44px,5vw,70px); line-height:0.93; letter-spacing:0.02em; text-transform:uppercase;">RESULTS<br/>SPEAK LOUD</h2>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:2px;" class="prog-grid">
+
+      <div class="testi-card reveal">
+        <p style="font-size:15px; font-weight:300; line-height:1.85; color:rgba(255,255,255,0.65); margin-bottom:28px; font-style:italic;">
+          "I finished my first HYROX under 90 minutes after 12 weeks on the Full Program. The structure is unlike anything I've tried before."
+        </p>
+        <div style="display:flex; align-items:center; gap:14px;">
+          <div style="width:40px; height:40px; border-radius:50%; background:#1a1a1a; overflow:hidden; flex-shrink:0; border:1.5px solid rgba(255,229,0,0.3);">
+            <img src="https://placehold.co/40x40/1a1a1a/444?text=M" alt="" style="width:100%; height:100%; object-fit:cover;"/>
+          </div>
+          <div>
+            <div style="font-size:13px; font-weight:600; color:#fff;">Marco S.</div>
+            <div style="font-size:11px; font-weight:300; color:var(--ca);">HYROX Finisher — Hamburg 2024</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testi-card reveal d1">
+        <p style="font-size:15px; font-weight:300; line-height:1.85; color:rgba(255,255,255,0.65); margin-bottom:28px; font-style:italic;">
+          "The Strength Block added 20kg to my deadlift in 8 weeks. Real programming, real results. Now combining with Hybrid Daily."
+        </p>
+        <div style="display:flex; align-items:center; gap:14px;">
+          <div style="width:40px; height:40px; border-radius:50%; background:#1a1a1a; overflow:hidden; flex-shrink:0; border:1.5px solid rgba(255,229,0,0.3);">
+            <img src="https://placehold.co/40x40/1a1a1a/444?text=A" alt="" style="width:100%; height:100%; object-fit:cover;"/>
+          </div>
+          <div>
+            <div style="font-size:13px; font-weight:600; color:#fff;">Ana P.</div>
+            <div style="font-size:11px; font-weight:300; color:var(--ca);">CrossFit Athlete — Lisbon</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testi-card reveal d2">
+        <p style="font-size:15px; font-weight:300; line-height:1.85; color:rgba(255,255,255,0.65); margin-bottom:28px; font-style:italic;">
+          "Coach Lopes knows what it takes to compete. The daily workouts are hard but smart — always progressive, never random."
+        </p>
+        <div style="display:flex; align-items:center; gap:14px;">
+          <div style="width:40px; height:40px; border-radius:50%; background:#1a1a1a; overflow:hidden; flex-shrink:0; border:1.5px solid rgba(255,229,0,0.3);">
+            <img src="https://placehold.co/40x40/1a1a1a/444?text=J" alt="" style="width:100%; height:100%; object-fit:cover;"/>
+          </div>
+          <div>
+            <div style="font-size:13px; font-weight:600; color:#fff;">João R.</div>
+            <div style="font-size:11px; font-weight:300; color:var(--ca);">HYROX Pro Division — 2024</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FAQ ═══ -->
+<section id="faq" style="background:var(--ca); padding:120px 52px;">
+  <div style="max-width:860px; margin:0 auto;">
+    <div style="text-align:center; margin-bottom:64px;">
+      <p class="reveal" style="font-size:11px; font-weight:700; letter-spacing:0.28em; text-transform:uppercase; color:rgba(0,0,0,0.45); margin-bottom:12px;">Questions</p>
+      <h2 class="reveal d1" style="font-family:var(--fh); font-size:clamp(44px,5vw,70px); line-height:0.93; letter-spacing:0.02em; text-transform:uppercase; color:var(--c1);">BEFORE YOU<br/>START TRAINING</h2>
+    </div>
+    <div id="faq-list" style="border-top:1px solid rgba(0,0,0,0.12);">
+      <div class="faq-item" style="border-bottom-color:rgba(0,0,0,0.12);">
+        <button class="faq-btn" aria-expanded="false" style="color:var(--c1);">
+          What fitness level do I need to start?
+          <span class="faq-icon" style="border-color:rgba(0,0,0,0.35); color:var(--c1);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg></span>
+        </button>
+        <div class="faq-answer"><div class="faq-answer-inner" style="color:rgba(0,0,0,0.6);">All programs include scaling options. Whether you're just getting into fitness or already competing, the workouts adapt to your current level. A basic level of fitness is helpful, but beginners are welcome.</div></div>
+      </div>
+      <div class="faq-item" style="border-bottom-color:rgba(0,0,0,0.12);">
+        <button class="faq-btn" aria-expanded="false" style="color:var(--c1);">
+          What equipment do I need?
+          <span class="faq-icon" style="border-color:rgba(0,0,0,0.35); color:var(--c1);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg></span>
+        </button>
+        <div class="faq-answer"><div class="faq-answer-inner" style="color:rgba(0,0,0,0.6);">A gym with barbells, dumbbells, pull-up bar, and ideally a ski or row erg. Most sessions include equipment alternatives. HYROX-specific workouts replicate race stations with standard gym equipment.</div></div>
+      </div>
+      <div class="faq-item" style="border-bottom-color:rgba(0,0,0,0.12);">
+        <button class="faq-btn" aria-expanded="false" style="color:var(--c1);">
+          How are the workouts delivered?
+          <span class="faq-icon" style="border-color:rgba(0,0,0,0.35); color:var(--c1);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg></span>
+        </button>
+        <div class="faq-answer"><div class="faq-answer-inner" style="color:rgba(0,0,0,0.6);">Workouts are delivered through <strong style="color:var(--c1);">TrainHeroic</strong> — a free app for athletes (iOS &amp; Android). After you sign up you'll receive an invite link. Every session is posted the night before with full instructions, video demos, scaling options, and coach notes. No complicated setup — just download, accept the invite, and train.</div></div>
+      </div>
+      <div class="faq-item" style="border-bottom-color:rgba(0,0,0,0.12);">
+        <button class="faq-btn" aria-expanded="false" style="color:var(--c1);">
+          Can I combine multiple programs?
+          <span class="faq-icon" style="border-color:rgba(0,0,0,0.35); color:var(--c1);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg></span>
+        </button>
+        <div class="faq-answer"><div class="faq-answer-inner" style="color:rgba(0,0,0,0.6);">The Full Program already integrates hybrid and strength. If you're on individual plans and want both, upgrading to Full Program is the best path — the sessions are designed to work together without overtraining.</div></div>
+      </div>
+      <div class="faq-item" style="border-bottom-color:rgba(0,0,0,0.12);">
+        <button class="faq-btn" aria-expanded="false" style="color:var(--c1);">
+          Is there a lock-in period?
+          <span class="faq-icon" style="border-color:rgba(0,0,0,0.35); color:var(--c1);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg></span>
+        </button>
+        <div class="faq-answer"><div class="faq-answer-inner" style="color:rgba(0,0,0,0.6);">All plans are month-to-month — cancel anytime. That said, real results require at least 8–12 weeks of consistent training. Commit to the process and the results follow.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PRIVATE TRAINING ═══ -->
+<section id="private" style="background:var(--cd); padding:120px 52px;">
+  <div style="max-width:1280px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:start;" class="split-2">
+
+    <!-- Left: info -->
+    <div>
+      <p class="reveal" style="font-size:11px; font-weight:700; letter-spacing:0.28em; text-transform:uppercase; color:var(--ca); margin-bottom:16px;">One-on-One</p>
+      <h2 class="reveal d1" style="font-family:var(--fh); font-size:clamp(44px,5vw,74px); line-height:0.93; letter-spacing:0.02em; text-transform:uppercase; margin-bottom:28px;">PRIVATE<br/>COACHING</h2>
+      <p class="reveal d2" style="font-size:15px; font-weight:300; line-height:1.85; color:rgba(255,255,255,0.55); margin-bottom:36px; max-width:460px;">
+        Want more than a daily program? Private coaching is a direct working relationship — your schedule, your goals, my full attention. I build your training around your life, track your progress every week, and adjust the plan as you evolve.
+      </p>
+      <div class="reveal d2" style="display:flex; flex-direction:column; gap:16px; margin-bottom:40px;">
+        <div style="display:flex; align-items:flex-start; gap:14px;">
+          <div style="width:5px; height:5px; background:var(--ca); flex-shrink:0; margin-top:8px; transform:rotate(45deg);"></div>
+          <div>
+            <div style="font-size:14px; font-weight:600; color:rgba(255,255,255,0.85); margin-bottom:2px;">Fully Custom Programming</div>
+            <div style="font-size:13px; font-weight:300; color:rgba(255,255,255,0.4); line-height:1.6;">Built around your race schedule, equipment, and current fitness level.</div>
+          </div>
+        </div>
+        <div style="display:flex; align-items:flex-start; gap:14px;">
+          <div style="width:5px; height:5px; background:var(--ca); flex-shrink:0; margin-top:8px; transform:rotate(45deg);"></div>
+          <div>
+            <div style="font-size:14px; font-weight:600; color:rgba(255,255,255,0.85); margin-bottom:2px;">Weekly Check-ins</div>
+            <div style="font-size:13px; font-weight:300; color:rgba(255,255,255,0.4); line-height:1.6;">We review your results, address weaknesses, and adjust intensity each week.</div>
+          </div>
+        </div>
+        <div style="display:flex; align-items:flex-start; gap:14px;">
+          <div style="width:5px; height:5px; background:var(--ca); flex-shrink:0; margin-top:8px; transform:rotate(45deg);"></div>
+          <div>
+            <div style="font-size:14px; font-weight:600; color:rgba(255,255,255,0.85); margin-bottom:2px;">Direct Messaging Access</div>
+            <div style="font-size:13px; font-weight:300; color:rgba(255,255,255,0.4); line-height:1.6;">Questions, form videos, race prep — I'm available throughout the week.</div>
+          </div>
+        </div>
+        <div style="display:flex; align-items:flex-start; gap:14px;">
+          <div style="width:5px; height:5px; background:var(--ca); flex-shrink:0; margin-top:8px; transform:rotate(45deg);"></div>
+          <div>
+            <div style="font-size:14px; font-weight:600; color:rgba(255,255,255,0.85); margin-bottom:2px;">Limited Spots Available</div>
+            <div style="font-size:13px; font-weight:300; color:rgba(255,255,255,0.4); line-height:1.6;">Private coaching is capped to ensure quality. Reach out to check availability.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: contact form -->
+    <form class="reveal d1" id="contact-form"
+      action="https://formspree.io/f/YOUR_FORM_ID"
+      method="POST"
+      style="background:var(--c2); padding:44px; display:flex; flex-direction:column; gap:18px;">
+
+      <h3 style="font-family:var(--fh); font-size:32px; letter-spacing:0.02em; text-transform:uppercase; color:#fff; line-height:1; margin-bottom:4px;">Get In Touch</h3>
+      <p style="font-size:13px; font-weight:300; color:rgba(255,255,255,0.4); line-height:1.6; margin-bottom:6px;">Fill in your details and I'll get back to you within 24 hours.</p>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+        <div style="display:flex; flex-direction:column; gap:6px;">
+          <label style="font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,255,255,0.4);">First Name</label>
+          <input type="text" name="first_name" required placeholder="João"
+            style="background:var(--cd); border:1px solid rgba(255,255,255,0.08); color:#fff; padding:13px 16px; font-family:var(--fb); font-size:14px; outline:none; transition:border-color 0.2s;"
+            onfocus="this.style.borderColor='var(--ca)'" onblur="this.style.borderColor='rgba(255,255,255,0.08)'"/>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:6px;">
+          <label style="font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,255,255,0.4);">Last Name</label>
+          <input type="text" name="last_name" required placeholder="Silva"
+            style="background:var(--cd); border:1px solid rgba(255,255,255,0.08); color:#fff; padding:13px 16px; font-family:var(--fb); font-size:14px; outline:none; transition:border-color 0.2s;"
+            onfocus="this.style.borderColor='var(--ca)'" onblur="this.style.borderColor='rgba(255,255,255,0.08)'"/>
+        </div>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:6px;">
+        <label style="font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,255,255,0.4);">Email</label>
+        <input type="email" name="email" required placeholder="you@email.com"
+          style="background:var(--cd); border:1px solid rgba(255,255,255,0.08); color:#fff; padding:13px 16px; font-family:var(--fb); font-size:14px; outline:none; transition:border-color 0.2s;"
+          onfocus="this.style.borderColor='var(--ca)'" onblur="this.style.borderColor='rgba(255,255,255,0.08)'"/>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:6px;">
+        <label style="font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,255,255,0.4);">Your Goal</label>
+        <select name="goal" required
+          style="background:var(--cd); border:1px solid rgba(255,255,255,0.08); color:rgba(255,255,255,0.7); padding:13px 16px; font-family:var(--fb); font-size:14px; outline:none; transition:border-color 0.2s; appearance:none; cursor:pointer;"
+          onfocus="this.style.borderColor='var(--ca)'" onblur="this.style.borderColor='rgba(255,255,255,0.08)'">
+          <option value="" disabled selected>Select your goal</option>
+          <option value="first_race">Finish my first race</option>
+          <option value="beat_pr">Beat my current PR</option>
+          <option value="hyrox">Prepare for HYROX</option>
+          <option value="crossfit">Compete in CrossFit</option>
+          <option value="general">General fitness &amp; strength</option>
+        </select>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:6px;">
+        <label style="font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,255,255,0.4);">Tell Me About Yourself</label>
+        <textarea name="message" required rows="4" placeholder="Current fitness level, upcoming races, availability..."
+          style="background:var(--cd); border:1px solid rgba(255,255,255,0.08); color:#fff; padding:13px 16px; font-family:var(--fb); font-size:14px; outline:none; resize:vertical; transition:border-color 0.2s; line-height:1.6;"
+          onfocus="this.style.borderColor='var(--ca)'" onblur="this.style.borderColor='rgba(255,255,255,0.08)'"></textarea>
+      </div>
+
+      <input type="hidden" name="_subject" value="Private Coaching Inquiry — Team Lopes Training"/>
+
+      <button type="submit" class="btn btn-yellow" style="width:100%; margin-top:4px;">
+        Send Message
+        <svg style="margin-left:10px;" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+
+      <p id="form-success" style="display:none; font-size:13px; font-weight:500; color:var(--ca); text-align:center; margin-top:4px;">
+        ✓ Message sent! I'll get back to you within 24 hours.
+      </p>
+    </form>
+
+  </div>
+</section>
+
+<!-- ═══ CTA ═══ -->
+<section style="background:var(--ca); padding:120px 52px; text-align:center;">
+  <div style="max-width:720px; margin:0 auto;">
+    <p class="reveal" style="font-size:11px; font-weight:700; letter-spacing:0.28em; text-transform:uppercase; color:rgba(0,0,0,0.45); margin-bottom:16px;">Ready To Start?</p>
+    <h2 class="reveal d1" style="font-family:var(--fh); font-size:clamp(56px,8vw,118px); line-height:0.88; letter-spacing:0.02em; text-transform:uppercase; color:var(--c1); margin-bottom:28px;">
+      YOUR<br/>STRENGTH<br/>STARTS NOW
+    </h2>
+    <p class="reveal d2" style="font-size:16px; font-weight:400; color:rgba(0,0,0,0.55); margin-bottom:48px; line-height:1.7;">
+      GL Hybrid Engine — daily structured training combining running, strength, and conditioning.
+    </p>
+    <div class="reveal d3" style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
+      <a href="#programs" class="btn btn-outline-dark">See All Programs</a>
+      <a href="#programs" class="btn btn-black">Start Today →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer style="background:var(--cd); padding:80px 52px 36px; border-top:1px solid rgba(255,255,255,0.04);">
+  <div style="max-width:1280px; margin:0 auto;">
+    <div style="display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:48px; margin-bottom:64px;" class="split-3">
+
+      <div>
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:20px; line-height:1;">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 76 90" style="height:40px; width:auto; display:block; flex-shrink:0;">
+            <line x1="44" y1="12" x2="68" y2="2"  stroke="#FFE500" stroke-width="5" stroke-linecap="square"/>
+            <line x1="32" y1="21" x2="68" y2="6"  stroke="#FFE500" stroke-width="5" stroke-linecap="square"/>
+            <line x1="20" y1="30" x2="68" y2="10" stroke="#FFE500" stroke-width="5" stroke-linecap="square"/>
+            <line x1="8"  y1="39" x2="68" y2="14" stroke="#FFE500" stroke-width="5" stroke-linecap="square"/>
+            <line x1="8"  y1="50" x2="68" y2="75" stroke="#FFE500" stroke-width="5" stroke-linecap="square"/>
+            <line x1="20" y1="59" x2="68" y2="79" stroke="#FFE500" stroke-width="5" stroke-linecap="square"/>
+            <line x1="32" y1="68" x2="68" y2="83" stroke="#FFE500" stroke-width="5" stroke-linecap="square"/>
+            <line x1="44" y1="77" x2="68" y2="87" stroke="#FFE500" stroke-width="5" stroke-linecap="square"/>
+          </svg>
+          <div>
+            <div style="font-family:var(--fh); font-size:26px; letter-spacing:0.04em; color:#fff; line-height:0.9;
+              text-shadow:0 0 8px rgba(255,255,255,0.9),0 0 20px rgba(255,255,255,0.6),0 0 45px rgba(255,255,255,0.3);">GL</div>
+            <div style="font-family:var(--fh); font-size:9px; letter-spacing:0.32em; color:#fff; line-height:1; margin-top:3px;">HYBRID ENGINE</div>
+          </div>
+        </div>
+        <p style="font-size:11px; font-weight:600; letter-spacing:0.18em; text-transform:uppercase; color:var(--ca); margin-bottom:8px;">Daily Hybrid Training System</p>
+        <p style="font-size:13px; font-weight:300; color:rgba(255,255,255,0.3); line-height:1.75; max-width:280px; margin-bottom:28px;">Structured daily sessions — running, strength, and conditioning — delivered to your app.</p>
+        <div style="display:flex; gap:10px;">
+          <a href="#" aria-label="Instagram" style="width:36px; height:36px; border:1px solid rgba(255,255,255,0.1); display:flex; align-items:center; justify-content:center; color:rgba(255,255,255,0.35); text-decoration:none; transition:border-color 0.2s, color 0.2s;" onmouseover="this.style.borderColor='#FFE500';this.style.color='#FFE500'" onmouseout="this.style.borderColor='rgba(255,255,255,0.1)';this.style.color='rgba(255,255,255,0.35)'">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+          </a>
+          <a href="#" aria-label="TikTok" style="width:36px; height:36px; border:1px solid rgba(255,255,255,0.1); display:flex; align-items:center; justify-content:center; color:rgba(255,255,255,0.35); text-decoration:none; transition:border-color 0.2s, color 0.2s;" onmouseover="this.style.borderColor='#FFE500';this.style.color='#FFE500'" onmouseout="this.style.borderColor='rgba(255,255,255,0.1)';this.style.color='rgba(255,255,255,0.35)'">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 12a4 4 0 104 4V4a5 5 0 005 5"/></svg>
+          </a>
+          <a href="#" aria-label="YouTube" style="width:36px; height:36px; border:1px solid rgba(255,255,255,0.1); display:flex; align-items:center; justify-content:center; color:rgba(255,255,255,0.35); text-decoration:none; transition:border-color 0.2s, color 0.2s;" onmouseover="this.style.borderColor='#FFE500';this.style.color='#FFE500'" onmouseout="this.style.borderColor='rgba(255,255,255,0.1)';this.style.color='rgba(255,255,255,0.35)'">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="7" width="20" height="15" rx="3"/><path d="M10 10l5 3-5 3V10z" fill="currentColor"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <h4 style="font-size:10px; font-weight:700; letter-spacing:0.26em; text-transform:uppercase; color:#fff; margin-bottom:20px;">Programs</h4>
+        <ul style="list-style:none; display:flex; flex-direction:column; gap:12px;">
+          <li><a href="#programs" style="font-size:13px; font-weight:300; color:rgba(255,255,255,0.3); text-decoration:none; transition:color 0.2s;" onmouseover="this.style.color='#FFE500'" onmouseout="this.style.color='rgba(255,255,255,0.3)'">Hybrid Daily</a></li>
+          <li><a href="#programs" style="font-size:13px; font-weight:300; color:rgba(255,255,255,0.3); text-decoration:none; transition:color 0.2s;" onmouseover="this.style.color='#FFE500'" onmouseout="this.style.color='rgba(255,255,255,0.3)'">Full Program</a></li>
+          <li><a href="#programs" style="font-size:13px; font-weight:300; color:rgba(255,255,255,0.3); text-decoration:none; transition:color 0.2s;" onmouseover="this.style.color='#FFE500'" onmouseout="this.style.color='rgba(255,255,255,0.3)'">Strength Block</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 style="font-size:10px; font-weight:700; letter-spacing:0.26em; text-transform:uppercase; color:#fff; margin-bottom:20px;">Athlete</h4>
+        <ul style="list-style:none; display:flex; flex-direction:column; gap:12px;">
+          <li><a href="#athlete"       style="font-size:13px; font-weight:300; color:rgba(255,255,255,0.3); text-decoration:none; transition:color 0.2s;" onmouseover="this.style.color='#FFE500'" onmouseout="this.style.color='rgba(255,255,255,0.3)'">About Coach Lopes</a></li>
+          <li><a href="#results"       style="font-size:13px; font-weight:300; color:rgba(255,255,255,0.3); text-decoration:none; transition:color 0.2s;" onmouseover="this.style.color='#FFE500'" onmouseout="this.style.color='rgba(255,255,255,0.3)'">Competition Results</a></li>
+          <li><a href="#testimonials"  style="font-size:13px; font-weight:300; color:rgba(255,255,255,0.3); text-decoration:none; transition:color 0.2s;" onmouseover="this.style.color='#FFE500'" onmouseout="this.style.color='rgba(255,255,255,0.3)'">Athlete Stories</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 style="font-size:10px; font-weight:700; letter-spacing:0.26em; text-transform:uppercase; color:#fff; margin-bottom:20px;">Support</h4>
+        <ul style="list-style:none; display:flex; flex-direction:column; gap:12px;">
+          <li><a href="#faq" style="font-size:13px; font-weight:300; color:rgba(255,255,255,0.3); text-decoration:none; transition:color 0.2s;" onmouseover="this.style.color='#FFE500'" onmouseout="this.style.color='rgba(255,255,255,0.3)'">FAQ</a></li>
+          <li><a href="#"    style="font-size:13px; font-weight:300; color:rgba(255,255,255,0.3); text-decoration:none; transition:color 0.2s;" onmouseover="this.style.color='#FFE500'" onmouseout="this.style.color='rgba(255,255,255,0.3)'">Contact</a></li>
+          <li><a href="#"    style="font-size:13px; font-weight:300; color:rgba(255,255,255,0.3); text-decoration:none; transition:color 0.2s;" onmouseover="this.style.color='#FFE500'" onmouseout="this.style.color='rgba(255,255,255,0.3)'">Privacy Policy</a></li>
+          <li><a href="#"    style="font-size:13px; font-weight:300; color:rgba(255,255,255,0.3); text-decoration:none; transition:color 0.2s;" onmouseover="this.style.color='#FFE500'" onmouseout="this.style.color='rgba(255,255,255,0.3)'">Terms</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div style="display:flex; justify-content:space-between; align-items:center; padding-top:28px; border-top:1px solid rgba(255,255,255,0.06); flex-wrap:wrap; gap:12px;">
+      <p style="font-size:12px; color:rgba(255,255,255,0.2);">© 2026 <span style="color:var(--ca);">GL Hybrid Engine</span>. All rights reserved.</p>
+      <p style="font-size:12px; color:rgba(255,255,255,0.2); letter-spacing:0.12em; text-transform:uppercase;">Train · Progress · Race</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function closeMob() { document.getElementById('mobile-menu').classList.remove('open'); }
+
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 40);
+  }, { passive: true });
+
+  document.getElementById('menu-btn').addEventListener('click', () => {
+    document.getElementById('mobile-menu').classList.add('open');
+  });
+  document.getElementById('menu-close').addEventListener('click', closeMob);
+
+  document.querySelectorAll('.faq-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('.faq-item');
+      const answer = item.querySelector('.faq-answer');
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(i => {
+        i.classList.remove('open');
+        i.querySelector('.faq-answer').style.maxHeight = '0';
+        i.querySelector('.faq-btn').setAttribute('aria-expanded', 'false');
+      });
+      if (!isOpen) {
+        item.classList.add('open');
+        answer.style.maxHeight = answer.scrollHeight + 'px';
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+
+  /* Contact form — Formspree AJAX */
+  const contactForm = document.getElementById('contact-form');
+  if (contactForm) {
+    contactForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = contactForm.querySelector('button[type="submit"]');
+      const success = document.getElementById('form-success');
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+      try {
+        const res = await fetch(contactForm.action, {
+          method: 'POST',
+          body: new FormData(contactForm),
+          headers: { 'Accept': 'application/json' }
+        });
+        if (res.ok) {
+          contactForm.reset();
+          success.style.display = 'block';
+          btn.style.display = 'none';
+        } else {
+          btn.textContent = 'Try Again';
+          btn.disabled = false;
+        }
+      } catch {
+        btn.textContent = 'Try Again';
+        btn.disabled = false;
+      }
+    });
+  }
+
+  /* Stripe post-payment success banner */
+  if (new URLSearchParams(window.location.search).get('paid') === 'success') {
+    document.getElementById('payment-banner').style.display = 'block';
+    /* Clean the query param from the URL without a page reload */
+    history.replaceState(null, '', window.location.pathname + window.location.hash);
+  }
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  /* Flip cards — click to flip, skip clicks on purchase links */
+  document.querySelectorAll('.prog-card').forEach(card => {
+    card.addEventListener('click', e => {
+      if (e.target.closest('a[href]')) return;
+      if (e.target.closest('.flip-back-close')) return;
+      card.classList.toggle('flipped');
+    });
+    card.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); card.classList.toggle('flipped'); }
+      if (e.key === 'Escape') card.classList.remove('flipped');
+    });
+  });
+</script>
+</body>
+</html>
