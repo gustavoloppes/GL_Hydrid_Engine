@@ -27,9 +27,9 @@
   ─────────────────────────────────────────────────
   1. Log into https://dashboard.stripe.com
   2. Products → Add product for each plan:
-       • Hybrid Daily    CAD $39/mo  (recurring)
-       • Full Program    CAD $59/mo  (recurring)
-       • Strength Block  CAD $39/mo  (recurring)
+       • Hybrid Daily    $39/mo  (recurring)
+       • Full Program    $59/mo  (recurring)
+       • Strength Block  $39/mo  (recurring)
   3. For each product: Payment Links → Create link
      → Under "After payment" set redirect URL to:
          https://gl-hydrid-engine.vercel.app/?paid=success
@@ -899,7 +899,7 @@
       <p class="reveal d2" style="font-size:15px; font-weight:300; color:rgba(255,255,255,0.4); max-width:460px; margin:0 auto; line-height:1.8;">Every program is delivered daily. Open, train, improve. No guessing required.</p>
     </div>
 
-    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:2px;" class="prog-grid">
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:2px;" class="prog-grid">
 
       <!-- Hybrid Daily -->
       <div class="prog-card reveal" tabindex="0">
@@ -964,7 +964,7 @@
 
             <div class="flip-back-cta">
               <!-- ⬇ STRIPE: replace href with your Hybrid Daily Payment Link -->
-              <a href="https://buy.stripe.com/prod_UXsPWl703ooVZJ"
+              <a href="https://buy.stripe.com/test_14A7sLf2c1Kl0C7fPe18c02"
                  target="_blank" rel="noopener"
                  class="btn btn-outline" style="width:100%;"
                  data-plan="hybrid-daily"
@@ -1047,7 +1047,7 @@
 
             <div class="flip-back-cta">
               <!-- ⬇ STRIPE: replace href with your Full Program Payment Link -->
-              <a href="https://buy.stripe.com/prod_UXsQQKLqecTnjh"
+              <a href="https://buy.stripe.com/test_00wbJ13jucoZdoT32s18c01"
                  target="_blank" rel="noopener"
                  class="btn btn-yellow" style="width:100%;"
                  data-plan="full-program"
@@ -1057,41 +1057,6 @@
             </div>
           </div>
 
-        </div>
-      </div>
-
-      <!-- Private Coaching -->
-      <div class="prog-card reveal d2" tabindex="0" style="cursor:default; border:1px solid rgba(255,229,0,0.3); border-top:3px solid var(--ca);">
-        <div style="padding:48px 36px 52px; display:flex; flex-direction:column; height:100%;">
-          <div style="font-size:10px; font-weight:700; letter-spacing:0.26em; text-transform:uppercase; color:var(--ca); margin-bottom:18px;">PRIVATE COACHING</div>
-
-          <div style="font-family:var(--fh); font-size:clamp(42px,4vw,54px); line-height:1; color:var(--ca); letter-spacing:-0.01em; margin-bottom:4px;">From $179.90</div>
-          <div style="font-size:12px; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; color:rgba(255,255,255,0.45); margin-bottom:32px;">/mo — limited spots</div>
-
-          <ul style="list-style:none; display:flex; flex-direction:column; gap:14px; margin-bottom:auto; padding-bottom:36px;">
-            <li style="display:flex; align-items:flex-start; gap:10px; font-size:13.5px; font-weight:400; color:rgba(255,255,255,0.75); line-height:1.4;">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0; margin-top:1px;"><circle cx="8" cy="8" r="8" fill="var(--ca)" fill-opacity="0.15"/><path d="M4.5 8.5l2.5 2.5 4.5-5" stroke="var(--ca)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              1-on-1 program design
-            </li>
-            <li style="display:flex; align-items:flex-start; gap:10px; font-size:13.5px; font-weight:400; color:rgba(255,255,255,0.75); line-height:1.4;">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0; margin-top:1px;"><circle cx="8" cy="8" r="8" fill="var(--ca)" fill-opacity="0.15"/><path d="M4.5 8.5l2.5 2.5 4.5-5" stroke="var(--ca)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              Weekly check-ins
-            </li>
-            <li style="display:flex; align-items:flex-start; gap:10px; font-size:13.5px; font-weight:400; color:rgba(255,255,255,0.75); line-height:1.4;">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0; margin-top:1px;"><circle cx="8" cy="8" r="8" fill="var(--ca)" fill-opacity="0.15"/><path d="M4.5 8.5l2.5 2.5 4.5-5" stroke="var(--ca)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              Race-day strategy
-            </li>
-            <li style="display:flex; align-items:flex-start; gap:10px; font-size:13.5px; font-weight:400; color:rgba(255,255,255,0.75); line-height:1.4;">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0; margin-top:1px;"><circle cx="8" cy="8" r="8" fill="var(--ca)" fill-opacity="0.15"/><path d="M4.5 8.5l2.5 2.5 4.5-5" stroke="var(--ca)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              Direct coach access
-            </li>
-            <li style="display:flex; align-items:flex-start; gap:10px; font-size:13.5px; font-weight:400; color:rgba(255,255,255,0.75); line-height:1.4;">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0; margin-top:1px;"><circle cx="8" cy="8" r="8" fill="var(--ca)" fill-opacity="0.15"/><path d="M4.5 8.5l2.5 2.5 4.5-5" stroke="var(--ca)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              Nutrition guidance
-            </li>
-          </ul>
-
-          <a href="#private" class="btn btn-yellow" style="width:100%;" onclick="event.stopPropagation()">APPLY FOR A SPOT</a>
         </div>
       </div>
 
@@ -1158,7 +1123,7 @@
 
             <div class="flip-back-cta">
               <!-- ⬇ STRIPE: replace href with your Strength Block Payment Link -->
-              <a href="https://buy.stripe.com/prod_UXsK6oc9JU92M2"
+              <a href="https://buy.stripe.com/test_cNi9AT5rC0Gh0C7gTi18c03"
                  target="_blank" rel="noopener"
                  class="btn btn-outline" style="width:100%;"
                  data-plan="strength-block"
@@ -1311,7 +1276,7 @@
     <!-- Left: info -->
     <div>
       <p class="reveal" style="font-size:11px; font-weight:700; letter-spacing:0.28em; text-transform:uppercase; color:var(--ca); margin-bottom:16px;">One-on-One</p>
-      <p class="reveal" style="font-family:var(--fh); font-size:clamp(18px,2vw,24px); letter-spacing:0.08em; text-transform:uppercase; color:var(--ca); display:block; text-align:center; margin:0 0 1rem 0;">1-on-1 coaching from CAD to $179.90/mo — limited spots</p>
+      <p class="reveal" style="font-family:var(--fh); font-size:clamp(18px,2vw,24px); letter-spacing:0.08em; text-transform:uppercase; color:var(--ca); display:block; text-align:center; margin:0 0 1rem 0;">1-on-1 coaching from $179.90/mo — limited spots</p>
       <h2 class="reveal d1" style="font-family:var(--fh); font-size:clamp(44px,5vw,74px); line-height:0.93; letter-spacing:0.02em; text-transform:uppercase; margin-bottom:28px;">PRIVATE<br/>COACHING</h2>
       <p class="reveal d2" style="font-size:15px; font-weight:300; line-height:1.85; color:rgba(255,255,255,0.55); margin-bottom:36px; max-width:460px;">
         Want more than a daily program? Private coaching is a direct working relationship — your schedule, your goals, my full attention. I build your training around your life, track your progress every week, and adjust the plan as you evolve.
