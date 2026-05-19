@@ -10,7 +10,9 @@
   "author": "",
   "license": "ISC",
   "type": "commonjs",
-  "dependencies": {
-    "puppeteer": "^24.42.0"
+  "dependencies": {},
+  "devDependencies": {
+    "puppeteer": "^24.42.0",
+    "sharp": "^0.34.5"
   }
 }

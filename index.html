@@ -4,6 +4,15 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>GL Hybrid Engine — Daily Hybrid Training System</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" href="/favicon.ico">
+  <meta name="description" content="GL Hybrid Engine — Daily structured hybrid training combining running, strength and conditioning. Built for HYROX competitors and serious athletes. From $21.90/mo.">
+  <meta property="og:title" content="GL Hybrid Engine — Daily Hybrid Training System">
+  <meta property="og:description" content="Structured daily sessions for HYROX and hybrid athletes. Running, strength, conditioning — delivered every morning.">
+  <meta property="og:url" content="https://gl-hydrid-engine.vercel.app">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://gl-hydrid-engine.vercel.app/brand_assets/logo nova.png">
+  <meta name="twitter:card" content="summary_large_image">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -23,7 +32,7 @@
        • Strength Block  CAD $39/mo  (recurring)
   3. For each product: Payment Links → Create link
      → Under "After payment" set redirect URL to:
-         https://teamlopestraining.com/?paid=success
+         https://gl-hydrid-engine.vercel.app/?paid=success
        (or your actual domain)
   4. Copy each Payment Link URL and paste it into index.html:
        Search for "HYBRID_DAILY_LINK"   → replace with real URL
@@ -890,7 +899,7 @@
       <p class="reveal d2" style="font-size:15px; font-weight:300; color:rgba(255,255,255,0.4); max-width:460px; margin:0 auto; line-height:1.8;">Every program is delivered daily. Open, train, improve. No guessing required.</p>
     </div>
 
-    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:2px;" class="prog-grid">
+    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:2px;" class="prog-grid">
 
       <!-- Hybrid Daily -->
       <div class="prog-card reveal" tabindex="0">
@@ -900,7 +909,7 @@
           <div class="flip-front">
             <div style="font-size:10px; font-weight:700; letter-spacing:0.26em; text-transform:uppercase; color:var(--ca); margin-bottom:18px;">First Race or New to Running</div>
             <h3 style="font-family:var(--fh); font-size:clamp(30px,3vw,44px); line-height:1; letter-spacing:0.02em; text-transform:uppercase; margin-bottom:14px;">HYBRID<br/>DAILY</h3>
-            <div style="font-family:var(--fh); font-size:54px; color:var(--ca); line-height:1; margin-bottom:4px;">CAD $39<span style="font-family:var(--fb); font-size:14px; color:rgba(255,255,255,0.35); font-weight:300;">/month</span></div>
+            <div style="font-family:var(--fh); font-size:54px; color:var(--ca); line-height:1; margin-bottom:4px;">$29.90<span style="font-family:var(--fb); font-size:14px; color:rgba(255,255,255,0.35); font-weight:300;">/month</span></div>
             <p style="font-size:13px; font-weight:300; color:rgba(255,255,255,0.35); margin-bottom:32px; line-height:1.6;">Build your base — cardio + functional fitness, 5 sessions/week</p>
             <ul style="list-style:none; display:flex; flex-direction:column; gap:12px; margin-bottom:32px; flex:1;">
               <li style="display:flex; align-items:flex-start; gap:10px; font-size:14px; font-weight:300; color:rgba(255,255,255,0.6);">
@@ -955,12 +964,12 @@
 
             <div class="flip-back-cta">
               <!-- ⬇ STRIPE: replace href with your Hybrid Daily Payment Link -->
-              <a href="https://buy.stripe.com/HYBRID_DAILY_LINK"
+              <a href="https://buy.stripe.com/prod_UXsPWl703ooVZJ"
                  target="_blank" rel="noopener"
                  class="btn btn-outline" style="width:100%;"
                  data-plan="hybrid-daily"
                  onclick="event.stopPropagation()">
-                CAD $39/mo — Start Now
+                $29.90/mo — Start Now
               </a>
             </div>
           </div>
@@ -978,7 +987,7 @@
               font-family:var(--fb); font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; padding:6px 14px;">Best Value</div>
             <div style="font-size:10px; font-weight:700; letter-spacing:0.26em; text-transform:uppercase; color:var(--ca); margin-bottom:18px;">Beat Your PR — All Levels</div>
             <h3 style="font-family:var(--fh); font-size:clamp(30px,3vw,44px); line-height:1; letter-spacing:0.02em; text-transform:uppercase; margin-bottom:14px;">FULL<br/>PROGRAM</h3>
-            <div style="font-family:var(--fh); font-size:54px; color:var(--ca); line-height:1; margin-bottom:4px;">CAD $59<span style="font-family:var(--fb); font-size:14px; color:rgba(255,255,255,0.35); font-weight:300;">/month</span></div>
+            <div style="font-family:var(--fh); font-size:54px; color:var(--ca); line-height:1; margin-bottom:4px;">$44.90<span style="font-family:var(--fb); font-size:14px; color:rgba(255,255,255,0.35); font-weight:300;">/month</span></div>
             <p style="font-size:13px; font-weight:300; color:rgba(255,255,255,0.35); margin-bottom:32px; line-height:1.6;">Cardio capacity + strength + running, 6 sessions/week</p>
             <ul style="list-style:none; display:flex; flex-direction:column; gap:12px; margin-bottom:32px; flex:1;">
               <li style="display:flex; align-items:flex-start; gap:10px; font-size:14px; font-weight:300; color:rgba(255,255,255,0.6);">
@@ -1038,16 +1047,51 @@
 
             <div class="flip-back-cta">
               <!-- ⬇ STRIPE: replace href with your Full Program Payment Link -->
-              <a href="https://buy.stripe.com/FULL_PROGRAM_LINK"
+              <a href="https://buy.stripe.com/prod_UXsQQKLqecTnjh"
                  target="_blank" rel="noopener"
                  class="btn btn-yellow" style="width:100%;"
                  data-plan="full-program"
                  onclick="event.stopPropagation()">
-                CAD $59/mo — Start Now
+                $44.90/mo — Start Now
               </a>
             </div>
           </div>
 
+        </div>
+      </div>
+
+      <!-- Private Coaching -->
+      <div class="prog-card reveal d2" tabindex="0" style="cursor:default; border:1px solid rgba(255,229,0,0.3); border-top:3px solid var(--ca);">
+        <div style="padding:48px 36px 52px; display:flex; flex-direction:column; height:100%;">
+          <div style="font-size:10px; font-weight:700; letter-spacing:0.26em; text-transform:uppercase; color:var(--ca); margin-bottom:18px;">PRIVATE COACHING</div>
+
+          <div style="font-family:var(--fh); font-size:clamp(42px,4vw,54px); line-height:1; color:var(--ca); letter-spacing:-0.01em; margin-bottom:4px;">From $179.90</div>
+          <div style="font-size:12px; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; color:rgba(255,255,255,0.45); margin-bottom:32px;">/mo — limited spots</div>
+
+          <ul style="list-style:none; display:flex; flex-direction:column; gap:14px; margin-bottom:auto; padding-bottom:36px;">
+            <li style="display:flex; align-items:flex-start; gap:10px; font-size:13.5px; font-weight:400; color:rgba(255,255,255,0.75); line-height:1.4;">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0; margin-top:1px;"><circle cx="8" cy="8" r="8" fill="var(--ca)" fill-opacity="0.15"/><path d="M4.5 8.5l2.5 2.5 4.5-5" stroke="var(--ca)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              1-on-1 program design
+            </li>
+            <li style="display:flex; align-items:flex-start; gap:10px; font-size:13.5px; font-weight:400; color:rgba(255,255,255,0.75); line-height:1.4;">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0; margin-top:1px;"><circle cx="8" cy="8" r="8" fill="var(--ca)" fill-opacity="0.15"/><path d="M4.5 8.5l2.5 2.5 4.5-5" stroke="var(--ca)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Weekly check-ins
+            </li>
+            <li style="display:flex; align-items:flex-start; gap:10px; font-size:13.5px; font-weight:400; color:rgba(255,255,255,0.75); line-height:1.4;">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0; margin-top:1px;"><circle cx="8" cy="8" r="8" fill="var(--ca)" fill-opacity="0.15"/><path d="M4.5 8.5l2.5 2.5 4.5-5" stroke="var(--ca)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Race-day strategy
+            </li>
+            <li style="display:flex; align-items:flex-start; gap:10px; font-size:13.5px; font-weight:400; color:rgba(255,255,255,0.75); line-height:1.4;">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0; margin-top:1px;"><circle cx="8" cy="8" r="8" fill="var(--ca)" fill-opacity="0.15"/><path d="M4.5 8.5l2.5 2.5 4.5-5" stroke="var(--ca)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Direct coach access
+            </li>
+            <li style="display:flex; align-items:flex-start; gap:10px; font-size:13.5px; font-weight:400; color:rgba(255,255,255,0.75); line-height:1.4;">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0; margin-top:1px;"><circle cx="8" cy="8" r="8" fill="var(--ca)" fill-opacity="0.15"/><path d="M4.5 8.5l2.5 2.5 4.5-5" stroke="var(--ca)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Nutrition guidance
+            </li>
+          </ul>
+
+          <a href="#private" class="btn btn-yellow" style="width:100%;" onclick="event.stopPropagation()">APPLY FOR A SPOT</a>
         </div>
       </div>
 
@@ -1059,7 +1103,7 @@
           <div class="flip-front">
             <div style="font-size:10px; font-weight:700; letter-spacing:0.26em; text-transform:uppercase; color:var(--ca); margin-bottom:18px;">Build a Stronger Foundation</div>
             <h3 style="font-family:var(--fh); font-size:clamp(30px,3vw,44px); line-height:1; letter-spacing:0.02em; text-transform:uppercase; margin-bottom:14px;">STRENGTH<br/>BLOCK</h3>
-            <div style="font-family:var(--fh); font-size:54px; color:var(--ca); line-height:1; margin-bottom:4px;">CAD $39<span style="font-family:var(--fb); font-size:14px; color:rgba(255,255,255,0.35); font-weight:300;">/month</span></div>
+            <div style="font-family:var(--fh); font-size:54px; color:var(--ca); line-height:1; margin-bottom:4px;">$21.90<span style="font-family:var(--fb); font-size:14px; color:rgba(255,255,255,0.35); font-weight:300;">/month</span></div>
             <p style="font-size:13px; font-weight:300; color:rgba(255,255,255,0.35); margin-bottom:32px; line-height:1.6;">Pure strength training, 4 sessions/week</p>
             <ul style="list-style:none; display:flex; flex-direction:column; gap:12px; margin-bottom:32px; flex:1;">
               <li style="display:flex; align-items:flex-start; gap:10px; font-size:14px; font-weight:300; color:rgba(255,255,255,0.6);">
@@ -1114,12 +1158,12 @@
 
             <div class="flip-back-cta">
               <!-- ⬇ STRIPE: replace href with your Strength Block Payment Link -->
-              <a href="https://buy.stripe.com/STRENGTH_BLOCK_LINK"
+              <a href="https://buy.stripe.com/prod_UXsK6oc9JU92M2"
                  target="_blank" rel="noopener"
                  class="btn btn-outline" style="width:100%;"
                  data-plan="strength-block"
                  onclick="event.stopPropagation()">
-                CAD $39/mo — Start Now
+                $21.90/mo — Start Now
               </a>
             </div>
           </div>
@@ -1267,6 +1311,7 @@
     <!-- Left: info -->
     <div>
       <p class="reveal" style="font-size:11px; font-weight:700; letter-spacing:0.28em; text-transform:uppercase; color:var(--ca); margin-bottom:16px;">One-on-One</p>
+      <p class="reveal" style="font-family:var(--fh); font-size:clamp(18px,2vw,24px); letter-spacing:0.08em; text-transform:uppercase; color:var(--ca); display:block; text-align:center; margin:0 0 1rem 0;">1-on-1 coaching from CAD to $179.90/mo — limited spots</p>
       <h2 class="reveal d1" style="font-family:var(--fh); font-size:clamp(44px,5vw,74px); line-height:0.93; letter-spacing:0.02em; text-transform:uppercase; margin-bottom:28px;">PRIVATE<br/>COACHING</h2>
       <p class="reveal d2" style="font-size:15px; font-weight:300; line-height:1.85; color:rgba(255,255,255,0.55); margin-bottom:36px; max-width:460px;">
         Want more than a daily program? Private coaching is a direct working relationship — your schedule, your goals, my full attention. I build your training around your life, track your progress every week, and adjust the plan as you evolve.
@@ -1305,7 +1350,7 @@
 
     <!-- Right: contact form -->
     <form class="reveal d1" id="contact-form"
-      action="https://formspree.io/f/YOUR_FORM_ID"
+      action="https://formspree.io/f/mredbvyg"
       method="POST"
       style="background:var(--c2); padding:44px; display:flex; flex-direction:column; gap:18px;">
 
@@ -1448,8 +1493,8 @@
         <ul style="list-style:none; display:flex; flex-direction:column; gap:12px;">
           <li><a href="#faq" style="font-size:13px; font-weight:300; color:rgba(255,255,255,0.3); text-decoration:none; transition:color 0.2s;" onmouseover="this.style.color='#FFE500'" onmouseout="this.style.color='rgba(255,255,255,0.3)'">FAQ</a></li>
           <li><a href="#"    style="font-size:13px; font-weight:300; color:rgba(255,255,255,0.3); text-decoration:none; transition:color 0.2s;" onmouseover="this.style.color='#FFE500'" onmouseout="this.style.color='rgba(255,255,255,0.3)'">Contact</a></li>
-          <li><a href="#"    style="font-size:13px; font-weight:300; color:rgba(255,255,255,0.3); text-decoration:none; transition:color 0.2s;" onmouseover="this.style.color='#FFE500'" onmouseout="this.style.color='rgba(255,255,255,0.3)'">Privacy Policy</a></li>
-          <li><a href="#"    style="font-size:13px; font-weight:300; color:rgba(255,255,255,0.3); text-decoration:none; transition:color 0.2s;" onmouseover="this.style.color='#FFE500'" onmouseout="this.style.color='rgba(255,255,255,0.3)'">Terms</a></li>
+          <li><a href="/privacy" style="font-size:13px; font-weight:300; color:rgba(255,255,255,0.3); text-decoration:none; transition:color 0.2s;" onmouseover="this.style.color='#FFE500'" onmouseout="this.style.color='rgba(255,255,255,0.3)'">Privacy Policy</a></li>
+          <li><a href="/terms"   style="font-size:13px; font-weight:300; color:rgba(255,255,255,0.3); text-decoration:none; transition:color 0.2s;" onmouseover="this.style.color='#FFE500'" onmouseout="this.style.color='rgba(255,255,255,0.3)'">Terms</a></li>
         </ul>
       </div>
 

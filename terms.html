@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Terms of Service — GL Hybrid Engine</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" href="/favicon.ico">
+  <meta name="description" content="Terms of Service for GL Hybrid Engine — Team Lopes Training. Month-to-month subscriptions, no lock-in. Cancel anytime.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ca: #FFE500;
+      --c1: #000000;
+      --cd: #0d0d0d;
+      --c2: #151515;
+      --cgray: #777777;
+      --cw: #ffffff;
+      --fh: 'Bebas Neue', Impact, sans-serif;
+      --fb: 'Montserrat', Arial, sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--fb); background: var(--c1); color: var(--cw); overflow-x: hidden; font-size: 16px; line-height: 1.6; }
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--c1); }
+    ::-webkit-scrollbar-thumb { background: var(--ca); border-radius: 2px; }
+
+    #navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      height: 72px; display: flex; align-items: center;
+      justify-content: space-between; padding: 0 52px;
+      background: rgba(0,0,0,0.96); backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(255,229,0,0.1);
+    }
+    .nav-link {
+      color: rgba(255,255,255,0.6); font-size: 12px; font-weight: 600;
+      letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none;
+      position: relative; transition: color 0.2s;
+    }
+    .nav-link::after {
+      content: ''; position: absolute; bottom: -4px; left: 0;
+      width: 0; height: 1.5px; background: var(--ca);
+      transition: width 0.2s cubic-bezier(.22,1,.36,1);
+    }
+    .nav-link:hover { color: var(--ca); }
+    .nav-link:hover::after { width: 100%; }
+
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      font-family: var(--fb); font-size: 13px; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none;
+      padding: 15px 36px; cursor: pointer; border: none;
+      transition: background 0.2s cubic-bezier(.22,1,.36,1),
+                  color 0.2s cubic-bezier(.22,1,.36,1),
+                  transform 0.2s cubic-bezier(.22,1,.36,1);
+    }
+    .btn:focus-visible { outline: 2px solid var(--ca); outline-offset: 3px; }
+    .btn:active { transform: translateY(1px) !important; }
+    .btn-yellow { background: var(--ca); color: var(--c1); }
+    .btn-yellow:hover { background: #f5dc00; transform: translateY(-2px); }
+
+    .hide-desk { display: none; }
+    #mobile-menu {
+      position: fixed; inset: 0; z-index: 90;
+      background: rgba(0,0,0,0.99); backdrop-filter: blur(20px);
+      display: none; flex-direction: column;
+      justify-content: center; align-items: flex-start; padding: 80px 48px;
+    }
+    #mobile-menu.open { display: flex; }
+    .mob-link {
+      font-family: var(--fh); font-size: 48px; text-transform: uppercase;
+      color: var(--cw); text-decoration: none; display: block; margin-bottom: 8px;
+      letter-spacing: 0.02em; line-height: 1.1; transition: color 0.2s;
+    }
+    .mob-link:hover { color: var(--ca); }
+
+    @media (max-width: 900px) {
+      .hide-mob { display: none !important; }
+      .hide-desk { display: block !important; }
+      #navbar { padding: 0 24px; }
+      .legal-body { padding: 112px 20px 80px !important; }
+    }
+
+    .legal-body {
+      max-width: 760px; margin: 0 auto;
+      padding: 112px 24px 100px;
+    }
+    .legal-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.28em;
+      text-transform: uppercase; color: var(--ca); margin-bottom: 16px;
+    }
+    .legal-title {
+      font-family: var(--fh); font-size: clamp(52px, 7vw, 92px);
+      line-height: 0.93; letter-spacing: 0.02em; text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .legal-updated {
+      font-size: 12px; font-weight: 300; color: rgba(255,255,255,0.3);
+      margin-bottom: 56px; letter-spacing: 0.08em;
+    }
+    .legal-section { margin-bottom: 48px; }
+    .legal-section h2 {
+      font-family: var(--fh); font-size: clamp(22px, 3vw, 32px);
+      letter-spacing: 0.04em; text-transform: uppercase;
+      color: var(--cw); margin-bottom: 16px; line-height: 1;
+    }
+    .legal-section h2 span { color: var(--ca); }
+    .legal-section p {
+      font-size: 15px; font-weight: 300; line-height: 1.85;
+      color: rgba(255,255,255,0.55); margin-bottom: 14px;
+    }
+    .legal-section ul {
+      list-style: none; display: flex; flex-direction: column; gap: 10px;
+      margin-bottom: 14px; padding-left: 0;
+    }
+    .legal-section ul li {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: 14px; font-weight: 300; color: rgba(255,255,255,0.5); line-height: 1.7;
+    }
+    .legal-section ul li::before {
+      content: ''; display: block; width: 5px; height: 5px;
+      background: var(--ca); flex-shrink: 0; margin-top: 8px;
+      transform: rotate(45deg);
+    }
+    .legal-section a {
+      color: var(--ca); text-decoration: none; border-bottom: 1px solid rgba(255,229,0,0.3);
+      transition: border-color 0.2s;
+    }
+    .legal-section a:hover { border-color: var(--ca); }
+    .legal-divider {
+      border: none; border-top: 1px solid rgba(255,255,255,0.06); margin: 48px 0;
+    }
+    .back-link {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 12px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
+      color: rgba(255,255,255,0.4); text-decoration: none; margin-bottom: 52px;
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--ca); }
+    .highlight-box {
+      background: var(--cd); border-left: 3px solid var(--ca);
+      padding: 20px 24px; margin-bottom: 24px;
+    }
+    .highlight-box p {
+      font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.75);
+      margin-bottom: 0; line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══ MOBILE MENU ═══ -->
+<div id="mobile-menu" role="dialog" aria-modal="true" aria-label="Navigation">
+  <button id="menu-close" aria-label="Close menu"
+    style="position:absolute; top:24px; right:24px; background:none; border:none; cursor:pointer; color:#fff; padding:4px;">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+  </button>
+  <a href="/#athlete"      class="mob-link" onclick="closeMob()">About</a>
+  <a href="/#programs"     class="mob-link" onclick="closeMob()">Programs</a>
+  <a href="/#results"      class="mob-link" onclick="closeMob()">Results</a>
+  <a href="/#testimonials" class="mob-link" onclick="closeMob()">Athletes</a>
+  <a href="/#private"      class="mob-link" onclick="closeMob()">Private</a>
+  <a href="/#faq"          class="mob-link" onclick="closeMob()">FAQ</a>
+  <a href="/#programs" class="btn btn-yellow" style="margin-top:36px;" onclick="closeMob()">Start Today</a>
+</div>
+
+<!-- ═══ NAV ═══ -->
+<nav id="navbar">
+  <a href="/" style="flex-shrink:0; display:flex; align-items:center; gap:6px; text-decoration:none; line-height:1;">
+    <svg viewBox="0 0 120 88" style="height:28px; width:auto; display:block; flex-shrink:0;">
+      <line x1="0"  y1="10" x2="120" y2="10" stroke="rgba(255,255,255,0.45)" stroke-width="2.5" stroke-linecap="square"/>
+      <line x1="16" y1="30" x2="120" y2="30" stroke="rgba(255,255,255,0.32)" stroke-width="2"   stroke-linecap="square"/>
+      <line x1="36" y1="52" x2="120" y2="52" stroke="rgba(255,255,255,0.20)" stroke-width="1.5" stroke-linecap="square"/>
+      <line x1="58" y1="74" x2="120" y2="74" stroke="rgba(255,255,255,0.10)" stroke-width="1"   stroke-linecap="square"/>
+    </svg>
+    <div>
+      <div style="font-family:var(--fh); font-size:26px; letter-spacing:0.04em; color:#fff; line-height:0.9;
+        text-shadow:0 0 8px rgba(255,255,255,0.9),0 0 20px rgba(255,255,255,0.6),0 0 45px rgba(255,255,255,0.3);">GL</div>
+      <div style="font-family:var(--fh); font-size:9px; letter-spacing:0.32em; color:#fff; line-height:1; margin-top:3px;">HYBRID ENGINE</div>
+    </div>
+  </a>
+
+  <ul class="hide-mob" style="display:flex; align-items:center; gap:36px; list-style:none;">
+    <li><a href="/#athlete"      class="nav-link">About</a></li>
+    <li><a href="/#programs"     class="nav-link">Programs</a></li>
+    <li><a href="/#results"      class="nav-link">Results</a></li>
+    <li><a href="/#testimonials" class="nav-link">Athletes</a></li>
+    <li><a href="/#private"      class="nav-link">Private</a></li>
+    <li><a href="/#faq"          class="nav-link">FAQ</a></li>
+  </ul>
+
+  <div style="display:flex; align-items:center; gap:14px;">
+    <a href="/#programs" class="btn btn-yellow hide-mob" style="padding:12px 28px;">Start Today</a>
+    <button id="menu-btn" class="hide-desk" aria-label="Open menu"
+      style="background:none; border:none; cursor:pointer; color:#fff; padding:4px;">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+    </button>
+  </div>
+</nav>
+
+<!-- ═══ CONTENT ═══ -->
+<main>
+  <div class="legal-body">
+
+    <a href="/" class="back-link">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      Back to Home
+    </a>
+
+    <p class="legal-label">Legal</p>
+    <h1 class="legal-title">TERMS OF<br/>SERVICE</h1>
+    <p class="legal-updated">Last updated: May 14, 2026</p>
+
+    <div class="highlight-box">
+      <p>The short version: all subscriptions are month-to-month, cancel anytime, no lock-in. Refunds are available within 7 days of the first charge on your current billing cycle. After 7 days, charges for the current period are non-refundable.</p>
+    </div>
+
+    <div class="legal-section">
+      <p>These Terms of Service ("Terms") govern your use of the GL Hybrid Engine website and subscription services operated by Team Lopes Training ("we", "us", "our"). By subscribing to or using any of our services, you agree to these Terms in full.</p>
+      <p>If you have questions, contact us at <a href="mailto:glopes0712@gmail.com">glopes0712@gmail.com</a>.</p>
+    </div>
+
+    <hr class="legal-divider">
+
+    <div class="legal-section">
+      <h2>01. <span>Subscription Terms</span></h2>
+      <p>All GL Hybrid Engine programs are sold as recurring monthly subscriptions. The following applies to all plans (Hybrid Daily, Full Program, Strength Block):</p>
+      <ul>
+        <li><strong style="color:rgba(255,255,255,0.8);">Month-to-month billing</strong> — your subscription renews automatically every 30 days from the date of purchase.</li>
+        <li><strong style="color:rgba(255,255,255,0.8);">No lock-in period</strong> — you are never committed to more than one billing cycle at a time.</li>
+        <li><strong style="color:rgba(255,255,255,0.8);">Cancel anytime</strong> — you may cancel your subscription at any time through Stripe. Upon cancellation, access continues until the end of the current paid period.</li>
+        <li><strong style="color:rgba(255,255,255,0.8);">Price changes</strong> — we will provide at least 30 days' notice of any price change before it affects your subscription.</li>
+      </ul>
+    </div>
+
+    <div class="legal-section">
+      <h2>02. <span>What You Receive</span></h2>
+      <p>Upon subscribing and successful payment processing, you will receive:</p>
+      <ul>
+        <li>A welcome email to the address used at checkout within approximately 24 hours</li>
+        <li>An invite link to join your program on the <strong style="color:rgba(255,255,255,0.8);">TrainHeroic</strong> athlete app (free to download on iOS and Android)</li>
+        <li>Access to your daily workouts, coach notes, scaling options, and performance tracking via TrainHeroic for the duration of your active subscription</li>
+        <li>Access to the subscriber community group</li>
+        <li>For Full Program subscribers: monthly programming reviews and direct coach Q&amp;A access</li>
+      </ul>
+      <p>Workouts are posted in TrainHeroic the night before each training day. Access to past workouts is included while your subscription is active.</p>
+    </div>
+
+    <div class="legal-section">
+      <h2>03. <span>Refund Policy</span></h2>
+      <p>We stand behind the quality of our programming. Our refund policy is as follows:</p>
+      <ul>
+        <li><strong style="color:rgba(255,255,255,0.8);">Within 7 days of initial charge</strong> — full refund available, no questions asked. Contact us at <a href="mailto:glopes0712@gmail.com">glopes0712@gmail.com</a>.</li>
+        <li><strong style="color:rgba(255,255,255,0.8);">After 7 days</strong> — the current billing period is non-refundable. You will retain access until the end of the period and will not be charged again if you have cancelled.</li>
+        <li><strong style="color:rgba(255,255,255,0.8);">Renewal charges</strong> — if you did not intend to renew and were charged within 48 hours of the renewal date, contact us and we will review your case individually.</li>
+      </ul>
+      <p>To request a refund, email <a href="mailto:glopes0712@gmail.com">glopes0712@gmail.com</a> with your order reference from Stripe. We process refunds within 5 business days.</p>
+    </div>
+
+    <div class="legal-section">
+      <h2>04. <span>Coach Obligations</span></h2>
+      <p>Team Lopes Training commits to the following for all active subscribers:</p>
+      <ul>
+        <li>Publishing daily workouts to TrainHeroic according to the schedule of your plan (5 days/week for Hybrid Daily and Strength Block; 6 days/week for Full Program)</li>
+        <li>Providing clear instructions, scaling options, and coach notes for each session</li>
+        <li>Responding to private coaching inquiries and direct Q&amp;A messages within 48 hours on weekdays</li>
+        <li>Providing at least 30 days' written notice of any material changes to program content, pricing, or service structure</li>
+      </ul>
+      <p>In the event of a planned service interruption (e.g., coach travel, competition), we will post substitute programming in advance or provide credit for missed days.</p>
+    </div>
+
+    <div class="legal-section">
+      <h2>05. <span>Subscriber Responsibilities</span></h2>
+      <p>By subscribing, you acknowledge that:</p>
+      <ul>
+        <li>You are responsible for your own health and safety during training. Consult a licensed medical professional before beginning any new exercise program.</li>
+        <li>You will use proper form and appropriate loads. Scale workouts to your current fitness level using the options provided.</li>
+        <li>You will not share your TrainHeroic access or distribute program content without written permission.</li>
+        <li>The programming is designed for general athletic development and HYROX preparation. It is not medical advice.</li>
+      </ul>
+    </div>
+
+    <div class="legal-section">
+      <h2>06. <span>Limitation of Liability</span></h2>
+      <p>To the maximum extent permitted by applicable law:</p>
+      <ul>
+        <li>Team Lopes Training is not liable for any injury, illness, or physical harm arising from participation in the programs, whether followed correctly or otherwise.</li>
+        <li>Our total liability for any claim arising from these services is limited to the amount you paid in the 30-day period preceding the claim.</li>
+        <li>We are not responsible for technical issues, downtime, or service interruptions on third-party platforms (TrainHeroic, Stripe, Zapier).</li>
+      </ul>
+      <p>Nothing in these Terms excludes liability for fraud, death, or personal injury caused by our negligence.</p>
+    </div>
+
+    <div class="legal-section">
+      <h2>07. <span>Governing Law</span></h2>
+      <p>These Terms are governed by the laws of the Province of Ontario, Canada, without regard to conflict of law principles. Any disputes arising from these Terms will be resolved in the courts of Ontario.</p>
+    </div>
+
+    <div class="legal-section">
+      <h2>08. <span>Changes to These Terms</span></h2>
+      <p>We may update these Terms from time to time. Material changes will be communicated by email to your subscription address at least 14 days before taking effect. Continued use of the service after the effective date constitutes acceptance of the revised Terms.</p>
+    </div>
+
+    <div class="legal-section">
+      <h2>09. <span>Contact</span></h2>
+      <p>For any questions about these Terms:</p>
+      <p><strong style="color:rgba(255,255,255,0.8);">Team Lopes Training — GL Hybrid Engine</strong><br>
+      Email: <a href="mailto:glopes0712@gmail.com">glopes0712@gmail.com</a></p>
+    </div>
+
+    <hr class="legal-divider">
+
+    <a href="/" class="back-link">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      Back to Home
+    </a>
+
+  </div>
+</main>
+
+<!-- ═══ FOOTER ═══ -->
+<footer style="background:var(--cd); padding:60px 52px 36px; border-top:1px solid rgba(255,255,255,0.04);">
+  <div style="max-width:760px; margin:0 auto;">
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+      <p style="font-size:12px; color:rgba(255,255,255,0.2);">© 2026 <span style="color:var(--ca);">GL Hybrid Engine</span>. All rights reserved.</p>
+      <div style="display:flex; gap:24px; flex-wrap:wrap;">
+        <a href="/privacy" style="font-size:12px; color:rgba(255,255,255,0.3); text-decoration:none; letter-spacing:0.08em; text-transform:uppercase; transition:color 0.2s;" onmouseover="this.style.color='#FFE500'" onmouseout="this.style.color='rgba(255,255,255,0.3)'">Privacy Policy</a>
+        <a href="/terms" style="font-size:12px; color:var(--ca); text-decoration:none; letter-spacing:0.08em; text-transform:uppercase;">Terms</a>
+        <a href="mailto:glopes0712@gmail.com" style="font-size:12px; color:rgba(255,255,255,0.3); text-decoration:none; letter-spacing:0.08em; text-transform:uppercase; transition:color 0.2s;" onmouseover="this.style.color='#FFE500'" onmouseout="this.style.color='rgba(255,255,255,0.3)'">Contact</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function closeMob() { document.getElementById('mobile-menu').classList.remove('open'); }
+  document.getElementById('menu-btn').addEventListener('click', () => {
+    document.getElementById('mobile-menu').classList.add('open');
+  });
+  document.getElementById('menu-close').addEventListener('click', closeMob);
+</script>
+</body>
+</html>

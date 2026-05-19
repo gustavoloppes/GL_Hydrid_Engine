@@ -27,6 +27,7 @@ const MIME = {
 http.createServer((req, res) => {
   let urlPath = req.url.split('?')[0];
   if (urlPath === '/') urlPath = '/index.html';
+  else if (!path.extname(urlPath)) urlPath = urlPath + '.html';
 
   const filePath = path.join(__dirname, urlPath);
   const ext = path.extname(filePath).toLowerCase();
@@ -42,5 +43,5 @@ http.createServer((req, res) => {
     res.end(data);
   });
 }).listen(PORT, () => {
-  console.log(`ZION dev server running → http://localhost:${PORT}`);
+  console.log(`GL Hybrid Engine dev server → http://localhost:${PORT}`);
 });
