@@ -3,24 +3,73 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GL Hybrid Engine — Daily Hybrid Training System</title>
+  <title>HYROX Training Programs | Hybrid Fitness Coach | GL Hybrid Engine</title>
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <link rel="apple-touch-icon" href="/favicon.ico">
-  <meta name="description" content="GL Hybrid Engine — Daily structured hybrid training combining running, strength and conditioning. Built for HYROX competitors and serious athletes. From $21.90/mo.">
+  <meta name="description" content="Structured HYROX and hybrid training programs delivered on TrainHeroic. From your first race to the podium — from $21/mo.">
   <meta property="og:title" content="GL Hybrid Engine — Daily Hybrid Training System">
   <meta property="og:description" content="Structured daily sessions for HYROX and hybrid athletes. Running, strength, conditioning — delivered every morning.">
   <meta property="og:url" content="https://glhybridengine.com">
   <meta property="og:type" content="website">
   <meta property="og:image" content="https://glhybridengine.com/brand_assets/logo nova.png">
   <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://glhybridengine.com/">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300&display=swap" rel="stylesheet" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What fitness level do I need to start?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "All programs include scaling options. Whether you're just getting into fitness or already competing, the workouts adapt to your current level. A basic level of fitness is helpful, but beginners are welcome."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What equipment do I need?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A gym with barbells, dumbbells, pull-up bar, and ideally a ski or row erg. Most sessions include equipment alternatives. HYROX-specific workouts replicate race stations with standard gym equipment."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How are the workouts delivered?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Workouts are delivered through TrainHeroic — a free app for athletes (iOS & Android). After you sign up you'll receive an invite link. Every session is posted the night before with full instructions, video demos, scaling options, and coach notes. No complicated setup — just download, accept the invite, and train."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I combine multiple programs?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The Full Program already integrates hybrid and strength. If you're on individual plans and want both, upgrading to Full Program is the best path — the sessions are designed to work together without overtraining."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is there a lock-in period?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "All plans are month-to-month — cancel anytime. That said, real results require at least 8–12 weeks of consistent training. Commit to the process and the results follow."
+        }
+      }
+    ]
+  }
+  </script>
 
   <!--
   ═══════════════════════════════════════════════════════════════
-  STRIPE + EMAIL AUTOMATION SETUP  —  Team Lopes Training
+  STRIPE + EMAIL AUTOMATION SETUP  —  GL Hybrid Engine
   ═══════════════════════════════════════════════════════════════
 
   STEP 1 — CREATE STRIPE PRODUCTS & PAYMENT LINKS
@@ -44,7 +93,7 @@
   1. Go to https://zapier.com → Create Zap
   2. Trigger:  Stripe → "New Subscription"
   3. Action:   Gmail (or SendGrid) → "Send Email"
-     Subject:  Welcome to Team Lopes Training 🏆
+     Subject:  Welcome to GL Hybrid Engine 🏆
      Body (plain text):
        Hi {{customer_name}},
 
@@ -59,7 +108,7 @@
        Questions? Reply to this email — I read every one.
 
        Train hard,
-       — Coach Lopes / Team Lopes Training
+       — Coach Lopes / GL Hybrid Engine
 
   4. In Zapier, use {{customer_email}} as the "To" address
      (it comes from the Stripe trigger automatically).
@@ -492,7 +541,7 @@
 <div id="countdown-overlay" style="
   position:fixed; inset:0; z-index:99999;
   background:#000;
-  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  display:none; flex-direction:column; align-items:center; justify-content:center;
   gap:0;
   pointer-events:all;
 ">
@@ -696,6 +745,7 @@
 
 <!-- ═══ HERO ═══ -->
 <section id="hero" style="position:relative; height:100vh; overflow:hidden;">
+  <h1 style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;">HYROX &amp; Hybrid Training. Built for competitive athletes.</h1>
   <!-- Official HYROX YouTube video background -->
   <div style="position:absolute; inset:0; z-index:0; overflow:hidden; pointer-events:none;">
     <iframe
@@ -771,10 +821,10 @@
         ATHLETE.<br/>COACH.<br/><span style="color:var(--ca);">CHAMPION.</span>
       </h2>
       <p class="reveal d2" style="font-size:15px; font-weight:300; line-height:1.85; color:rgba(255,255,255,0.55); margin-bottom:24px; max-width:500px;">
-        I've competed at the top level in both CrossFit and HYROX — I know what it feels like to line up for your very first race with no idea what to expect, and I know what it takes to go back and shave minutes off a time you thought was already your best.
+        I've competed at the top level in both strength sport and HYROX — I know what it feels like to line up for your very first race with no idea what to expect, and I know what it takes to go back and shave minutes off a time you thought was already your best.
       </p>
       <p class="reveal d2" style="font-size:15px; font-weight:300; line-height:1.85; color:rgba(255,255,255,0.55); margin-bottom:20px; max-width:500px;">
-        Team Lopes Training is built for <strong style="color:rgba(255,255,255,0.85); font-weight:600;">two types of athlete</strong>: the beginner who has signed up for their first run or race and needs a structured plan to get to that finish line — and the experienced athlete who is done accepting their current PR and wants a real system to break it.
+        GL Hybrid Engine is built for <strong style="color:rgba(255,255,255,0.85); font-weight:600;">two types of athlete</strong>: the beginner who has signed up for their first run or race and needs a structured plan to get to that finish line — and the experienced athlete who is done accepting their current PR and wants a real system to break it.
       </p>
       <p class="reveal d2" style="font-size:15px; font-weight:300; line-height:1.85; color:rgba(255,255,255,0.55); margin-bottom:44px; max-width:500px;">
         No matter where you start, the method is the same: consistent daily training, progressive overload, and programming that prepares your body and your mind for race day.
@@ -786,15 +836,11 @@
         </div>
         <div style="display:flex; align-items:center; gap:14px;">
           <div style="width:5px; height:5px; background:var(--ca); flex-shrink:0; transform:rotate(45deg);"></div>
-          <span style="font-size:14px; font-weight:500; color:rgba(255,255,255,0.8);">CrossFit Athlete — Open &amp; Sanctioned Events</span>
+          <span style="font-size:14px; font-weight:500; color:rgba(255,255,255,0.8);">Hybrid Specialist — Strength + Endurance Combined</span>
         </div>
         <div style="display:flex; align-items:center; gap:14px;">
           <div style="width:5px; height:5px; background:var(--ca); flex-shrink:0; transform:rotate(45deg);"></div>
           <span style="font-size:14px; font-weight:500; color:rgba(255,255,255,0.8);">Online Coach — Athletes Across Multiple Countries</span>
-        </div>
-        <div style="display:flex; align-items:center; gap:14px;">
-          <div style="width:5px; height:5px; background:var(--ca); flex-shrink:0; transform:rotate(45deg);"></div>
-          <span style="font-size:14px; font-weight:500; color:rgba(255,255,255,0.8);">Hybrid Specialist — Strength + Endurance Combined</span>
         </div>
       </div>
     </div>
@@ -819,7 +865,7 @@
     </div>
     <div style="padding:40px 36px; border-right:1px solid rgba(0,0,0,0.1); text-align:center;">
       <div style="font-family:var(--fh); font-size:clamp(44px,4.5vw,66px); color:var(--c1); line-height:1;">50+</div>
-      <div style="font-size:11px; font-weight:700; letter-spacing:0.22em; text-transform:uppercase; color:rgba(0,0,0,0.5); margin-top:4px;">CrossFit Events</div>
+      <div style="font-size:11px; font-weight:700; letter-spacing:0.22em; text-transform:uppercase; color:rgba(0,0,0,0.5); margin-top:4px;">Podium Finishes</div>
     </div>
     <div style="padding:40px 36px; border-right:1px solid rgba(0,0,0,0.1); text-align:center;">
       <div style="font-family:var(--fh); font-size:clamp(44px,4.5vw,66px); color:var(--c1); line-height:1;">200+</div>
@@ -841,7 +887,7 @@
         <p class="reveal" style="font-size:11px; font-weight:700; letter-spacing:0.28em; text-transform:uppercase; color:var(--ca); margin-bottom:12px;">On The Race Floor</p>
         <h2 class="reveal d1" style="font-family:var(--fh); font-size:clamp(44px,5vw,74px); line-height:0.93; letter-spacing:0.02em; text-transform:uppercase;">COMPETITION<br/>HIGHLIGHTS</h2>
       </div>
-      <p class="reveal d2" style="font-size:14px; font-weight:300; color:rgba(255,255,255,0.4); max-width:320px; line-height:1.8;">From HYROX world series to CrossFit sanctioned events — every race is a data point. Every finish is proof.</p>
+      <p class="reveal d2" style="font-size:14px; font-weight:300; color:rgba(255,255,255,0.4); max-width:320px; line-height:1.8;">From HYROX world series to hybrid sanctioned events — every race is a data point. Every finish is proof.</p>
     </div>
 
     <div class="mosaic-grid" style="display:grid; grid-template-columns:1fr 1fr 1fr; grid-template-rows:340px 340px; gap:3px;">
@@ -854,10 +900,10 @@
         </div>
       </div>
       <div class="img-tile reveal d1">
-        <img src="https://placehold.co/600x340/0d0d0d/222222?text=CrossFit+Event" alt="CrossFit Open" />
+        <img src="https://placehold.co/600x340/0d0d0d/222222?text=Hybrid+Competition" alt="Hybrid Competition" />
         <div class="overlay-b"></div>
         <div style="position:absolute; bottom:20px; left:22px; z-index:2;">
-          <div style="font-size:10px; font-weight:700; letter-spacing:0.22em; text-transform:uppercase; color:var(--ca); margin-bottom:2px;">CrossFit Open 2024</div>
+          <div style="font-size:10px; font-weight:700; letter-spacing:0.22em; text-transform:uppercase; color:var(--ca); margin-bottom:2px;">Hybrid Competition 2024</div>
           <div style="font-family:var(--fh); font-size:26px; color:#fff; line-height:1;">TOP 10%</div>
         </div>
       </div>
@@ -1198,7 +1244,7 @@
           </div>
           <div>
             <div style="font-size:13px; font-weight:600; color:#fff;">Ana P.</div>
-            <div style="font-size:11px; font-weight:300; color:var(--ca);">CrossFit Athlete — Lisbon</div>
+            <div style="font-size:11px; font-weight:300; color:var(--ca);">Hybrid Athlete — Lisbon</div>
           </div>
         </div>
       </div>
@@ -1324,13 +1370,13 @@
 
       <div class="form-name-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
         <div style="display:flex; flex-direction:column; gap:6px;">
-          <label style="font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,255,255,0.4);">First Name</label>
+          <label style="font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,255,255,0.4);">Your name (first)</label>
           <input type="text" name="first_name" required placeholder="João"
             style="background:var(--cd); border:1px solid rgba(255,255,255,0.08); color:#fff; padding:13px 16px; font-family:var(--fb); font-size:14px; outline:none; transition:border-color 0.2s;"
             onfocus="this.style.borderColor='var(--ca)'" onblur="this.style.borderColor='rgba(255,255,255,0.08)'"/>
         </div>
         <div style="display:flex; flex-direction:column; gap:6px;">
-          <label style="font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,255,255,0.4);">Last Name</label>
+          <label style="font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,255,255,0.4);">Your name (last)</label>
           <input type="text" name="last_name" required placeholder="Silva"
             style="background:var(--cd); border:1px solid rgba(255,255,255,0.08); color:#fff; padding:13px 16px; font-family:var(--fb); font-size:14px; outline:none; transition:border-color 0.2s;"
             onfocus="this.style.borderColor='var(--ca)'" onblur="this.style.borderColor='rgba(255,255,255,0.08)'"/>
@@ -1338,14 +1384,14 @@
       </div>
 
       <div style="display:flex; flex-direction:column; gap:6px;">
-        <label style="font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,255,255,0.4);">Email</label>
+        <label style="font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,255,255,0.4);">Your email</label>
         <input type="email" name="email" required placeholder="you@email.com"
           style="background:var(--cd); border:1px solid rgba(255,255,255,0.08); color:#fff; padding:13px 16px; font-family:var(--fb); font-size:14px; outline:none; transition:border-color 0.2s;"
           onfocus="this.style.borderColor='var(--ca)'" onblur="this.style.borderColor='rgba(255,255,255,0.08)'"/>
       </div>
 
       <div style="display:flex; flex-direction:column; gap:6px;">
-        <label style="font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,255,255,0.4);">Your Goal</label>
+        <label style="font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,255,255,0.4);">Your goal</label>
         <select name="goal" required
           style="background:var(--cd); border:1px solid rgba(255,255,255,0.08); color:rgba(255,255,255,0.7); padding:13px 16px; font-family:var(--fb); font-size:14px; outline:none; transition:border-color 0.2s; appearance:none; cursor:pointer;"
           onfocus="this.style.borderColor='var(--ca)'" onblur="this.style.borderColor='rgba(255,255,255,0.08)'">
@@ -1353,19 +1399,19 @@
           <option value="first_race">Finish my first race</option>
           <option value="beat_pr">Beat my current PR</option>
           <option value="hyrox">Prepare for HYROX</option>
-          <option value="crossfit">Compete in CrossFit</option>
+          <option value="strength_hyrox">Build strength for HYROX</option>
           <option value="general">General fitness &amp; strength</option>
         </select>
       </div>
 
       <div style="display:flex; flex-direction:column; gap:6px;">
-        <label style="font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,255,255,0.4);">Tell Me About Yourself</label>
+        <label style="font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,255,255,0.4);">Your message</label>
         <textarea name="message" required rows="4" placeholder="Current fitness level, upcoming races, availability..."
           style="background:var(--cd); border:1px solid rgba(255,255,255,0.08); color:#fff; padding:13px 16px; font-family:var(--fb); font-size:14px; outline:none; resize:vertical; transition:border-color 0.2s; line-height:1.6;"
           onfocus="this.style.borderColor='var(--ca)'" onblur="this.style.borderColor='rgba(255,255,255,0.08)'"></textarea>
       </div>
 
-      <input type="hidden" name="_subject" value="Private Coaching Inquiry — Team Lopes Training"/>
+      <input type="hidden" name="_subject" value="Private Coaching Inquiry — GL Hybrid Engine"/>
 
       <button type="submit" class="btn btn-yellow" style="width:100%; margin-top:4px;">
         Send Message
@@ -1422,17 +1468,6 @@
         </div>
         <p style="font-size:11px; font-weight:600; letter-spacing:0.18em; text-transform:uppercase; color:var(--ca); margin-bottom:8px;">Daily Hybrid Training System</p>
         <p style="font-size:13px; font-weight:300; color:rgba(255,255,255,0.3); line-height:1.75; max-width:280px; margin-bottom:28px;">Structured daily sessions — running, strength, and conditioning — delivered to your app.</p>
-        <div style="display:flex; gap:10px;">
-          <a href="#" aria-label="Instagram" style="width:36px; height:36px; border:1px solid rgba(255,255,255,0.1); display:flex; align-items:center; justify-content:center; color:rgba(255,255,255,0.35); text-decoration:none; transition:border-color 0.2s, color 0.2s;" onmouseover="this.style.borderColor='#FFE500';this.style.color='#FFE500'" onmouseout="this.style.borderColor='rgba(255,255,255,0.1)';this.style.color='rgba(255,255,255,0.35)'">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
-          </a>
-          <a href="#" aria-label="TikTok" style="width:36px; height:36px; border:1px solid rgba(255,255,255,0.1); display:flex; align-items:center; justify-content:center; color:rgba(255,255,255,0.35); text-decoration:none; transition:border-color 0.2s, color 0.2s;" onmouseover="this.style.borderColor='#FFE500';this.style.color='#FFE500'" onmouseout="this.style.borderColor='rgba(255,255,255,0.1)';this.style.color='rgba(255,255,255,0.35)'">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 12a4 4 0 104 4V4a5 5 0 005 5"/></svg>
-          </a>
-          <a href="#" aria-label="YouTube" style="width:36px; height:36px; border:1px solid rgba(255,255,255,0.1); display:flex; align-items:center; justify-content:center; color:rgba(255,255,255,0.35); text-decoration:none; transition:border-color 0.2s, color 0.2s;" onmouseover="this.style.borderColor='#FFE500';this.style.color='#FFE500'" onmouseout="this.style.borderColor='rgba(255,255,255,0.1)';this.style.color='rgba(255,255,255,0.35)'">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="7" width="20" height="15" rx="3"/><path d="M10 10l5 3-5 3V10z" fill="currentColor"/></svg>
-          </a>
-        </div>
       </div>
 
       <div>
