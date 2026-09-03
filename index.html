@@ -11,14 +11,14 @@
   </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HYROX Training Programs | Hybrid Fitness Coach | GL Hybrid Engine</title>
+  <title>12-Week HYROX Program + Private Run Coaching | GL Hybrid Engine</title>
   <meta name="google-site-verification" content="OYhQ0EdAO5G41Jfjn_K0Cx4c6qKlzWXVvylSuZugl10" />
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
   <link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png">
-  <meta name="description" content="GL Hybrid Engine — three training paths for HYROX competitors. Iron Base, Sub 90' and Own the Flag. 7-day free trial from $21.90/mo. Cancel anytime.">
-  <meta property="og:title" content="Iron Base · Sub 90' · Own the Flag | GL Hybrid Engine">
-  <meta property="og:description" content="GL Hybrid Engine — three training paths for HYROX competitors. Iron Base, Sub 90' and Own the Flag. 7-day free trial from $21.90/mo. Cancel anytime.">
+  <meta name="description" content="GL Hybrid Engine — 12-week HYROX training program ($47) and private run coaching ($79/mo) with TrainingPeaks. Built for competitive athletes.">
+  <meta property="og:title" content="GL Hybrid Engine | HYROX Program + Run Coaching">
+  <meta property="og:description" content="GL Hybrid Engine — 12-week HYROX training program ($47) and private run coaching ($79/mo) with TrainingPeaks. Built for competitive athletes.">
   <meta property="og:url" content="https://glhybridengine.com">
   <meta property="og:type" content="website">
   <meta property="og:image" content="https://glhybridengine.com/brand_assets/logo nova.png">
@@ -54,23 +54,7 @@
         "name": "How are the workouts delivered?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Workouts are delivered through TrainHeroic — a free app for athletes (iOS & Android). After you sign up you'll receive an invite link. Every session is posted the night before with full instructions, video demos, scaling options, and coach notes. No complicated setup — just download, accept the invite, and train."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Can I combine multiple programs?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Own the Flag already integrates hybrid and strength. If you're on individual plans and want both, upgrading to Own the Flag is the best path — the sessions are designed to work together without overtraining."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Is there a lock-in period?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "All plans are month-to-month — cancel anytime. That said, real results require at least 8–12 weeks of consistent training. Commit to the process and the results follow."
+          "text": "It depends on the product. The 12-Week HYROX Program is delivered as a PDF straight to your inbox after purchase — no app required. Private run coaching is delivered through TrainingPeaks — a free app for athletes (iOS & Android) — with your plan updated weekly based on your data."
         }
       }
     ]
@@ -322,82 +306,56 @@
     .img-tile:hover img { transform: scale(1.04); }
     .overlay-b { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.2) 50%, transparent 100%); pointer-events: none; }
 
-    /* Program card — flip container */
-    .prog-card {
-      background: transparent; padding: 0; position: relative;
-      border: 1px solid rgba(255,255,255,0.04);
-      transition: border-color 0.25s cubic-bezier(.22,1,.36,1);
-      cursor: pointer;
-      perspective: 1400px;
+    /* Product cards */
+    .prod-grid {
+      display: flex; gap: 32px; justify-content: center; align-items: stretch;
+      flex-wrap: wrap; max-width: 900px; margin: 0 auto; padding: 0 24px;
     }
-    .prog-card:hover { border-color: rgba(255,229,0,0.2); }
-    .prog-card:focus-visible { outline: 2px solid var(--ca); outline-offset: -2px; }
-    .prog-card.featured { border-color: var(--ca); }
-
-    /* Flip mechanism */
-    .flip-inner {
-      position: relative; width: 100%; height: 100%;
-      transform-style: preserve-3d;
-      transition: transform 0.65s cubic-bezier(.4,0,.2,1);
+    .prod-card {
+      flex: 1; min-width: 300px; max-width: 420px;
+      background: var(--c2); border: 1px solid rgba(255,255,255,0.06); border-radius: 4px;
+      padding: 40px 36px 44px;
+      display: flex; flex-direction: column;
+      position: relative; overflow: hidden;
     }
-    .prog-card.flipped .flip-inner { transform: rotateY(180deg); }
-
-    .flip-front, .flip-back {
-      backface-visibility: hidden;
-      -webkit-backface-visibility: hidden;
-      padding: 48px 36px 52px;
+    .prod-bar { position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--ca); }
+    .prod-badge {
+      font-family: var(--fb); font-size: 10px; letter-spacing: 0.12em;
+      color: var(--ca); text-transform: uppercase; margin-bottom: 12px;
     }
-    .flip-front {
-      position: relative;
-      background: var(--c2);
-      transition: background 0.25s cubic-bezier(.22,1,.36,1);
-      display: flex; flex-direction: column; height: 100%;
+    .prod-spots {
+      position: absolute; top: 20px; right: 20px;
+      border: 1px solid var(--ca); color: var(--ca); background: transparent;
+      font-family: var(--fb); font-size: 9px; letter-spacing: 0.1em;
+      padding: 3px 8px; text-transform: uppercase;
     }
-    .prog-card:hover .flip-front { background: #1d1d1d; }
-    .flip-front > .btn { margin-top: auto; }
-    .flip-back {
-      position: absolute; inset: 0;
-      transform: rotateY(180deg);
-      background: #131313;
-      display: flex; flex-direction: column; gap: 20px;
-      overflow-y: auto;
+    .prod-name {
+      font-family: var(--fh); font-size: 36px; color: var(--cw);
+      line-height: 1.1; margin-bottom: 20px;
     }
-    .flip-back-title {
-      font-family: var(--fh); font-size: 11px; letter-spacing: 0.28em;
-      text-transform: uppercase; color: var(--ca); margin-bottom: 4px;
+    .prod-name-accent { color: var(--ca); }
+    .prod-price { display: block; }
+    .prod-amount { font-family: var(--fh); font-size: 56px; color: var(--ca); }
+    .prod-period { font-family: var(--fb); font-size: 10px; color: var(--cgray); display: block; margin-top: 4px; }
+    .prod-divider { border: none; border-top: 1px solid rgba(255,229,0,0.15); margin: 20px 0; }
+    .prod-features { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+    .prod-features li {
+      display: flex; gap: 10px; align-items: flex-start;
+      font-family: var(--fb); font-size: 13px; color: var(--cw); line-height: 1.5;
     }
-    .flip-back-section { display: flex; flex-direction: column; gap: 8px; }
-    .flip-back-label {
-      font-size: 9px; font-weight: 700; letter-spacing: 0.3em;
-      text-transform: uppercase; color: rgba(255,255,255,0.3);
+    .prod-cta {
+      display: block; width: 100%;
+      background: var(--ca); color: var(--c1);
+      font-family: var(--fh); font-size: 18px; letter-spacing: 0.1em;
+      padding: 16px; text-align: center; text-decoration: none; border: none;
+      margin-top: auto; padding-top: 32px;
+      transition: background 0.2s;
     }
-    .flip-back p {
-      font-size: 13px; font-weight: 300; color: rgba(255,255,255,0.6); line-height: 1.75;
+    .prod-cta:hover { background: rgba(255,229,0,0.85); }
+    .prod-note {
+      font-family: var(--fb); font-size: 11px; color: var(--cgray);
+      text-align: center; margin-top: 8px;
     }
-    .flip-back ul {
-      list-style: none; display: flex; flex-direction: column; gap: 9px; margin: 0;
-    }
-    .flip-back ul li {
-      display: flex; align-items: flex-start; gap: 9px;
-      font-size: 13px; font-weight: 300; color: rgba(255,255,255,0.55); line-height: 1.5;
-    }
-    .flip-back-cta { margin-top: auto; padding-top: 8px; }
-    .flip-hint {
-      display: flex; align-items: center; justify-content: center; gap: 6px;
-      font-size: 10px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase;
-      color: rgba(255,229,0,0.45); margin-top: 12px;
-      animation: hint-pulse 2.8s ease-in-out infinite;
-    }
-    @keyframes hint-pulse {
-      0%,100% { opacity: 0.45; } 50% { opacity: 0.9; }
-    }
-    .flip-back-close {
-      position: absolute; top: 16px; right: 20px;
-      font-size: 10px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase;
-      color: rgba(255,255,255,0.3); cursor: pointer;
-      transition: color 0.2s;
-    }
-    .flip-back-close:hover { color: var(--ca); }
 
     /* Testimonial */
     .testi-card { background: var(--c2); padding: 36px; border-left: 3px solid var(--ca); transition: background 0.2s; }
@@ -494,10 +452,6 @@
       .mosaic-grid .img-tile          { min-height: 200px; }
       .mosaic-tall                    { min-height: 260px !important; }
 
-      /* Flip cards */
-      .flip-front, .flip-back         { padding: 32px 22px 36px !important; }
-      .prog-card                      { min-height: 500px; }
-
       /* Testimonials */
       .testi-card                     { padding: 28px 20px !important; }
 
@@ -533,10 +487,6 @@
       /* Mobile menu */
       .mob-link                       { font-size: 34px !important; }
       #mobile-menu                    { padding: 80px 20px !important; }
-
-      /* Flip cards: tighter on small phones */
-      .flip-front, .flip-back         { padding: 28px 18px 32px !important; }
-      .prog-card                      { min-height: 480px; }
 
       /* Hero button: reduce horizontal padding */
       #hero .btn-hero                 { padding: 16px 36px !important; }
@@ -749,7 +699,7 @@
 
 <!-- ═══ MOBILE STICKY CTA ═══ -->
 <div id="mobile-cta" aria-hidden="true">
-  <a href="#programs" class="btn btn-yellow btn-hero" style="flex:1; min-height:48px; font-size:13px;">START FREE — 7 DAYS</a>
+  <a href="#programs" class="btn btn-yellow btn-hero" style="flex:1; min-height:48px; font-size:13px;">SEE PROGRAMS</a>
 </div>
 
 <!-- ═══ HERO ═══ -->
@@ -813,7 +763,7 @@
 
     <div style="pointer-events:auto; margin-top:8px; display:flex; flex-direction:column; align-items:center; gap:10px;">
       <a href="#programs" class="btn btn-yellow btn-hero" style="font-size:14px; padding:18px 52px;">START FREE TRIAL</a>
-      <span style="font-size:11px; font-weight:600; letter-spacing:0.18em; text-transform:uppercase; color:rgba(255,255,255,0.45);">7-day free trial · cancel anytime</span>
+      <span style="font-size:11px; font-weight:600; letter-spacing:0.18em; text-transform:uppercase; color:rgba(255,255,255,0.45);">12-week program · Private run coaching</span>
       <p style="font-family:'Montserrat',sans-serif; font-size:13px; color:rgba(255,255,255,0.55); text-align:center; max-width:480px; line-height:1.6; margin-top:4px;">Daily structured sessions — running, strength, conditioning. Delivered every morning. Built to get you to the finish line faster than you thought possible.</p>
     </div>
   </div>
@@ -944,272 +894,127 @@
   <div style="max-width:1280px; margin:0 auto;">
     <div style="text-align:center; margin-bottom:72px;">
       <p class="reveal" style="font-size:11px; font-weight:700; letter-spacing:0.28em; text-transform:uppercase; color:var(--ca); margin-bottom:12px;">Daily Online Training</p>
-      <h2 class="reveal d1" style="font-family:var(--fh); font-size:clamp(44px,5.5vw,82px); line-height:0.93; letter-spacing:0.02em; text-transform:uppercase; margin-bottom:20px;">CHOOSE YOUR<br/>PATH</h2>
-      <p class="reveal d2" style="font-size:15px; font-weight:300; color:rgba(255,255,255,0.4); max-width:460px; margin:0 auto; line-height:1.8;">Three programs. One goal. The podium.</p>
+      <h2 class="reveal d1" style="font-family:var(--fh); font-size:clamp(44px,5.5vw,82px); line-height:0.93; letter-spacing:0.02em; text-transform:uppercase; margin-bottom:20px;">TWO WAYS<br/>TO TRAIN</h2>
+      <p class="reveal d2" style="font-size:15px; font-weight:300; color:rgba(255,255,255,0.4); max-width:460px; margin:0 auto; line-height:1.8;">A 12-week program to own your race.<br/>Private coaching to own your run.</p>
     </div>
 
-    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:2px;" class="prog-grid">
+    <div class="prod-grid">
 
-      <!-- Iron Base -->
-      <div class="prog-card reveal" tabindex="0">
-        <div class="flip-inner">
-
-          <!-- FRONT -->
-          <div class="flip-front">
-            <div style="font-size:10px; font-weight:700; letter-spacing:0.26em; text-transform:uppercase; color:var(--ca); margin-bottom:18px;">STRENGTH FOUNDATION</div>
-            <h3 style="font-family:var(--fh); font-size:clamp(30px,3vw,44px); line-height:1; letter-spacing:0.02em; text-transform:uppercase; margin-bottom:14px;">IRON BASE</h3>
-            <div style="font-family:var(--fh); font-size:54px; color:var(--ca); line-height:1; margin-bottom:4px;">$21.90<span style="font-family:var(--fb); font-size:14px; color:rgba(255,255,255,0.35); font-weight:300;">/month</span></div>
-            <span style="display:block; font-size:12px; color:var(--ca); margin-top:4px; letter-spacing:0.05em;">7-DAY FREE TRIAL INCLUDED</span>
-            <p style="font-size:13px; font-weight:300; color:rgba(255,255,255,0.35); margin-bottom:32px; line-height:1.6;">4 days/week</p>
-            <ul style="list-style:none; display:flex; flex-direction:column; gap:12px; margin-bottom:16px; flex:1;">
-              <li style="display:flex; align-items:flex-start; gap:10px; font-size:14px; font-weight:300; color:rgba(255,255,255,0.6);">
-                <svg style="flex-shrink:0; margin-top:3px;" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#FFE500" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
-                Pure strength and progressive overload
-              </li>
-              <li style="display:flex; align-items:flex-start; gap:10px; font-size:14px; font-weight:300; color:rgba(255,255,255,0.6);">
-                <svg style="flex-shrink:0; margin-top:3px;" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#FFE500" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
-                Compound movements as the foundation
-              </li>
-              <li style="display:flex; align-items:flex-start; gap:10px; font-size:14px; font-weight:300; color:rgba(255,255,255,0.6);">
-                <svg style="flex-shrink:0; margin-top:3px;" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#FFE500" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
-                Built to develop the strength base every hybrid athlete needs
-              </li>
-              <li style="display:flex; align-items:flex-start; gap:10px; font-size:14px; font-weight:300; color:rgba(255,255,255,0.6);">
-                <svg style="flex-shrink:0; margin-top:3px;" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#FFE500" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
-                Community access
-              </li>
-              <li style="display:flex; align-items:flex-start; gap:10px; font-size:14px; font-weight:300; color:rgba(255,255,255,0.6);">
-                <svg style="flex-shrink:0; margin-top:3px;" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#FFE500" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
-                Cancel anytime
-              </li>
-            </ul>
-            <p style="font-size:11px; font-style:italic; color:rgba(255,255,255,0.25); margin-bottom:20px; line-height:1.5;">For the athlete building strength first.</p>
-            <div class="btn btn-outline" style="width:100%; text-align:center;">Learn More</div>
-            <div class="flip-hint">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M1 4v6h6M23 20v-6h-6"/><path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4-4.64 4.36A9 9 0 0 1 3.51 15"/></svg>
-              Tap to see full details
-            </div>
-          </div>
-
-          <!-- BACK -->
-          <div class="flip-back">
-            <span class="flip-back-close" onclick="event.stopPropagation(); this.closest('.prog-card').classList.remove('flipped')">✕ CLOSE</span>
-            <div class="flip-back-title">Iron Base</div>
-
-            <div class="flip-back-section">
-              <div class="flip-back-label">Who it's for</div>
-              <p>For the athlete building strength first.</p>
-            </div>
-
-            <div class="flip-back-section">
-              <div class="flip-back-label">The program</div>
-              <p>4 sessions/week of progressive strength training built around functional patterns that transfer directly to HYROX performance — squats, deadlifts, carries, overhead pressing.</p>
-              <ul>
-                <li><svg style="flex-shrink:0;margin-top:2px;" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#FFE500" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>Linear progression — add weight every week</li>
-                <li><svg style="flex-shrink:0;margin-top:2px;" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#FFE500" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>Functional patterns: squat, hinge, carry, press</li>
-                <li><svg style="flex-shrink:0;margin-top:2px;" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#FFE500" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>Built-in mobility &amp; recovery protocol</li>
-                <li><svg style="flex-shrink:0;margin-top:2px;" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#FFE500" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>Community group for form checks &amp; support</li>
-              </ul>
-            </div>
-
-            <div class="flip-back-section">
-              <div class="flip-back-label">Commitment</div>
-              <p>4 days/week · 50–60 min per session · Gym required (barbell + rack)</p>
-            </div>
-
-            <div class="flip-back-cta">
-              <!-- ⬇ STRIPE: replace href with your Strength Block Payment Link -->
-              <a href="https://buy.stripe.com/8x200j2aOdJq0VO4sUejK06"
-                 target="_blank" rel="noopener"
-                 class="btn btn-outline" style="width:100%;"
-                 data-plan="strength-block"
-                 onclick="event.stopPropagation()">
-                START FREE TRIAL
-              </a>
-              <p style="font-family:'Montserrat',sans-serif; font-size:11px; color:var(--cgray); text-align:center; margin-top:8px; letter-spacing:0.04em;">No charge until day 8 · Cancel anytime · 30 sec to start</p>
-            </div>
-          </div>
-
+      <!-- 12-Week HYROX Program -->
+      <div class="prod-card reveal">
+        <div class="prod-bar"></div>
+        <p class="prod-badge">ONE-TIME PROGRAM</p>
+        <h3 class="prod-name">12-WEEK HYROX<br><span class="prod-name-accent">PROGRAM</span></h3>
+        <div class="prod-price">
+          <span class="prod-amount">$47</span>
+          <span class="prod-period">one-time · instant access</span>
         </div>
+        <div class="prod-divider"></div>
+        <ul class="prod-features">
+          <li>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0;margin-top:2px">
+              <circle cx="8" cy="8" r="7" stroke="#FFE500" stroke-width="1.5"/>
+              <path d="M5 8l2 2 4-4" stroke="#FFE500" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            12 weeks of structured HYROX programming
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0;margin-top:2px">
+              <circle cx="8" cy="8" r="7" stroke="#FFE500" stroke-width="1.5"/>
+              <path d="M5 8l2 2 4-4" stroke="#FFE500" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Open and Pro division loading included
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0;margin-top:2px">
+              <circle cx="8" cy="8" r="7" stroke="#FFE500" stroke-width="1.5"/>
+              <path d="M5 8l2 2 4-4" stroke="#FFE500" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Strength, conditioning and run sessions
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0;margin-top:2px">
+              <circle cx="8" cy="8" r="7" stroke="#FFE500" stroke-width="1.5"/>
+              <path d="M5 8l2 2 4-4" stroke="#FFE500" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Printable PDF — train anywhere
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0;margin-top:2px">
+              <circle cx="8" cy="8" r="7" stroke="#FFE500" stroke-width="1.5"/>
+              <path d="M5 8l2 2 4-4" stroke="#FFE500" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Progressive overload built in week by week
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0;margin-top:2px">
+              <circle cx="8" cy="8" r="7" stroke="#FFE500" stroke-width="1.5"/>
+              <path d="M5 8l2 2 4-4" stroke="#FFE500" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            One-time payment — yours forever
+          </li>
+        </ul>
+        <a href="https://buy.stripe.com/aFa4gz3eSgVCawo0cEejK08" target="_blank" rel="noopener" class="prod-cta">GET THE PROGRAM</a>
+        <p class="prod-note">PDF delivered to your inbox after purchase</p>
       </div>
 
-      <!-- Sub 90' -->
-      <div class="prog-card reveal d1" tabindex="0">
-        <div class="flip-inner">
-
-          <!-- FRONT -->
-          <div class="flip-front">
-            <div style="font-size:10px; font-weight:700; letter-spacing:0.26em; text-transform:uppercase; color:var(--ca); margin-bottom:18px;">HYROX PERFORMANCE</div>
-            <h3 style="font-family:var(--fh); font-size:clamp(30px,3vw,44px); line-height:1; letter-spacing:0.02em; text-transform:uppercase; margin-bottom:14px;">SUB 90'</h3>
-            <div style="font-family:var(--fh); font-size:54px; color:var(--ca); line-height:1; margin-bottom:4px;">$29.90<span style="font-family:var(--fb); font-size:14px; color:rgba(255,255,255,0.35); font-weight:300;">/month</span></div>
-            <span style="display:block; font-size:12px; color:var(--ca); margin-top:4px; letter-spacing:0.05em;">7-DAY FREE TRIAL INCLUDED</span>
-            <p style="font-size:13px; font-weight:300; color:rgba(255,255,255,0.35); margin-bottom:32px; line-height:1.6;">5 days/week</p>
-            <ul style="list-style:none; display:flex; flex-direction:column; gap:12px; margin-bottom:16px; flex:1;">
-              <li style="display:flex; align-items:flex-start; gap:10px; font-size:14px; font-weight:300; color:rgba(255,255,255,0.6);">
-                <svg style="flex-shrink:0; margin-top:3px;" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#FFE500" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
-                Running development + HYROX conditioning
-              </li>
-              <li style="display:flex; align-items:flex-start; gap:10px; font-size:14px; font-weight:300; color:rgba(255,255,255,0.6);">
-                <svg style="flex-shrink:0; margin-top:3px;" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#FFE500" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
-                Structured around the 8 HYROX stations
-              </li>
-              <li style="display:flex; align-items:flex-start; gap:10px; font-size:14px; font-weight:300; color:rgba(255,255,255,0.6);">
-                <svg style="flex-shrink:0; margin-top:3px;" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#FFE500" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
-                Every session moves the clock forward
-              </li>
-              <li style="display:flex; align-items:flex-start; gap:10px; font-size:14px; font-weight:300; color:rgba(255,255,255,0.6);">
-                <svg style="flex-shrink:0; margin-top:3px;" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#FFE500" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
-                Built to get you under 90 minutes
-              </li>
-              <li style="display:flex; align-items:flex-start; gap:10px; font-size:14px; font-weight:300; color:rgba(255,255,255,0.6);">
-                <svg style="flex-shrink:0; margin-top:3px;" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#FFE500" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
-                Community access
-              </li>
-              <li style="display:flex; align-items:flex-start; gap:10px; font-size:14px; font-weight:300; color:rgba(255,255,255,0.6);">
-                <svg style="flex-shrink:0; margin-top:3px;" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#FFE500" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
-                Cancel anytime
-              </li>
-            </ul>
-            <p style="font-size:11px; font-style:italic; color:rgba(255,255,255,0.25); margin-bottom:20px; line-height:1.5;">For the athlete with a time goal.</p>
-            <div class="btn btn-outline" style="width:100%; text-align:center;">Learn More</div>
-            <div class="flip-hint">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M1 4v6h6M23 20v-6h-6"/><path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4-4.64 4.36A9 9 0 0 1 3.51 15"/></svg>
-              Tap to see full details
-            </div>
-          </div>
-
-          <!-- BACK -->
-          <div class="flip-back">
-            <span class="flip-back-close" onclick="event.stopPropagation(); this.closest('.prog-card').classList.remove('flipped')">✕ CLOSE</span>
-            <div class="flip-back-title">Sub 90'</div>
-
-            <div class="flip-back-section">
-              <div class="flip-back-label">Who it's for</div>
-              <p>For the athlete with a time goal.</p>
-            </div>
-
-            <div class="flip-back-section">
-              <div class="flip-back-label">The program</div>
-              <p>5 structured sessions per week built around HYROX-specific movements. Each workout combines cardio conditioning and functional fitness — delivered daily so you never have to think about what to train.</p>
-              <ul>
-                <li><svg style="flex-shrink:0;margin-top:2px;" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#FFE500" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>Zone 2 base work + HYROX conditioning circuits</li>
-                <li><svg style="flex-shrink:0;margin-top:2px;" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#FFE500" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>Race simulations that mirror the real event format</li>
-                <li><svg style="flex-shrink:0;margin-top:2px;" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#FFE500" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>Scaling options — every level can follow along</li>
-                <li><svg style="flex-shrink:0;margin-top:2px;" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#FFE500" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>Sessions run 45–60 min, Mon–Fri</li>
-              </ul>
-            </div>
-
-            <div class="flip-back-section">
-              <div class="flip-back-label">Commitment</div>
-              <p>5 days/week · 45–60 min per session · All fitness levels welcome</p>
-            </div>
-
-            <div class="flip-back-cta">
-              <!-- ⬇ STRIPE: replace href with your Hybrid Daily Payment Link -->
-              <a href="https://buy.stripe.com/8x228r5n0fRy1ZS0cEejK07"
-                 target="_blank" rel="noopener"
-                 class="btn btn-outline" style="width:100%;"
-                 data-plan="hybrid-daily"
-                 onclick="event.stopPropagation()">
-                START FREE TRIAL
-              </a>
-              <p style="font-family:'Montserrat',sans-serif; font-size:11px; color:var(--cgray); text-align:center; margin-top:8px; letter-spacing:0.04em;">No charge until day 8 · Cancel anytime · 30 sec to start</p>
-            </div>
-          </div>
-
+      <!-- Running Private Coaching -->
+      <div class="prod-card reveal d1">
+        <div class="prod-bar"></div>
+        <span class="prod-spots">LIMITED SPOTS</span>
+        <p class="prod-badge">PRIVATE COACHING</p>
+        <h3 class="prod-name">RUNNING<br><span class="prod-name-accent">PRIVATE COACH</span></h3>
+        <div class="prod-price">
+          <span class="prod-amount">$79</span>
+          <span class="prod-period">/mo · TrainingPeaks included</span>
         </div>
-      </div>
-
-      <!-- Own the Flag — featured -->
-      <div style="transform: scale(1.04); z-index: 2; position: relative;">
-        <div class="prog-card featured reveal d2" tabindex="0">
-          <div class="flip-inner">
-
-            <!-- FRONT -->
-            <div class="flip-front" style="position:relative;">
-              <div style="position:absolute; top:-1px; right:24px; background:var(--ca); color:var(--c1);
-                font-family:var(--fb); font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; padding:6px 14px;">Best Value</div>
-              <div style="font-size:10px; font-weight:700; letter-spacing:0.26em; text-transform:uppercase; color:var(--ca); margin-bottom:18px;">PODIUM LEVEL</div>
-              <h3 style="font-family:var(--fh); font-size:clamp(30px,3vw,44px); line-height:1; letter-spacing:0.02em; text-transform:uppercase; margin-bottom:14px;">OWN THE FLAG</h3>
-              <div style="font-family:var(--fh); font-size:54px; color:var(--ca); line-height:1; margin-bottom:4px;">$44.90<span style="font-family:var(--fb); font-size:14px; color:rgba(255,255,255,0.35); font-weight:300;">/month</span></div>
-              <span style="display:block; font-size:12px; color:var(--ca); margin-top:4px; letter-spacing:0.05em;">7-DAY FREE TRIAL INCLUDED</span>
-              <p style="font-size:13px; font-weight:300; color:rgba(255,255,255,0.35); margin-bottom:32px; line-height:1.6;">6 days/week</p>
-              <ul style="list-style:none; display:flex; flex-direction:column; gap:12px; margin-bottom:16px; flex:1;">
-                <li style="display:flex; align-items:flex-start; gap:10px; font-size:14px; font-weight:300; color:rgba(255,255,255,0.6);">
-                  <svg style="flex-shrink:0; margin-top:3px;" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#FFE500" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
-                  The complete system — nothing left out
-                </li>
-                <li style="display:flex; align-items:flex-start; gap:10px; font-size:14px; font-weight:300; color:rgba(255,255,255,0.6);">
-                  <svg style="flex-shrink:0; margin-top:3px;" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#FFE500" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
-                  Strength + running + conditioning
-                </li>
-                <li style="display:flex; align-items:flex-start; gap:10px; font-size:14px; font-weight:300; color:rgba(255,255,255,0.6);">
-                  <svg style="flex-shrink:0; margin-top:3px;" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#FFE500" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
-                  Monthly programming review
-                </li>
-                <li style="display:flex; align-items:flex-start; gap:10px; font-size:14px; font-weight:300; color:rgba(255,255,255,0.6);">
-                  <svg style="flex-shrink:0; margin-top:3px;" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#FFE500" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
-                  Direct coach access — Q&amp;A open
-                </li>
-                <li style="display:flex; align-items:flex-start; gap:10px; font-size:14px; font-weight:300; color:rgba(255,255,255,0.6);">
-                  <svg style="flex-shrink:0; margin-top:3px;" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#FFE500" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
-                  Built for athletes training to podium
-                </li>
-                <li style="display:flex; align-items:flex-start; gap:10px; font-size:14px; font-weight:300; color:rgba(255,255,255,0.6);">
-                  <svg style="flex-shrink:0; margin-top:3px;" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#FFE500" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
-                  Cancel anytime
-                </li>
-              </ul>
-              <p style="font-size:11px; font-style:italic; color:rgba(255,255,255,0.25); margin-bottom:20px; line-height:1.5;">For the athlete training to win.</p>
-              <div class="btn btn-yellow" style="width:100%; text-align:center;">Learn More</div>
-              <div class="flip-hint">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M1 4v6h6M23 20v-6h-6"/><path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4-4.64 4.36A9 9 0 0 1 3.51 15"/></svg>
-                Tap to see full details
-              </div>
-            </div>
-
-            <!-- BACK -->
-            <div class="flip-back" style="background:#161400; border-left:2px solid rgba(255,229,0,0.2);">
-              <span class="flip-back-close" onclick="event.stopPropagation(); this.closest('.prog-card').classList.remove('flipped')">✕ CLOSE</span>
-              <div class="flip-back-title">Own the Flag</div>
-
-              <div class="flip-back-section">
-                <div class="flip-back-label">Who it's for</div>
-                <p>For the athlete training to win.</p>
-              </div>
-
-              <div class="flip-back-section">
-                <div class="flip-back-label">The program</div>
-                <p>The complete GL Hybrid Engine system — 6 days/week combining every performance pillar you need to race at your best. Nothing is left out.</p>
-                <ul>
-                  <li><svg style="flex-shrink:0;margin-top:2px;" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#FFE500" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>Zone 2 base, threshold, &amp; VO2max sessions</li>
-                  <li><svg style="flex-shrink:0;margin-top:2px;" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#FFE500" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>Strength blocks with progressive overload</li>
-                  <li><svg style="flex-shrink:0;margin-top:2px;" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#FFE500" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>Running form, pace work &amp; race intervals</li>
-                  <li><svg style="flex-shrink:0;margin-top:2px;" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#FFE500" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>Monthly review + race prep peaking cycles</li>
-                  <li><svg style="flex-shrink:0;margin-top:2px;" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#FFE500" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>Direct coach Q&amp;A — your questions answered</li>
-                </ul>
-              </div>
-
-              <div class="flip-back-section">
-                <div class="flip-back-label">Commitment</div>
-                <p>6 days/week · 50–70 min per session · For athletes ready to train seriously</p>
-              </div>
-
-              <div class="flip-back-cta">
-                <!-- ⬇ STRIPE: replace href with your Full Program Payment Link -->
-                <a href="https://buy.stripe.com/bJedR9aHk9ta6g88JaejK05"
-                   target="_blank" rel="noopener"
-                   class="btn btn-yellow" style="width:100%;"
-                   data-plan="full-program"
-                   onclick="event.stopPropagation()">
-                  START FREE TRIAL
-                </a>
-                <p style="font-family:'Montserrat',sans-serif; font-size:11px; color:var(--cgray); text-align:center; margin-top:8px; letter-spacing:0.04em;">No charge until day 8 · Cancel anytime · 30 sec to start</p>
-              </div>
-            </div>
-
-          </div>
-        </div>
+        <div class="prod-divider"></div>
+        <ul class="prod-features">
+          <li>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0;margin-top:2px">
+              <circle cx="8" cy="8" r="7" stroke="#FFE500" stroke-width="1.5"/>
+              <path d="M5 8l2 2 4-4" stroke="#FFE500" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            1-on-1 coaching with Coach Gustavo
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0;margin-top:2px">
+              <circle cx="8" cy="8" r="7" stroke="#FFE500" stroke-width="1.5"/>
+              <path d="M5 8l2 2 4-4" stroke="#FFE500" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Personalised run plan built for your goals
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0;margin-top:2px">
+              <circle cx="8" cy="8" r="7" stroke="#FFE500" stroke-width="1.5"/>
+              <path d="M5 8l2 2 4-4" stroke="#FFE500" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            TrainingPeaks app included — $0 extra
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0;margin-top:2px">
+              <circle cx="8" cy="8" r="7" stroke="#FFE500" stroke-width="1.5"/>
+              <path d="M5 8l2 2 4-4" stroke="#FFE500" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Syncs with Garmin, Apple Watch, COROS and more
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0;margin-top:2px">
+              <circle cx="8" cy="8" r="7" stroke="#FFE500" stroke-width="1.5"/>
+              <path d="M5 8l2 2 4-4" stroke="#FFE500" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Weekly plan adjustments based on your data
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0;margin-top:2px">
+              <circle cx="8" cy="8" r="7" stroke="#FFE500" stroke-width="1.5"/>
+              <path d="M5 8l2 2 4-4" stroke="#FFE500" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Direct coach contact via the app
+          </li>
+        </ul>
+        <a href="https://buy.stripe.com/dRm9AT7v834M9sk5wYejK09" target="_blank" rel="noopener" class="prod-cta">APPLY FOR COACHING</a>
+        <p class="prod-note">Limited spots · billed monthly · cancel anytime</p>
       </div>
 
     </div>
@@ -1224,7 +1029,7 @@
       <div class="reveal" style="display:flex; flex-direction:column; gap:22px;">
         <div class="step-num" style="color:var(--c1);">01</div>
         <h3 style="font-family:var(--fh); font-size:30px; letter-spacing:0.02em; text-transform:uppercase; color:var(--c1); line-height:1;">Choose Your Plan</h3>
-        <p style="font-size:14px; font-weight:400; color:rgba(0,0,0,0.55); line-height:1.75;">Iron Base for strength foundation. Sub 90' for HYROX performance. Own the Flag for the complete system. Pick the one that matches where you're going.</p>
+        <p style="font-size:14px; font-weight:400; color:rgba(0,0,0,0.55); line-height:1.75;">The 12-Week HYROX Program for structured race prep. Private run coaching for a personalised plan. Pick the one that matches where you're going.</p>
       </div>
       <div class="reveal d1" style="display:flex; flex-direction:column; gap:22px;">
         <div class="step-num" style="color:var(--c1);">02</div>
@@ -1251,7 +1056,7 @@
 
       <div class="testi-card reveal">
         <p style="font-size:15px; font-weight:300; line-height:1.85; color:rgba(255,255,255,0.65); margin-bottom:28px; font-style:italic;">
-          "I finished my first HYROX under 90 minutes after 12 weeks on Own the Flag. The structure is unlike anything I've tried before."
+          "I finished my first HYROX under 90 minutes after 12 weeks on the HYROX Program. The structure is unlike anything I've tried before."
         </p>
         <div style="display:flex; align-items:center; gap:14px;">
           <div>
@@ -1263,7 +1068,7 @@
 
       <div class="testi-card reveal d1">
         <p style="font-size:15px; font-weight:300; line-height:1.85; color:rgba(255,255,255,0.65); margin-bottom:28px; font-style:italic;">
-          "Iron Base added 20kg to my deadlift in 8 weeks. Real programming, real results. Now combining with Sub 90'."
+          "The 12-Week HYROX Program added 20kg to my deadlift in 8 weeks. Real programming, real results. Now working one-on-one with private coaching."
         </p>
         <div style="display:flex; align-items:center; gap:14px;">
           <div>
@@ -1280,7 +1085,7 @@
         <div style="display:flex; align-items:center; gap:14px;">
           <div>
             <div style="font-size:13px; font-weight:600; color:#fff;">João R.</div>
-            <div style="font-size:11px; font-weight:300; color:var(--ca);">HYROX Pro Division — 2024</div>
+            <div style="font-size:11px; font-weight:300; color:var(--ca);">12-Week HYROX Program — 2024</div>
           </div>
         </div>
       </div>
@@ -1299,10 +1104,31 @@
     <div id="faq-list" style="border-top:1px solid rgba(0,0,0,0.12);">
       <div class="faq-item" style="border-bottom-color:rgba(0,0,0,0.12);">
         <button class="faq-btn" aria-expanded="false" style="color:var(--c1);">
-          Is there a free trial?
+          What is included in the 12-week program?
           <span class="faq-icon" style="border-color:rgba(0,0,0,0.35); color:var(--c1);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg></span>
         </button>
-        <div class="faq-answer"><div class="faq-answer-inner" style="color:rgba(0,0,0,0.6);">Yes — all three programs include a 7-day free trial. You will not be charged until day 8. Cancel any time before then at no cost. No questions asked.</div></div>
+        <div class="faq-answer"><div class="faq-answer-inner" style="color:rgba(0,0,0,0.6);">A complete PDF training guide covering 12 weeks of structured HYROX programming. Includes Open and Pro division loading, strength, conditioning and run sessions with progressive overload built in week by week. One-time payment — yours forever.</div></div>
+      </div>
+      <div class="faq-item" style="border-bottom-color:rgba(0,0,0,0.12);">
+        <button class="faq-btn" aria-expanded="false" style="color:var(--c1);">
+          How is the 12-week program delivered?
+          <span class="faq-icon" style="border-color:rgba(0,0,0,0.35); color:var(--c1);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg></span>
+        </button>
+        <div class="faq-answer"><div class="faq-answer-inner" style="color:rgba(0,0,0,0.6);">As a PDF sent directly to your email after purchase. You can print it or follow it on any device. No app required.</div></div>
+      </div>
+      <div class="faq-item" style="border-bottom-color:rgba(0,0,0,0.12);">
+        <button class="faq-btn" aria-expanded="false" style="color:var(--c1);">
+          What does private run coaching include?
+          <span class="faq-icon" style="border-color:rgba(0,0,0,0.35); color:var(--c1);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg></span>
+        </button>
+        <div class="faq-answer"><div class="faq-answer-inner" style="color:rgba(0,0,0,0.6);">A personalised run plan built around your goals, availability and current fitness. Delivered via TrainingPeaks (included at no extra cost). Syncs with Garmin, Apple Watch, COROS and more. Direct contact with Coach Gustavo via the app. Billed monthly — cancel anytime.</div></div>
+      </div>
+      <div class="faq-item" style="border-bottom-color:rgba(0,0,0,0.12);">
+        <button class="faq-btn" aria-expanded="false" style="color:var(--c1);">
+          How do I get started with private coaching?
+          <span class="faq-icon" style="border-color:rgba(0,0,0,0.35); color:var(--c1);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg></span>
+        </button>
+        <div class="faq-answer"><div class="faq-answer-inner" style="color:rgba(0,0,0,0.6);">Subscribe via the button above. You will receive a TrainingPeaks invite and a short intake form within 24 hours. Your first session will be posted within 48 hours of your profile being complete.</div></div>
       </div>
       <div class="faq-item" style="border-bottom-color:rgba(0,0,0,0.12);">
         <button class="faq-btn" aria-expanded="false" style="color:var(--c1);">
@@ -1323,21 +1149,7 @@
           How are the workouts delivered?
           <span class="faq-icon" style="border-color:rgba(0,0,0,0.35); color:var(--c1);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg></span>
         </button>
-        <div class="faq-answer"><div class="faq-answer-inner" style="color:rgba(0,0,0,0.6);">Workouts are delivered through <strong style="color:var(--c1);">TrainHeroic</strong> — a free app for athletes (iOS &amp; Android). After you sign up you'll receive an invite link. Every session is posted the night before with full instructions, video demos, scaling options, and coach notes. No complicated setup — just download, accept the invite, and train.</div></div>
-      </div>
-      <div class="faq-item" style="border-bottom-color:rgba(0,0,0,0.12);">
-        <button class="faq-btn" aria-expanded="false" style="color:var(--c1);">
-          Can I combine multiple programs?
-          <span class="faq-icon" style="border-color:rgba(0,0,0,0.35); color:var(--c1);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg></span>
-        </button>
-        <div class="faq-answer"><div class="faq-answer-inner" style="color:rgba(0,0,0,0.6);">Own the Flag already integrates hybrid and strength. If you're on individual plans and want both, upgrading to Own the Flag is the best path — the sessions are designed to work together without overtraining.</div></div>
-      </div>
-      <div class="faq-item" style="border-bottom-color:rgba(0,0,0,0.12);">
-        <button class="faq-btn" aria-expanded="false" style="color:var(--c1);">
-          Is there a lock-in period?
-          <span class="faq-icon" style="border-color:rgba(0,0,0,0.35); color:var(--c1);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg></span>
-        </button>
-        <div class="faq-answer"><div class="faq-answer-inner" style="color:rgba(0,0,0,0.6);">All plans are month-to-month — cancel anytime. That said, real results require at least 8–12 weeks of consistent training. Commit to the process and the results follow.</div></div>
+        <div class="faq-answer"><div class="faq-answer-inner" style="color:rgba(0,0,0,0.6);">It depends on the product. The 12-Week HYROX Program is delivered as a PDF straight to your inbox after purchase — no app required. Private run coaching is delivered through <strong style="color:var(--c1);">TrainingPeaks</strong> — a free app for athletes (iOS &amp; Android) — with your plan updated weekly based on your data.</div></div>
       </div>
       <div class="faq-item" style="border-bottom-color:rgba(0,0,0,0.12);">
         <button class="faq-btn" aria-expanded="false" style="color:var(--c1);">
@@ -1345,13 +1157,6 @@
           <span class="faq-icon" style="border-color:rgba(0,0,0,0.35); color:var(--c1);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg></span>
         </button>
         <div class="faq-answer"><div class="faq-answer-inner" style="color:rgba(0,0,0,0.6);">Cancel anytime by visiting your account portal at <a href="https://billing.stripe.com/p/login/8x26oH16KbBi8og9NeejK00" target="_blank" style="color:var(--c1); font-weight:600;">billing.stripe.com</a>. No phone call required, no questions asked. You can also email <a href="mailto:teamlopestraining@gmail.com" style="color:var(--c1); font-weight:600;">teamlopestraining@gmail.com</a> and we will cancel within 24 hours. You keep full access until the end of your current billing period.</div></div>
-      </div>
-      <div class="faq-item" style="border-bottom-color:rgba(0,0,0,0.12);">
-        <button class="faq-btn" aria-expanded="false" style="color:var(--c1);">
-          How do I switch to a different program?
-          <span class="faq-icon" style="border-color:rgba(0,0,0,0.35); color:var(--c1);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg></span>
-        </button>
-        <div class="faq-answer"><div class="faq-answer-inner" style="color:rgba(0,0,0,0.6);">Visit your account portal at <a href="https://billing.stripe.com/p/login/8x26oH16KbBi8og9NeejK00" target="_blank" style="color:var(--c1); font-weight:600;">billing.stripe.com</a>. Cancel your current plan and subscribe to the new one. Your first 7 days on the new plan are free. Email <a href="mailto:teamlopestraining@gmail.com" style="color:var(--c1); font-weight:600;">teamlopestraining@gmail.com</a> and we will move you to the correct program in TrainHeroic within 24 hours.</div></div>
       </div>
       <div class="faq-item" style="border-bottom-color:rgba(0,0,0,0.12);">
         <button class="faq-btn" aria-expanded="false" style="color:var(--c1);">
@@ -1517,9 +1322,8 @@
       <div>
         <h4 style="font-size:10px; font-weight:700; letter-spacing:0.26em; text-transform:uppercase; color:#fff; margin-bottom:20px;">Programs</h4>
         <ul style="list-style:none; display:flex; flex-direction:column; gap:12px;">
-          <li><a href="#programs" style="font-size:13px; font-weight:300; color:rgba(255,255,255,0.3); text-decoration:none; transition:color 0.2s;" onmouseover="this.style.color='#FFE500'" onmouseout="this.style.color='rgba(255,255,255,0.3)'">Sub 90'</a></li>
-          <li><a href="#programs" style="font-size:13px; font-weight:300; color:rgba(255,255,255,0.3); text-decoration:none; transition:color 0.2s;" onmouseover="this.style.color='#FFE500'" onmouseout="this.style.color='rgba(255,255,255,0.3)'">Own the Flag</a></li>
-          <li><a href="#programs" style="font-size:13px; font-weight:300; color:rgba(255,255,255,0.3); text-decoration:none; transition:color 0.2s;" onmouseover="this.style.color='#FFE500'" onmouseout="this.style.color='rgba(255,255,255,0.3)'">Iron Base</a></li>
+          <li><a href="#programs" style="font-size:13px; font-weight:300; color:rgba(255,255,255,0.3); text-decoration:none; transition:color 0.2s;" onmouseover="this.style.color='#FFE500'" onmouseout="this.style.color='rgba(255,255,255,0.3)'">12-Week HYROX Program</a></li>
+          <li><a href="#programs" style="font-size:13px; font-weight:300; color:rgba(255,255,255,0.3); text-decoration:none; transition:color 0.2s;" onmouseover="this.style.color='#FFE500'" onmouseout="this.style.color='rgba(255,255,255,0.3)'">Running Private Coach</a></li>
         </ul>
       </div>
 
@@ -1629,27 +1433,6 @@
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
   }, { threshold: 0.1 });
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-  const progCardObserver = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); progCardObserver.unobserve(e.target); } });
-  }, { threshold: 0.12 });
-  document.querySelectorAll('.prog-card').forEach((card, i) => {
-    card.style.transitionDelay = `${i * 0.13}s`;
-    progCardObserver.observe(card);
-  });
-
-  /* Flip cards — click to flip, skip clicks on purchase links */
-  document.querySelectorAll('.prog-card').forEach(card => {
-    card.addEventListener('click', e => {
-      if (e.target.closest('a[href]')) return;
-      if (e.target.closest('.flip-back-close')) return;
-      card.classList.toggle('flipped');
-    });
-    card.addEventListener('keydown', e => {
-      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); card.classList.toggle('flipped'); }
-      if (e.key === 'Escape') card.classList.remove('flipped');
-    });
-  });
 </script>
 </body>
 </html>
