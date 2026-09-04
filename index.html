@@ -357,6 +357,64 @@
       text-align: center; margin-top: 8px;
     }
 
+    /* Programs — card/detail slide stage */
+    .prog-stage { position: relative; overflow: hidden; width: 100%; }
+    .prog-cards-view {
+      transition: transform 0.45s cubic-bezier(0.4,0,0.2,1), opacity 0.35s ease;
+      transform: translateX(0);
+      opacity: 1;
+    }
+    .prog-cards-view.slide-out { transform: translateX(-110%); opacity: 0; }
+    .prog-detail-view {
+      position: absolute; top: 0; left: 0; width: 100%; min-height: 100%;
+      transform: translateX(110%);
+      opacity: 0;
+      transition: transform 0.45s cubic-bezier(0.4,0,0.2,1), opacity 0.35s ease;
+      pointer-events: none;
+    }
+    .prog-detail-view.slide-in { transform: translateX(0); opacity: 1; pointer-events: auto; }
+    .prog-panel { display: none; max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+    .prog-close {
+      font-family: var(--fh); font-size: 14px; color: var(--ca);
+      letter-spacing: 0.1em; background: none; border: none; cursor: pointer;
+      margin-bottom: 32px; display: block; opacity: 0.8; transition: opacity 0.2s;
+    }
+    .prog-close:hover { opacity: 1; }
+    .prog-panel-inner { display: flex; gap: 48px; align-items: flex-start; }
+    .prog-panel-img { flex: 0 0 340px; height: 520px; border-radius: 4px; overflow: hidden; }
+    .prog-panel-content { flex: 1; display: flex; flex-direction: column; min-height: 520px; }
+    .prog-pillars { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 28px; }
+    .prog-pillar { border-left: 2px solid var(--ca); padding-left: 12px; }
+    .prog-pillar-label {
+      font-family: var(--fb); font-size: 10px; color: var(--ca); text-transform: uppercase;
+      letter-spacing: 0.08em; margin-bottom: 4px;
+    }
+    .prog-pillar-text { font-family: var(--fb); font-size: 12px; color: var(--cgray); line-height: 1.5; }
+    .prog-phase-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .prog-phase {
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,229,0,0.1);
+      border-radius: 4px; padding: 12px 14px;
+    }
+    .prog-phase-week { font-family: var(--fh); font-size: 13px; color: var(--ca); }
+    .prog-phase-name { font-family: var(--fh); font-size: 16px; color: var(--cw); }
+    .prog-phase-desc { font-family: var(--fb); font-size: 11px; color: var(--cgray); }
+
+    @media (max-width: 768px) {
+      .prog-panel-inner { flex-direction: column; }
+      .prog-panel-img { flex: none; width: 100%; height: 240px; }
+      .prog-panel-content { min-height: auto; }
+      .private-forms { grid-template-columns: 1fr; }
+    }
+
+    /* Private section — two inquiry forms */
+    .private-forms { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 40px; }
+    .private-form-block {
+      background: var(--cd); border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 4px; padding: 32px 28px;
+    }
+    .private-form-title { font-family: 'Bebas Neue', sans-serif; font-size: 20px; color: var(--cw); margin-bottom: 8px; }
+    .private-form-sub { font-family: Montserrat, sans-serif; font-size: 12px; color: var(--cgray); margin-bottom: 24px; line-height: 1.6; }
+
     /* Testimonial */
     .testi-card { background: var(--c2); padding: 36px; border-left: 3px solid var(--ca); transition: background 0.2s; }
     .testi-card:hover { background: #1a1a1a; }
@@ -641,7 +699,7 @@
   background:var(--ca); color:var(--c1); text-align:center;
   padding:14px 24px; font-family:var(--fb); font-size:14px; font-weight:700;
   letter-spacing:0.06em; box-shadow:0 4px 24px rgba(255,229,0,0.35);">
-  ✓ Payment confirmed — check your email for access instructions &amp; your TrainHeroic invite.
+  ✓ Payment confirmed — check your email for access instructions.
   <button onclick="document.getElementById('payment-banner').style.display='none'"
     style="margin-left:20px; background:none; border:1px solid rgba(0,0,0,0.3); cursor:pointer;
     font-size:11px; font-weight:700; padding:4px 10px; letter-spacing:0.08em; color:var(--c1);">
@@ -898,10 +956,12 @@
       <p class="reveal d2" style="font-size:15px; font-weight:300; color:rgba(255,255,255,0.4); max-width:460px; margin:0 auto; line-height:1.8;">A 12-week program to own your race.<br/>Private coaching to own your run.</p>
     </div>
 
+    <div class="prog-stage">
+    <div class="prog-cards-view">
     <div class="prod-grid">
 
       <!-- 12-Week HYROX Program -->
-      <div class="prod-card reveal">
+      <div class="prod-card reveal" data-detail="hyrox">
         <div class="prod-bar"></div>
         <p class="prod-badge">ONE-TIME PROGRAM</p>
         <h3 class="prod-name">12-WEEK HYROX<br><span class="prod-name-accent">PROGRAM</span></h3>
@@ -954,12 +1014,12 @@
             One-time payment — yours forever
           </li>
         </ul>
-        <a href="https://buy.stripe.com/aFa4gz3eSgVCawo0cEejK08" target="_blank" rel="noopener" class="prod-cta">GET THE PROGRAM</a>
+        <button class="prod-cta prod-open" data-detail="hyrox" type="button">GET THE PROGRAM</button>
         <p class="prod-note">PDF delivered to your inbox after purchase</p>
       </div>
 
       <!-- Running Private Coaching -->
-      <div class="prod-card reveal d1">
+      <div class="prod-card reveal d1" data-detail="run">
         <div class="prod-bar"></div>
         <span class="prod-spots">LIMITED SPOTS</span>
         <p class="prod-badge">PRIVATE COACHING</p>
@@ -1013,10 +1073,136 @@
             Direct coach contact via the app
           </li>
         </ul>
-        <a href="https://buy.stripe.com/dRm9AT7v834M9sk5wYejK09" target="_blank" rel="noopener" class="prod-cta">APPLY FOR COACHING</a>
+        <button class="prod-cta prod-open" data-detail="run" type="button">APPLY FOR COACHING</button>
         <p class="prod-note">Limited spots · billed monthly · cancel anytime</p>
       </div>
 
+    </div>
+    </div>
+
+    <div class="prog-detail-view" aria-hidden="true">
+
+      <!-- PANEL 1 — 12-Week HYROX Program -->
+      <div class="prog-panel" data-panel="hyrox">
+        <button class="prog-close" type="button" aria-label="Back to programs">← BACK</button>
+        <div class="prog-panel-inner">
+          <div class="prog-panel-img">
+            <img src="/images/12weeks.jpg" alt="12-Week HYROX Program" style="width:100%;height:100%;object-fit:cover;border-radius:4px;">
+          </div>
+          <div class="prog-panel-content">
+            <p class="prod-badge">12-WEEK PROGRAM</p>
+            <h3 style="font-family:'Bebas Neue',sans-serif;font-size:36px;color:var(--cw);line-height:1.1;margin-bottom:16px;">
+              GL HYBRID ENGINE<br>
+              <span style="color:var(--ca)">12-WEEK HYROX PROGRAM</span>
+            </h3>
+            <p style="font-family:Montserrat,sans-serif;font-size:13px;color:var(--cgray);line-height:1.7;margin-bottom:20px;">
+              Built on one principle: you train the way you want to race. Every session has a purpose. Every week builds on the one before it. Nothing is random.
+            </p>
+            <div class="prog-pillars">
+              <div class="prog-pillar">
+                <div class="prog-pillar-label">Strength — APRE Method</div>
+                <div class="prog-pillar-text">Auto-regulating progressive loads based on your actual performance each session — not fixed percentages.</div>
+              </div>
+              <div class="prog-pillar">
+                <div class="prog-pillar-label">HYROX Conditioning</div>
+                <div class="prog-pillar-text">Extensive and intensive intervals covering all 8 HYROX stations at race-specific distances.</div>
+              </div>
+              <div class="prog-pillar">
+                <div class="prog-pillar-label">Run Performance</div>
+                <div class="prog-pillar-text">Five training zones progressing from aerobic base to race-pace sharpening across the 12 weeks.</div>
+              </div>
+              <div class="prog-pillar">
+                <div class="prog-pillar-label">Recovery &amp; Mobility</div>
+                <div class="prog-pillar-text">Programmed recovery, mobility circuits, and a structured deload week built into the block.</div>
+              </div>
+            </div>
+            <div style="margin-bottom:28px;">
+              <p style="font-family:'Bebas Neue',sans-serif;font-size:16px;color:var(--cw);margin-bottom:12px;">THE 12-WEEK STRUCTURE</p>
+              <div class="prog-phase-grid">
+                <div class="prog-phase">
+                  <div class="prog-phase-week">WEEKS 1–3</div>
+                  <div class="prog-phase-name">BASE BUILDING</div>
+                  <div class="prog-phase-desc">Establish movement quality and aerobic base.</div>
+                </div>
+                <div class="prog-phase">
+                  <div class="prog-phase-week">WEEKS 4–7</div>
+                  <div class="prog-phase-name">DEVELOPMENT</div>
+                  <div class="prog-phase-desc">Build strength and conditioning volume.</div>
+                </div>
+                <div class="prog-phase">
+                  <div class="prog-phase-week">WEEKS 8–10</div>
+                  <div class="prog-phase-name">INTENSIFICATION</div>
+                  <div class="prog-phase-desc">Race-specific intensity increases.</div>
+                </div>
+                <div class="prog-phase">
+                  <div class="prog-phase-week">WEEKS 11–12</div>
+                  <div class="prog-phase-name">SHARPENING</div>
+                  <div class="prog-phase-desc">Taper and peak for race day.</div>
+                </div>
+              </div>
+            </div>
+            <div style="margin-top:auto;">
+              <p style="font-family:'Bebas Neue',sans-serif;font-size:42px;color:var(--ca);margin-bottom:8px;">
+                $47
+                <span style="font-family:Montserrat,sans-serif;font-size:13px;color:var(--cgray);">one-time · instant access</span>
+              </p>
+              <a href="https://buy.stripe.com/aFa4gz3eSgVCawo0cEejK08" target="_blank" rel="noopener" class="prod-cta" style="display:block;text-decoration:none;text-align:center;">GET THE PROGRAM</a>
+              <p style="font-family:Montserrat,sans-serif;font-size:11px;color:var(--cgray);text-align:center;margin-top:8px;">PDF delivered to your inbox after purchase</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PANEL 2 — Running Private Coaching -->
+      <div class="prog-panel" data-panel="run">
+        <button class="prog-close" type="button" aria-label="Back to programs">← BACK</button>
+        <div class="prog-panel-inner">
+          <div class="prog-panel-img">
+            <img src="/images/runcoach.jpg" alt="Run Private Coaching" style="width:100%;height:100%;object-fit:cover;border-radius:4px;">
+          </div>
+          <div class="prog-panel-content">
+            <p class="prod-badge">PRIVATE COACHING</p>
+            <h3 style="font-family:'Bebas Neue',sans-serif;font-size:36px;color:var(--cw);line-height:1.1;margin-bottom:16px;">
+              GL HYBRID ENGINE<br>
+              <span style="color:var(--ca)">RUN COACHING</span>
+            </h3>
+            <p style="font-family:Montserrat,sans-serif;font-size:13px;font-style:italic;color:var(--cgray);margin-bottom:20px;">
+              "Your paces aren't copied from someone else's plan — they're calculated from your own fitness, and they get sharper as you get faster."
+            </p>
+            <p style="font-family:Montserrat,sans-serif;font-size:13px;color:var(--cgray);line-height:1.7;margin-bottom:20px;">
+              Built on Critical Velocity (CV) — not generic pace charts. Every athlete starts with a 5-minute all-out CV test, establishing their personal threshold speed. Every workout is then calculated as a precise percentage of that athlete's CV.
+            </p>
+            <div class="prog-pillars">
+              <div class="prog-pillar">
+                <div class="prog-pillar-label">CV Test First</div>
+                <div class="prog-pillar-text">5-minute all-out effort sets your exact personal threshold — no borrowed pace charts.</div>
+              </div>
+              <div class="prog-pillar">
+                <div class="prog-pillar-label">Individual Zones</div>
+                <div class="prog-pillar-text">Zones 1 through 5c calculated from your CV — two athletes on the same day run completely different correct paces.</div>
+              </div>
+              <div class="prog-pillar">
+                <div class="prog-pillar-label">Science-Based Periodization</div>
+                <div class="prog-pillar-text">Issurin block periodization, Daniels-Gilbert VDOT, and critical-velocity research — not arbitrary effort labels.</div>
+              </div>
+              <div class="prog-pillar">
+                <div class="prog-pillar-label">TrainingPeaks Delivery</div>
+                <div class="prog-pillar-text">Pace zones built into your athlete profile. As your CV improves, your entire zone structure recalculates automatically.</div>
+              </div>
+            </div>
+            <div style="margin-top:auto;">
+              <p style="font-family:'Bebas Neue',sans-serif;font-size:42px;color:var(--ca);margin-bottom:8px;">
+                $79
+                <span style="font-family:Montserrat,sans-serif;font-size:13px;color:var(--cgray);">/mo · TrainingPeaks included</span>
+              </p>
+              <a href="https://buy.stripe.com/dRm9AT7v834M9sk5wYejK09" target="_blank" rel="noopener" class="prod-cta" style="display:block;text-decoration:none;text-align:center;">APPLY FOR COACHING</a>
+              <p class="prod-note">Limited spots · billed monthly · cancel anytime</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
     </div>
   </div>
 </section>
@@ -1176,7 +1362,6 @@
     <!-- Left: info -->
     <div>
       <p class="reveal" style="font-size:11px; font-weight:700; letter-spacing:0.28em; text-transform:uppercase; color:var(--ca); margin-bottom:16px;">One-on-One</p>
-      <p class="reveal" style="font-family:var(--fh); font-size:clamp(18px,2vw,24px); letter-spacing:0.08em; text-transform:uppercase; color:var(--ca); display:block; text-align:center; margin:0 0 1rem 0;">1-on-1 coaching from $179.90/mo — limited spots</p>
       <h2 class="reveal d1" style="font-family:var(--fh); font-size:clamp(44px,5vw,74px); line-height:0.93; letter-spacing:0.02em; text-transform:uppercase; margin-bottom:28px;">PRIVATE<br/>COACHING</h2>
       <p class="reveal d2" style="font-size:15px; font-weight:300; line-height:1.85; color:rgba(255,255,255,0.55); margin-bottom:36px; max-width:460px;">
         Want more than a daily program? Private coaching is a direct working relationship — your schedule, your goals, my full attention. I build your training around your life, track your progress every week, and adjust the plan as you evolve.
@@ -1213,69 +1398,132 @@
       </div>
     </div>
 
-    <!-- Right: contact form -->
-    <form class="reveal d1" id="contact-form"
-      action="https://formspree.io/f/mredbvyg"
-      method="POST"
-      style="background:var(--c2); padding:44px; display:flex; flex-direction:column; gap:18px;">
+    <!-- Right: two inquiry forms -->
+    <div class="private-forms reveal d1">
 
-      <h3 style="font-family:var(--fh); font-size:32px; letter-spacing:0.02em; text-transform:uppercase; color:#fff; line-height:1; margin-bottom:4px;">Get In Touch</h3>
-      <p style="font-size:13px; font-weight:300; color:rgba(255,255,255,0.4); line-height:1.6; margin-bottom:6px;">Fill in your details and I'll get back to you within 24 hours.</p>
+      <!-- Form 1: Run Coaching -->
+      <div class="private-form-block">
+        <h4 class="private-form-title">RUN COACHING INQUIRY</h4>
+        <p class="private-form-sub">Personalised run coaching via TrainingPeaks. Tell us about your goals.</p>
+        <form action="https://formspree.io/f/mredbvyg" method="POST" class="contact-form" style="display:flex; flex-direction:column; gap:18px;">
+          <input type="hidden" name="_subject" value="Run Coaching Inquiry">
 
-      <div class="form-name-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
-        <div style="display:flex; flex-direction:column; gap:6px;">
-          <label style="font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,255,255,0.4);">Your name (first)</label>
-          <input type="text" name="first_name" required placeholder="João"
-            style="background:var(--cd); border:1px solid rgba(255,255,255,0.08); color:#fff; padding:13px 16px; font-family:var(--fb); font-size:14px; outline:none; transition:border-color 0.2s;"
-            onfocus="this.style.borderColor='var(--ca)'" onblur="this.style.borderColor='rgba(255,255,255,0.08)'"/>
-        </div>
-        <div style="display:flex; flex-direction:column; gap:6px;">
-          <label style="font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,255,255,0.4);">Your name (last)</label>
-          <input type="text" name="last_name" required placeholder="Silva"
-            style="background:var(--cd); border:1px solid rgba(255,255,255,0.08); color:#fff; padding:13px 16px; font-family:var(--fb); font-size:14px; outline:none; transition:border-color 0.2s;"
-            onfocus="this.style.borderColor='var(--ca)'" onblur="this.style.borderColor='rgba(255,255,255,0.08)'"/>
-        </div>
+          <div class="form-name-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+            <div style="display:flex; flex-direction:column; gap:6px;">
+              <label style="font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,255,255,0.4);">Your name (first)</label>
+              <input type="text" name="first_name" required placeholder="João"
+                style="background:var(--cd); border:1px solid rgba(255,255,255,0.08); color:#fff; padding:13px 16px; font-family:var(--fb); font-size:14px; outline:none; transition:border-color 0.2s;"
+                onfocus="this.style.borderColor='var(--ca)'" onblur="this.style.borderColor='rgba(255,255,255,0.08)'"/>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:6px;">
+              <label style="font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,255,255,0.4);">Your name (last)</label>
+              <input type="text" name="last_name" required placeholder="Silva"
+                style="background:var(--cd); border:1px solid rgba(255,255,255,0.08); color:#fff; padding:13px 16px; font-family:var(--fb); font-size:14px; outline:none; transition:border-color 0.2s;"
+                onfocus="this.style.borderColor='var(--ca)'" onblur="this.style.borderColor='rgba(255,255,255,0.08)'"/>
+            </div>
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:6px;">
+            <label style="font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,255,255,0.4);">Your email</label>
+            <input type="email" name="email" required placeholder="you@email.com"
+              style="background:var(--cd); border:1px solid rgba(255,255,255,0.08); color:#fff; padding:13px 16px; font-family:var(--fb); font-size:14px; outline:none; transition:border-color 0.2s;"
+              onfocus="this.style.borderColor='var(--ca)'" onblur="this.style.borderColor='rgba(255,255,255,0.08)'"/>
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:6px;">
+            <label style="font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,255,255,0.4);">Your goal</label>
+            <select name="goal" required
+              style="background:var(--cd); border:1px solid rgba(255,255,255,0.08); color:rgba(255,255,255,0.7); padding:13px 16px; font-family:var(--fb); font-size:14px; outline:none; transition:border-color 0.2s; appearance:none; cursor:pointer;"
+              onfocus="this.style.borderColor='var(--ca)'" onblur="this.style.borderColor='rgba(255,255,255,0.08)'">
+              <option value="" disabled selected>Select your goal</option>
+              <option value="first_race">Finish my first race</option>
+              <option value="beat_pr">Beat my current PR</option>
+              <option value="hyrox">Prepare for HYROX</option>
+              <option value="strength_hyrox">Build strength for HYROX</option>
+              <option value="general">General fitness &amp; strength</option>
+            </select>
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:6px;">
+            <label style="font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,255,255,0.4);">Your message</label>
+            <textarea name="message" required rows="4" placeholder="Current fitness level, upcoming races, availability..."
+              style="background:var(--cd); border:1px solid rgba(255,255,255,0.08); color:#fff; padding:13px 16px; font-family:var(--fb); font-size:14px; outline:none; resize:vertical; transition:border-color 0.2s; line-height:1.6;"
+              onfocus="this.style.borderColor='var(--ca)'" onblur="this.style.borderColor='rgba(255,255,255,0.08)'"></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-yellow" style="width:100%; margin-top:4px;">
+            Send Message
+            <svg style="margin-left:10px;" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+
+          <p class="form-success" style="display:none; font-size:13px; font-weight:500; color:var(--ca); text-align:center; margin-top:4px;">
+            ✓ Message sent! I'll get back to you within 24 hours.
+          </p>
+        </form>
       </div>
 
-      <div style="display:flex; flex-direction:column; gap:6px;">
-        <label style="font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,255,255,0.4);">Your email</label>
-        <input type="email" name="email" required placeholder="you@email.com"
-          style="background:var(--cd); border:1px solid rgba(255,255,255,0.08); color:#fff; padding:13px 16px; font-family:var(--fb); font-size:14px; outline:none; transition:border-color 0.2s;"
-          onfocus="this.style.borderColor='var(--ca)'" onblur="this.style.borderColor='rgba(255,255,255,0.08)'"/>
+      <!-- Form 2: 1-on-1 Private Coaching -->
+      <div class="private-form-block">
+        <h4 class="private-form-title">PRIVATE COACHING INQUIRY</h4>
+        <p class="private-form-sub">Full 1-on-1 coaching — custom program, direct access, weekly adjustments. Limited spots available.</p>
+        <form action="https://formspree.io/f/mredbvyg" method="POST" class="contact-form" style="display:flex; flex-direction:column; gap:18px;">
+          <input type="hidden" name="_subject" value="Private Coaching Inquiry">
+
+          <div class="form-name-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+            <div style="display:flex; flex-direction:column; gap:6px;">
+              <label style="font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,255,255,0.4);">Your name (first)</label>
+              <input type="text" name="first_name" required placeholder="João"
+                style="background:var(--cd); border:1px solid rgba(255,255,255,0.08); color:#fff; padding:13px 16px; font-family:var(--fb); font-size:14px; outline:none; transition:border-color 0.2s;"
+                onfocus="this.style.borderColor='var(--ca)'" onblur="this.style.borderColor='rgba(255,255,255,0.08)'"/>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:6px;">
+              <label style="font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,255,255,0.4);">Your name (last)</label>
+              <input type="text" name="last_name" required placeholder="Silva"
+                style="background:var(--cd); border:1px solid rgba(255,255,255,0.08); color:#fff; padding:13px 16px; font-family:var(--fb); font-size:14px; outline:none; transition:border-color 0.2s;"
+                onfocus="this.style.borderColor='var(--ca)'" onblur="this.style.borderColor='rgba(255,255,255,0.08)'"/>
+            </div>
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:6px;">
+            <label style="font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,255,255,0.4);">Your email</label>
+            <input type="email" name="email" required placeholder="you@email.com"
+              style="background:var(--cd); border:1px solid rgba(255,255,255,0.08); color:#fff; padding:13px 16px; font-family:var(--fb); font-size:14px; outline:none; transition:border-color 0.2s;"
+              onfocus="this.style.borderColor='var(--ca)'" onblur="this.style.borderColor='rgba(255,255,255,0.08)'"/>
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:6px;">
+            <label style="font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,255,255,0.4);">Your goal</label>
+            <select name="goal" required
+              style="background:var(--cd); border:1px solid rgba(255,255,255,0.08); color:rgba(255,255,255,0.7); padding:13px 16px; font-family:var(--fb); font-size:14px; outline:none; transition:border-color 0.2s; appearance:none; cursor:pointer;"
+              onfocus="this.style.borderColor='var(--ca)'" onblur="this.style.borderColor='rgba(255,255,255,0.08)'">
+              <option value="" disabled selected>Select your goal</option>
+              <option value="first_race">Finish my first race</option>
+              <option value="beat_pr">Beat my current PR</option>
+              <option value="hyrox">Prepare for HYROX</option>
+              <option value="strength_hyrox">Build strength for HYROX</option>
+              <option value="general">General fitness &amp; strength</option>
+            </select>
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:6px;">
+            <label style="font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,255,255,0.4);">Your message</label>
+            <textarea name="message" required rows="4" placeholder="Current fitness level, upcoming races, availability..."
+              style="background:var(--cd); border:1px solid rgba(255,255,255,0.08); color:#fff; padding:13px 16px; font-family:var(--fb); font-size:14px; outline:none; resize:vertical; transition:border-color 0.2s; line-height:1.6;"
+              onfocus="this.style.borderColor='var(--ca)'" onblur="this.style.borderColor='rgba(255,255,255,0.08)'"></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-yellow" style="width:100%; margin-top:4px;">
+            Send Message
+            <svg style="margin-left:10px;" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+
+          <p class="form-success" style="display:none; font-size:13px; font-weight:500; color:var(--ca); text-align:center; margin-top:4px;">
+            ✓ Message sent! I'll get back to you within 24 hours.
+          </p>
+        </form>
       </div>
 
-      <div style="display:flex; flex-direction:column; gap:6px;">
-        <label style="font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,255,255,0.4);">Your goal</label>
-        <select name="goal" required
-          style="background:var(--cd); border:1px solid rgba(255,255,255,0.08); color:rgba(255,255,255,0.7); padding:13px 16px; font-family:var(--fb); font-size:14px; outline:none; transition:border-color 0.2s; appearance:none; cursor:pointer;"
-          onfocus="this.style.borderColor='var(--ca)'" onblur="this.style.borderColor='rgba(255,255,255,0.08)'">
-          <option value="" disabled selected>Select your goal</option>
-          <option value="first_race">Finish my first race</option>
-          <option value="beat_pr">Beat my current PR</option>
-          <option value="hyrox">Prepare for HYROX</option>
-          <option value="strength_hyrox">Build strength for HYROX</option>
-          <option value="general">General fitness &amp; strength</option>
-        </select>
-      </div>
-
-      <div style="display:flex; flex-direction:column; gap:6px;">
-        <label style="font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,255,255,0.4);">Your message</label>
-        <textarea name="message" required rows="4" placeholder="Current fitness level, upcoming races, availability..."
-          style="background:var(--cd); border:1px solid rgba(255,255,255,0.08); color:#fff; padding:13px 16px; font-family:var(--fb); font-size:14px; outline:none; resize:vertical; transition:border-color 0.2s; line-height:1.6;"
-          onfocus="this.style.borderColor='var(--ca)'" onblur="this.style.borderColor='rgba(255,255,255,0.08)'"></textarea>
-      </div>
-
-      <input type="hidden" name="_subject" value="Private Coaching Inquiry — GL Hybrid Engine"/>
-
-      <button type="submit" class="btn btn-yellow" style="width:100%; margin-top:4px;">
-        Send Message
-        <svg style="margin-left:10px;" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </button>
-
-      <p id="form-success" style="display:none; font-size:13px; font-weight:500; color:var(--ca); text-align:center; margin-top:4px;">
-        ✓ Message sent! I'll get back to you within 24 hours.
-      </p>
-    </form>
+    </div>
 
   </div>
 </section>
@@ -1392,13 +1640,12 @@
     });
   });
 
-  /* Contact form — Formspree AJAX */
-  const contactForm = document.getElementById('contact-form');
-  if (contactForm) {
+  /* Contact forms — Formspree AJAX */
+  document.querySelectorAll('.contact-form').forEach(contactForm => {
     contactForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       const btn = contactForm.querySelector('button[type="submit"]');
-      const success = document.getElementById('form-success');
+      const success = contactForm.querySelector('.form-success');
       btn.disabled = true;
       btn.textContent = 'Sending…';
       try {
@@ -1420,7 +1667,7 @@
         btn.disabled = false;
       }
     });
-  }
+  });
 
   /* Stripe post-payment success banner */
   if (new URLSearchParams(window.location.search).get('paid') === 'success') {
@@ -1433,6 +1680,64 @@
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
   }, { threshold: 0.1 });
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+<script>
+(function() {
+  const stage = document.querySelector('.prog-stage');
+  if (!stage) return;
+  const cardsView = stage.querySelector('.prog-cards-view');
+  const detailView = stage.querySelector('.prog-detail-view');
+  const panels = stage.querySelectorAll('.prog-panel');
+
+  function showDetail(id) {
+    panels.forEach(p => {
+      p.style.display = p.dataset.panel === id
+        ? 'block' : 'none';
+    });
+    cardsView.classList.add('slide-out');
+    detailView.classList.add('slide-in');
+    detailView.removeAttribute('aria-hidden');
+    const stageTop = stage.getBoundingClientRect().top
+      + window.scrollY;
+    window.scrollTo({
+      top: stageTop - 80,
+      behavior: 'auto'
+    });
+  }
+
+  function showCards() {
+    cardsView.classList.remove('slide-out');
+    detailView.classList.remove('slide-in');
+    detailView.setAttribute('aria-hidden','true');
+  }
+
+  stage.querySelectorAll('.prod-open').forEach(btn => {
+    btn.addEventListener('click', function() {
+      showDetail(this.dataset.detail);
+    });
+  });
+
+  stage.querySelectorAll('.prog-close').forEach(btn => {
+    btn.addEventListener('click', showCards);
+  });
+
+  // keyboard: Escape closes panel
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' &&
+        detailView.classList.contains('slide-in')) {
+      showCards();
+    }
+  });
+
+  // prefers-reduced-motion: instant swap
+  const mq = window.matchMedia(
+    '(prefers-reduced-motion: reduce)');
+  if (mq.matches) {
+    cardsView.style.transition = 'none';
+    detailView.style.transition = 'none';
+  }
+})();
 </script>
 </body>
 </html>
