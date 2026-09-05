@@ -356,6 +356,12 @@
       font-family: var(--fb); font-size: 11px; color: var(--cgray);
       text-align: center; margin-top: 8px;
     }
+    .prod-card-muted {
+      border: 1px solid rgba(255,255,255,0.04);
+      opacity: 0.85;
+      transition: opacity 0.2s ease;
+    }
+    .prod-card-muted:hover { opacity: 1; }
 
     /* Programs — card/detail slide stage */
     .prog-stage { position: relative; overflow: hidden; width: 100%; }
@@ -820,9 +826,9 @@
     <div id="hero-tagline" style="font-family:var(--fh); font-size:clamp(13px,1.5vw,20px); letter-spacing:0.38em; color:rgba(255,255,255,0.55); margin-top:4px; user-select:none;">TRAIN · PROGRESS · RACE</div>
 
     <div style="pointer-events:auto; margin-top:8px; display:flex; flex-direction:column; align-items:center; gap:10px;">
-      <a href="#programs" class="btn btn-yellow btn-hero" style="font-size:14px; padding:18px 52px;">START FREE TRIAL</a>
+      <a href="#programs" class="btn btn-yellow btn-hero" style="font-size:14px; padding:18px 52px;">GET STARTED</a>
       <span style="font-size:11px; font-weight:600; letter-spacing:0.18em; text-transform:uppercase; color:rgba(255,255,255,0.45);">12-week program · Private run coaching</span>
-      <p style="font-family:'Montserrat',sans-serif; font-size:13px; color:rgba(255,255,255,0.55); text-align:center; max-width:480px; line-height:1.6; margin-top:4px;">Daily structured sessions — running, strength, conditioning. Delivered every morning. Built to get you to the finish line faster than you thought possible.</p>
+      <p style="font-family:'Montserrat',sans-serif; font-size:13px; color:rgba(255,255,255,0.55); text-align:center; max-width:480px; line-height:1.6; margin-top:4px;">A 12-week HYROX program built for race day. Private run coaching delivered through TrainingPeaks. Two products. One goal. The finish line.</p>
     </div>
   </div>
 
@@ -895,8 +901,8 @@
       <div style="font-size:11px; font-weight:700; letter-spacing:0.22em; text-transform:uppercase; color:rgba(0,0,0,0.5); margin-top:4px;">WEEKS TO RACE READY</div>
     </div>
     <div style="padding:40px 36px; text-align:center;">
-      <div style="font-family:var(--fh); font-size:clamp(44px,4.5vw,66px); color:var(--c1); line-height:1;">$0</div>
-      <div style="font-size:11px; font-weight:700; letter-spacing:0.22em; text-transform:uppercase; color:rgba(0,0,0,0.5); margin-top:4px;">DUE TODAY</div>
+      <div style="font-family:var(--fh); font-size:clamp(44px,4.5vw,66px); color:var(--c1); line-height:1;">PDF</div>
+      <div style="font-size:11px; font-weight:700; letter-spacing:0.22em; text-transform:uppercase; color:rgba(0,0,0,0.5); margin-top:4px;">INSTANT ACCESS</div>
     </div>
   </div>
 </section>
@@ -952,8 +958,8 @@
   <div style="max-width:1280px; margin:0 auto;">
     <div style="text-align:center; margin-bottom:72px;">
       <p class="reveal" style="font-size:11px; font-weight:700; letter-spacing:0.28em; text-transform:uppercase; color:var(--ca); margin-bottom:12px;">Daily Online Training</p>
-      <h2 class="reveal d1" style="font-family:var(--fh); font-size:clamp(44px,5.5vw,82px); line-height:0.93; letter-spacing:0.02em; text-transform:uppercase; margin-bottom:20px;">TWO WAYS<br/>TO TRAIN</h2>
-      <p class="reveal d2" style="font-size:15px; font-weight:300; color:rgba(255,255,255,0.4); max-width:460px; margin:0 auto; line-height:1.8;">A 12-week program to own your race.<br/>Private coaching to own your run.</p>
+      <h2 class="reveal d1" style="font-family:var(--fh); font-size:clamp(44px,5.5vw,82px); line-height:0.93; letter-spacing:0.02em; text-transform:uppercase; margin-bottom:20px;">THE PROGRAM</h2>
+      <p class="reveal d2" style="font-size:15px; font-weight:300; color:rgba(255,255,255,0.4); max-width:460px; margin:0 auto; line-height:1.8;">12 weeks. Every session. Race day ready.</p>
     </div>
 
     <div class="prog-stage">
@@ -1019,8 +1025,7 @@
       </div>
 
       <!-- Running Private Coaching -->
-      <div class="prod-card reveal d1" data-detail="run">
-        <div class="prod-bar"></div>
+      <div class="prod-card prod-card-muted reveal d1" data-detail="run">
         <span class="prod-spots">LIMITED SPOTS</span>
         <p class="prod-badge">PRIVATE COACHING</p>
         <h3 class="prod-name">RUNNING<br><span class="prod-name-accent">PRIVATE COACH</span></h3>
@@ -1092,7 +1097,6 @@
           <div class="prog-panel-content">
             <p class="prod-badge">12-WEEK PROGRAM</p>
             <h3 style="font-family:'Bebas Neue',sans-serif;font-size:36px;color:var(--cw);line-height:1.1;margin-bottom:16px;">
-              GL HYBRID ENGINE<br>
               <span style="color:var(--ca)">12-WEEK HYROX PROGRAM</span>
             </h3>
             <p style="font-family:Montserrat,sans-serif;font-size:13px;color:var(--cgray);line-height:1.7;margin-bottom:20px;">
@@ -1163,7 +1167,6 @@
           <div class="prog-panel-content">
             <p class="prod-badge">PRIVATE COACHING</p>
             <h3 style="font-family:'Bebas Neue',sans-serif;font-size:36px;color:var(--cw);line-height:1.1;margin-bottom:16px;">
-              GL HYBRID ENGINE<br>
               <span style="color:var(--ca)">RUN COACHING</span>
             </h3>
             <p style="font-family:Montserrat,sans-serif;font-size:13px;font-style:italic;color:var(--cgray);margin-bottom:20px;">
@@ -1220,7 +1223,7 @@
       <div class="reveal d1" style="display:flex; flex-direction:column; gap:22px;">
         <div class="step-num" style="color:var(--c1);">02</div>
         <h3 style="font-family:var(--fh); font-size:30px; letter-spacing:0.02em; text-transform:uppercase; color:var(--c1); line-height:1;">Get Daily Workouts</h3>
-        <p style="font-size:14px; font-weight:400; color:rgba(0,0,0,0.55); line-height:1.75;">Your session is ready every morning — movement details, scaling options, coaching cues. No guessing, no planning. Just train.</p>
+        <p style="font-size:14px; font-weight:400; color:rgba(0,0,0,0.55); line-height:1.75;">Your 12-week program arrives as a PDF — every session planned, every week structured. Private coaching clients get their plan updated weekly inside TrainingPeaks. No guessing. Just train.</p>
       </div>
       <div class="reveal d2" style="display:flex; flex-direction:column; gap:22px;">
         <div class="step-num" style="color:var(--c1);">03</div>
@@ -1564,7 +1567,7 @@
           </div>
         </div>
         <p style="font-size:11px; font-weight:600; letter-spacing:0.18em; text-transform:uppercase; color:var(--ca); margin-bottom:8px;">Daily Hybrid Training System</p>
-        <p style="font-size:13px; font-weight:300; color:rgba(255,255,255,0.3); line-height:1.75; max-width:280px; margin-bottom:28px;">Structured daily sessions — running, strength, and conditioning — delivered to your app.</p>
+        <p style="font-size:13px; font-weight:300; color:rgba(255,255,255,0.3); line-height:1.75; max-width:280px; margin-bottom:28px;">12-week HYROX program and private run coaching. Built for competitive athletes.</p>
       </div>
 
       <div>
